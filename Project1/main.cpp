@@ -2,6 +2,7 @@
 #include"Define.h"
 #include "SceneManager.h"
 #include "PadInput.h"
+#include"GameMain.h"
 
 #define FRAMERATE 60.0	//フレームレート
 
@@ -11,7 +12,7 @@ int BGM;
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
 {
-	Fps fps;
+	
 	SetMainWindowText("タイトル");
 
 	ChangeWindowMode(TRUE);		// ウィンドウモードで起動
@@ -31,7 +32,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	try // シーンを選ぶとそこからスタートする（最終的にはTitleを入れる）
 	{
-		sceneMng = new SceneManager((AbstractScene*)new Title());
+		sceneMng = new SceneManager((AbstractScene*)new GameMain());
 
 	}
 	catch (const char* err)
@@ -60,9 +61,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		{
 			break;
 		}
-		fps.Update();	//更新
+		
 		ScreenFlip();			// 裏画面の内容を表画面に反映
-		fps.Wait();		//待機
 	}
 	return 0;
 }

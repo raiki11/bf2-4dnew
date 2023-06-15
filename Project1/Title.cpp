@@ -4,6 +4,10 @@ Title::Title()
 {
 }
 
+Title::~Title()
+{
+}
+
 AbstractScene* Title::Update()
 {
     return nullptr;
