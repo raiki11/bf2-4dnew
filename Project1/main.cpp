@@ -4,8 +4,6 @@
 #include "PadInput.h"
 #include"GameMain.h"
 
-#define FRAMERATE 60.0	//フレームレート
-
 //BGM用変数
 int BGM;
 
@@ -50,11 +48,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		return 0;
 	}
 
+
+
 	// ゲームループ
 	while ((ProcessMessage() == 0) && (sceneMng->Update() != nullptr)) {
 
 		ClearDrawScreen();		// 画面の初期化
 		PAD_INPUT::UpdateKey();
+;
 		sceneMng->Draw();
 		//強制終了
 		if (PAD_INPUT::OnButton(XINPUT_BUTTON_BACK))
