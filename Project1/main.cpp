@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 #include "PadInput.h"
 #include"GameMain.h"
+#include "FPS.h"
 
 //BGM用変数
 int BGM;
@@ -27,6 +28,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	PlaySoundMem(BGM, DX_PLAYTYPE_LOOP, TRUE);
 
 	SceneManager* sceneMng;
+	FPS fpsCtrl;
 
 	try // シーンを選ぶとそこからスタートする（最終的にはTitleを入れる）
 	{
@@ -63,6 +65,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			break;
 		}
 		
+		fpsCtrl.FpsCtrl();
+
 		ScreenFlip();			// 裏画面の内容を表画面に反映
 	}
 	return 0;
