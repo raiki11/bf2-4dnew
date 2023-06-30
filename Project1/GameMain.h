@@ -1,6 +1,7 @@
 #pragma once
 #include "AbstractScene.h"
 #include "DxLib.h"
+#include "Stage.h"
 
 // シーンマネージャークラス
 // 各シーンの切り替えを管理する
@@ -8,6 +9,9 @@
 class GameMain :
     public AbstractScene
 {
+private:
+    //ゲームメインで使う変数の宣言
+    Stage stage;
 
 public:
 
@@ -22,6 +26,6 @@ public:
 
     //描画に関することを実装
     void Draw() const override;
-private:
-    //ゲームメインで使う変数の宣言
+
+
 };
