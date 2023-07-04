@@ -4,6 +4,7 @@
 
 GameMain::GameMain()
 {
+	PauseFlg = FALSE;
 }
 
 GameMain::~GameMain()
@@ -19,23 +20,23 @@ AbstractScene* GameMain::Update()
 
 	}
 	//ポーズ中でないとき
-	if (PauseFlg = FALSE) {
-		//main処理
+	if (PauseFlg == FALSE) {
+		//
 	}
 
-	// ポーズ中
-	if (PauseFlg = TRUE) {
-		
-	}
 	return this;
 }
 
 void GameMain::Draw() const
 {
-	DrawFormatString(0, 0, 0xffffff, "ゲームメイン");
-	//一時停止中の描画
+	
+	
+	//ポーズ中の描画
 	if (PauseFlg == TRUE)
 	{
-		
+		DrawFormatString(0, 0, 0xffffff, "pause");
+	}
+	else {
+		DrawFormatString(0, 0, 0xffffff, "ゲームメイン");
 	}
 }
