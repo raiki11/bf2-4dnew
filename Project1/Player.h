@@ -4,8 +4,8 @@
 class Player
 {
 private:
-	int playerLocationX;
-	int playerLocationY;
+	float playerLocationX;
+	float playerLocationY;
 	float playerMoveX;
 	float playerMoveY;
 	int speed;
@@ -22,6 +22,8 @@ private:
 	int upFlg;
 	int rebound;
 	int reboundFlg;
+
+	int flyingFlg;
 public:
 	Player();
 	~Player();
@@ -29,5 +31,7 @@ public:
 	void PlayerUpdate();
 	void PlayerDraw() const;
 
+	void PlayerMoveX();
+	void PlayerMoveY();
 };
 
