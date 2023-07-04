@@ -10,6 +10,11 @@
 class GameMain :
     public AbstractScene
 {
+private:
+
+    bool PauseFlg;            // É|Å[ÉY
+   
+    
 
 public:
 
