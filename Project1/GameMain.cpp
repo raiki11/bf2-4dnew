@@ -1,10 +1,12 @@
 #include "GameMain.h"
 #include"DxLib.h"
 #include"PadInput.h"
+#include "Stage.h"
 
 GameMain::GameMain()
 {
 	PauseFlg = FALSE;
+
 }
 
 GameMain::~GameMain()
@@ -38,4 +40,6 @@ void GameMain::Draw() const
 	{ 
 		DrawFormatString(0, 0, 0xffffff, "ƒQ[ƒ€ƒƒCƒ“"); 
 	}
+}
+	stage.DrawStage();
 }

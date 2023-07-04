@@ -1,6 +1,7 @@
 #pragma once
 #include "AbstractScene.h"
 #include "DxLib.h"
+#include "Stage.h"
 #include "Player.h"
 #include"Enemy.h"
 
@@ -11,6 +12,11 @@ class GameMain :
     public AbstractScene
 {
 private:
+    //ゲームメインで使う変数の宣言
+    Stage stage;
+    //ゲームメインで使う変数の宣言
+    Player player;
+    Enemy enemy;
 
     bool PauseFlg;            // ポーズ
    
@@ -29,8 +35,5 @@ public:
 
     //描画に関することを実装
     void Draw() const override;
-private:
-    //ゲームメインで使う変数の宣言
-    Player player;
-    Enemy enemy;
+
 };
