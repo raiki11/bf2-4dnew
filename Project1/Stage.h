@@ -1,6 +1,6 @@
 #pragma once
-#define stagenum 5
-#define maxblock 10
+#define stagenum 5	//ステージの最大数
+#define maxcie 10 //ステージから取得するｘｙの最大数
 #define blockxy 3
 class Stage
 {
@@ -14,7 +14,7 @@ private:
 	int cloud;			//雲の画像
 	int stage1;			//ステージの仮画像
 
-	int StageXY[stagenum][maxblock][blockxy] = 
+	int StageXY[stagenum][maxcie][blockxy] = 
 	{
 		{
 			{175,282},//中央浮島
