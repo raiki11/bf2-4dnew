@@ -2,6 +2,7 @@
 #include "AbstractScene.h"
 #include "DxLib.h"
 #include "Player.h"
+#include"Enemy.h"
 
 // シーンマネージャークラス
 // 各シーンの切り替えを管理する
@@ -26,4 +27,5 @@ public:
 private:
     //ゲームメインで使う変数の宣言
     Player player;
+    Enemy enemy;
 };
