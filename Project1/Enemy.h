@@ -1,4 +1,7 @@
 #pragma once
+#include"Player.h"
+
+
 class Enemy
 {
 private:
@@ -6,13 +9,15 @@ private:
 	float enemyLocationY;
 	float enemyMoveX;
 	float enemyMoveY;
-	int Espeed;
+
+
+	
 
 public:
 	Enemy();
 	~Enemy();
 
-	void EnemyUpdate();
+	void EnemyUpdate(Player P);
 	void EnemyDraw() const;
 };
 

@@ -24,6 +24,8 @@ AbstractScene* GameMain::Update()
 		//
 	}
 
+	player.PlayerUpdate();
+	enemy.EnemyUpdate(player);
 	return this;
 }
 

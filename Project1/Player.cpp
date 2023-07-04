@@ -9,7 +9,6 @@ Player::Player()
 	playerMoveX = 0;
 	playerMoveY = 0;
 	fps = 0;
-	speed = 0;
 	count = 0;
 	moveFpsCountY = 0;
 	rebound = 10000.0f;
@@ -191,7 +190,6 @@ void Player::PlayerMoveY()
 			count = 0;
 			moveFpsCountY = 0;
 			fps = 0;
-			speed = 0;
 			playerMoveY = 0;
 		}
 	}
