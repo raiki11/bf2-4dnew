@@ -1,9 +1,12 @@
 #include "GameMain.h"
 #include"DxLib.h"
-
+#include"PadInput.h"
+#include "Stage.h"
 
 GameMain::GameMain()
 {
+	PauseFlg = FALSE;
+
 }
 
 GameMain::~GameMain()
@@ -12,6 +15,17 @@ GameMain::~GameMain()
 
 AbstractScene* GameMain::Update()
 {
+	//ポーズフラグ切り替え処理
+	if (PAD_INPUT::OnButton(XINPUT_BUTTON_START))
+	{
+		PauseFlg = !PauseFlg;
+
+	}
+	//ポーズ中でないとき
+	if (PauseFlg == FALSE) {
+		//
+	}
+
 	player.PlayerUpdate();
 	enemy.EnemyUpdate(player);
 	return this;
@@ -19,7 +33,13 @@ AbstractScene* GameMain::Update()
 
 void GameMain::Draw() const
 {
-	DrawFormatString(0, 0, 0xffffff, "ゲームメイン");
-	player.PlayerDraw();
-	enemy.EnemyDraw();
+	if (PauseFlg == FALSE) {
+		DrawFormatString(0, 0, 0xffffff, "Pause");
+	}
+	else 
+	{ 
+		DrawFormatString(0, 0, 0xffffff, "ゲームメイン"); 
+	}
+
+	stage.DrawStage();
 }
