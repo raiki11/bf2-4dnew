@@ -26,4 +26,5 @@ public:
 private:
     //ƒQ[ƒ€ƒƒCƒ“‚Åg‚¤•Ï”‚ÌéŒ¾
     Player player;
+
 };

@@ -4,21 +4,19 @@
 class Player
 {
 private:
-	float playerLocationX;
-	float playerLocationY;
-	float playerMoveX;
-	float playerMoveY;
-	int speed;
+	float playerLocationX, playerLocationY;
+	float playerMoveX, playerMoveY;
 
 	int balloonNum;
 
 	int fps;
 	int aButtonFlg;
-	int rButtonFlg;
-	int lButtonFlg;
+	int rButtonFlg, lButtonFlg;
+	int rFlg, lFlg;
+
 	int count;
-	int moveFpsCountY;
-	int moveFpsCountX;
+	int moveFpsCountY, moveFpsCountX;
+
 	int upFlg;
 	int rebound;
 	int reboundFlg;
@@ -33,5 +31,8 @@ public:
 
 	void PlayerMoveX();
 	void PlayerMoveY();
+
+	float GetPlayerLocationX() { return playerLocationX; }
+	float GetPlayerLocationY() { return playerLocationY; }
 };
 

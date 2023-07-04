@@ -76,14 +76,16 @@ void Player::PlayerMoveX()
 	//‰EˆÚ“®
 	if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || PAD_INPUT::GetLStick().x >= 32000) {
 		rButtonFlg = TRUE;
+		rFlg = TRUE;
 	}
 	else {
 		rButtonFlg = FALSE;
+		rFlg = FALSE;
 	}
 
 	if (rButtonFlg == TRUE) {
 		if (playerMoveX <= 0) {
-			playerMoveX += 0.001f;
+			playerMoveX += 0.005f;
 		}
 
 		playerLocationX += playerMoveX;
@@ -110,7 +112,7 @@ void Player::PlayerMoveX()
 
 	if (lButtonFlg == TRUE) {
 		if (playerMoveX >= 0) {
-			playerMoveX -= 0.001f;
+			playerMoveX -= 0.005f;
 		}
 
 		playerLocationX += playerMoveX;
