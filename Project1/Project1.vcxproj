@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="End.cpp" />
+    <ClCompile Include="fish.cpp" />
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="Help.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="AbstractScene.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="End.h" />
+    <ClInclude Include="fish.h" />
     <ClInclude Include="FPS.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="Help.h" />

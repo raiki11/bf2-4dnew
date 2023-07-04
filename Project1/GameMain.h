@@ -22,6 +22,7 @@ public:
 
     //•`‰æ‚ÉŠÖ‚·‚é‚±‚Æ‚ğÀ‘•
     void Draw() const override;
+
 private:
     //ƒQ[ƒ€ƒƒCƒ“‚Åg‚¤•Ï”‚ÌéŒ¾
 };
