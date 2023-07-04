@@ -40,6 +40,6 @@ void GameMain::Draw() const
 	{ 
 		DrawFormatString(0, 0, 0xffffff, "ƒQ[ƒ€ƒƒCƒ“"); 
 	}
-}
+
 	stage.DrawStage();
 }
