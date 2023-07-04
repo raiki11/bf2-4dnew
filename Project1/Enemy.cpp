@@ -15,9 +15,21 @@ Enemy::~Enemy()
 
 void Enemy::EnemyUpdate(Player P)
 {
+	EnemyMoveX(P);
+	/*‰ñ”ğs“®‚ÌcŠ[
+	if (enemyLocationX == P.GetPlayerLocationX() && enemyLocationY <= P.GetPlayerLocationY()) {
+		enemyMoveX -= 0.01f;
+	}*/
+}
 
+void Enemy::EnemyDraw() const
+{
+	DrawCircle(enemyLocationX, enemyLocationY, 4, 0x00ff00, TRUE);
+	DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", enemyLocationX);
+}
 
-
+void Enemy::EnemyMoveX(Player P)
+{
 	if (enemyLocationX > 640) {
 		enemyLocationX = 0;
 	}
@@ -31,25 +43,20 @@ void Enemy::EnemyUpdate(Player P)
 
 	if (enemyLocationX <= P.GetPlayerLocationX()) {
 		enemyMoveX += 0.01f;
-		
+
 	}
 	else if (enemyLocationX >= P.GetPlayerLocationX()) {
 		enemyMoveX -= 0.01f;
-		
+
 	}
 
 	if (enemyMoveX < -1) {
 		enemyMoveX = -1;
 	}
 
-
-
-
+	
 	enemyLocationX += enemyMoveX;
 }
 
-void Enemy::EnemyDraw() const
-{
-	DrawCircle(enemyLocationX, enemyLocationY, 4, 0x00ff00, TRUE);
-	DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", enemyLocationX);
-}
+
+

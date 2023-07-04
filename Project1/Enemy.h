@@ -19,5 +19,7 @@ public:
 
 	void EnemyUpdate(Player P);
 	void EnemyDraw() const;
+
+	void EnemyMoveX(Player P);
 };
 
