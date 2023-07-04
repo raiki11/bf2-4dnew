@@ -9,7 +9,6 @@ Player::Player()
 	playerMoveX = 0;
 	playerMoveY = 0;
 	fps = 0;
-	speed = 0;
 	count = 0;
 	moveFpsCountY = 0;
 	rebound = 10000.0f;
@@ -150,7 +149,7 @@ void Player::PlayerMoveX()
 void Player::PlayerMoveY()
 {
 	//Aƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚©
-	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
+	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
 		aButtonFlg = TRUE;
 		if (count < 12) {
 			count += 3;
@@ -177,7 +176,7 @@ void Player::PlayerMoveY()
 	}
 	//d—Í
 	else {
-		if (fps % 2 == 0) {
+		if (fps % 1 == 0) {
 			playerLocationY += 1;
 		}
 		fps++;
@@ -187,11 +186,10 @@ void Player::PlayerMoveY()
 			moveFpsCountY = 0;
 		}
 
-		if (fps >= 30) {
+		if (fps >= 10) {
 			count = 0;
 			moveFpsCountY = 0;
 			fps = 0;
-			speed = 0;
 			playerMoveY = 0;
 		}
 	}
