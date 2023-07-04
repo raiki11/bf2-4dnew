@@ -18,8 +18,11 @@ Stage::~Stage() {
 
 
 void Stage::DrawStage()const{
+	Stage1();
+}
 
-	//ステージ表示
+void Stage::Stage1()const {
+	//ステージ1の表示
 	//浮島の表示
 	DrawGraph(175, 280, St_Footing, TRUE);
 	DrawBox(175, 282, 455, 297, 0xff0000, FALSE);
@@ -37,5 +40,6 @@ void Stage::DrawStage()const{
 	DrawBox(160, 419, 480, 478, 0x00ff00, FALSE);
 
 	//雲表示
-	DrawGraph(321, 87,cloud,TRUE);
+	DrawGraph(321, 87, cloud, TRUE);
 }
+
