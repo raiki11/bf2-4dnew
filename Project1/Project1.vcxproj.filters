@@ -40,12 +40,15 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+=======
+>>>>>>> parent of b0453aa (サカナ追加)
 =======
 >>>>>>> parent of b0453aa (サカナ追加)
   </ItemGroup>
@@ -78,12 +81,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClInclude Include="Player.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+=======
+>>>>>>> parent of b0453aa (サカナ追加)
 =======
 >>>>>>> parent of b0453aa (サカナ追加)
   </ItemGroup>
