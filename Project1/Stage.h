@@ -1,6 +1,11 @@
 #pragma once
+#define stagenum 5
+#define maxblock 10
+#define blockxy 3
 class Stage
 {
+
+
 private:
 	int St_Footing;		//長い浮島の画像
 	int St_Land_Left;	//左の地面の画像
@@ -9,6 +14,17 @@ private:
 	int cloud;			//雲の画像
 	int stage1;			//ステージの仮画像
 
+	int StageXY[stagenum][maxblock][blockxy] = 
+	{
+		{
+			{175,282},//中央浮島
+			{455,297},
+			{0,419},//左下の地面
+			{160,480},
+			{480,419},//右下の地面
+			{640,480}
+		},
+	};
 public:
 	//コンストラクタ
 	Stage();
