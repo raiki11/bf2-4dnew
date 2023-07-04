@@ -13,7 +13,7 @@ GameMain::~GameMain()
 AbstractScene* GameMain::Update()
 {
 	player.PlayerUpdate();
-	enemy.EnemyUpdate();
+	enemy.EnemyUpdate(player);
 	return this;
 }
 

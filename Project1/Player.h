@@ -8,7 +8,7 @@ private:
 	float playerMoveX, playerMoveY;
 
 	int balloonNum;
-
+	
 	int fps;
 	int aButtonFlg;
 	int rButtonFlg, lButtonFlg;
