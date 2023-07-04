@@ -31,5 +31,11 @@ AbstractScene* GameMain::Update()
 
 void GameMain::Draw() const
 {
-	DrawFormatString(0, 0, 0xffffff, "ゲームメイン");
+	if (PauseFlg == FALSE) {
+		DrawFormatString(0, 0, 0xffffff, "Pause");
+	}
+	else 
+	{ 
+		DrawFormatString(0, 0, 0xffffff, "ゲームメイン"); 
+	}
 }
