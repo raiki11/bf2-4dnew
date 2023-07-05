@@ -31,5 +31,10 @@ public:
 	~Stage();
 
 	void DrawStage() const;
+
+	int GetStageXY(int snum, int m, int xy)
+	{
+		return StageXY[snum][m][xy];
+	}
 };
 

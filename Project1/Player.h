@@ -10,7 +10,7 @@ private:
 	int balloonNum;
 	
 	int fps;
-	int aButtonFlg;
+	int flyButtonFlg;
 	int rButtonFlg, lButtonFlg;
 	int rFlg, lFlg;
 
@@ -19,9 +19,13 @@ private:
 
 	int upFlg;
 	int rebound;
-	int reboundFlg;
+	int reboundFlgY;
+
+	int interval;
 
 	int flyingFlg;
+
+	int playerImg[24];
 public:
 	Player();
 	~Player();
@@ -34,5 +38,10 @@ public:
 
 	float GetPlayerLocationX() { return playerLocationX; }
 	float GetPlayerLocationY() { return playerLocationY; }
+
+	void SetFlyingFlg(int f)
+	{
+		flyingFlg = f;
+	}
 };
 
