@@ -84,11 +84,11 @@ void Player::PlayerMoveX()
 
 	if (rButtonFlg == TRUE) {
 		if (playerMoveX <= 0) {
-			playerMoveX += 0.005f;
+			playerMoveX += 0.01f;
 		}
 
 		playerLocationX += playerMoveX;
-		if ((playerMoveX > 0 ) ||PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
+		if ((playerMoveX > 0) || aButtonFlg == TRUE) {
 			playerMoveX += INERTIA;
 		}
 
@@ -111,11 +111,11 @@ void Player::PlayerMoveX()
 
 	if (lButtonFlg == TRUE) {
 		if (playerMoveX >= 0) {
-			playerMoveX -= 0.005f;
+			playerMoveX -= 0.01f;
 		}
 
 		playerLocationX += playerMoveX;
-		if ((playerMoveX < 0 ) || PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
+		if ((playerMoveX < 0 ) || aButtonFlg == TRUE) {
 			playerMoveX -= INERTIA;
 		}
 
