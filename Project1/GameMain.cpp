@@ -33,6 +33,9 @@ AbstractScene* GameMain::Update()
 
 void GameMain::Draw() const
 {
+
+	
+
 	if (PauseFlg == FALSE) {
 		DrawFormatString(0, 0, 0xffffff, "Pause");
 	}
@@ -42,4 +45,6 @@ void GameMain::Draw() const
 	}
 
 	stage.DrawStage();
+	
+	enemy.EnemyDraw();
 }
