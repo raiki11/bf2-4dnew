@@ -10,7 +10,7 @@ private:
 	int balloonNum;
 	
 	int fps;
-	int aButtonFlg;
+	int flyButtonFlg;
 	int rButtonFlg, lButtonFlg;
 	int rFlg, lFlg;
 
