@@ -156,6 +156,7 @@
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="Help.cpp" />
+    <ClCompile Include="HitBox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PadInput.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="FPS.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="Help.h" />
+    <ClInclude Include="HitBox.h" />
     <ClInclude Include="PadInput.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneManager.h" />

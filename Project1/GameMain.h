@@ -3,7 +3,8 @@
 #include "DxLib.h"
 #include "Stage.h"
 #include "Player.h"
-#include"Enemy.h"
+#include "Enemy.h"
+#include "HitBox.h"
 
 // シーンマネージャークラス
 // 各シーンの切り替えを管理する
@@ -17,10 +18,10 @@ private:
     //ゲームメインで使う変数の宣言
     Player player;
     Enemy enemy;
-
+    HitBox hit;
     bool PauseFlg;            // ポーズ
    
-    
+    int a;
 
 public:
 
