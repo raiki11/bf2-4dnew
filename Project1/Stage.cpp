@@ -41,5 +41,5 @@ void Stage::DrawStage()const{
 
 
 	//デバッグ
-	DrawFormatString(100, 0, 0xffffff, "%d", StageXY[0][0][1]);
+	//DrawFormatString(100, 0, 0xffffff, "%d", StageXY[0][0][1]);
 }

@@ -1,11 +1,13 @@
 #include "Player.h"
 #include "DxLib.h"
 #include "PadInput.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 Player::Player()
 {
 	playerLocationX = 320;
-	playerLocationY = 240;
+	playerLocationY = 140;
 	playerMoveX = 0;
 	playerMoveY = 0;
 	fps = 0;
@@ -13,6 +15,8 @@ Player::Player()
 	moveFpsCountY = 0;
 	rebound = 10000.0f;
 	flyingFlg = 1;
+	LoadDivGraph("images/Player/Player_Animation.png", 24, 8, 4, 64, 64, playerImg);
+	interval = 5;
 }
 
 Player::~Player()
@@ -21,26 +25,13 @@ Player::~Player()
 
 void Player::PlayerUpdate()
 {
-	/***飛んでる時の処理　ここから***/
-
+	
+	//飛んでる時の処理
 	if (flyingFlg == TRUE) {
-
-		/***上下の移動　ここから***/
-
 		PlayerMoveY();
-
-		/***上下の移動　ここまで***/
-
-
-		/***左右の移動　ここから***/
-
 		PlayerMoveX();
-
-		/***左右の移動　ここまで***/
-
 	}
-
-	/***飛んでる時の処理　ここまで***/
+	//歩いているときの処理
 	else if (flyingFlg == FALSE) {
 		PlayerMoveX();
 	}
@@ -60,6 +51,7 @@ void Player::PlayerUpdate()
 
 void Player::PlayerDraw() const
 {
+	DrawRotaGraph(playerLocationX, playerLocationY, 1.0f, 0, playerImg[0], TRUE, FALSE);
 	DrawCircle(playerLocationX, playerLocationY, 4, 0xff0000, TRUE);
 	DrawFormatString(0, 40, 0xffffff, "count::%d", count);
 	DrawFormatString(0, 55, 0xffffff, "fps::%d", fps);
@@ -68,81 +60,159 @@ void Player::PlayerDraw() const
 	DrawFormatString(0, 100, 0xffffff, "rebound::%d", rebound);
 	DrawFormatString(0, 115, 0xffffff, "playerMoveX::%f", playerMoveX);
 	DrawFormatString(0, 130, 0xffffff, "playerLocatoinX::%f", playerLocationX);
+	DrawFormatString(0, 145, 0xffffff, "flyingflg::%d", flyingFlg);
+	
 }
 
 void Player::PlayerMoveX()
 {
-	//右移動
-	if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || PAD_INPUT::GetLStick().x >= 32000) {
-		rButtonFlg = TRUE;
-		rFlg = TRUE;
+	if (flyingFlg == TRUE) {
+		//右移動
+		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || PAD_INPUT::GetLStick().x >= 32000) {
+			rButtonFlg = TRUE;
+			rFlg = TRUE;
+		}
+		else {
+			rButtonFlg = FALSE;
+			rFlg = FALSE;
+		}
+
+		if (rButtonFlg == TRUE) {
+			if (playerMoveX <= 0) {
+				playerMoveX += 0.01f;
+			}
+
+			playerLocationX += playerMoveX;
+			if ((playerMoveX > 0) || aButtonFlg == TRUE) {
+				playerMoveX += INERTIA;
+			}
+
+			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
+				playerMoveX += 1.0f;
+			}
+
+			if (playerMoveX > 3) {
+				playerMoveX = 3;
+			}
+		}
+
+		//左移動
+		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_LEFT) || PAD_INPUT::GetLStick().x <= -32000) {
+			lButtonFlg = TRUE;
+		}
+		else {
+			lButtonFlg = FALSE;
+		}
+
+		if (lButtonFlg == TRUE) {
+			if (playerMoveX >= 0) {
+				playerMoveX -= 0.01f;
+			}
+
+			playerLocationX += playerMoveX;
+			if ((playerMoveX < 0) || aButtonFlg == TRUE) {
+				playerMoveX -= INERTIA;
+			}
+
+			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
+				playerMoveX -= 1.0f;
+			}
+
+			if (playerMoveX < -3) {
+				playerMoveX = -3;
+			}
+		}
+
+		//立ち止まり
+		if (rButtonFlg == FALSE && lButtonFlg == FALSE) {
+
+			if (playerMoveX > -0.0001f && playerMoveX < 0.0001f) {
+				playerMoveX = 0;
+			}
+
+			if (playerMoveX > 0) {
+				playerMoveX -= 0.01f;
+			}
+			else if (playerMoveX < 0) {
+				playerMoveX += 0.01f;
+			}
+
+			playerLocationX += playerMoveX;
+		}
 	}
-	else {
-		rButtonFlg = FALSE;
-		rFlg = FALSE;
-	}
-
-	if (rButtonFlg == TRUE) {
-		if (playerMoveX <= 0) {
-			playerMoveX += 0.01f;
+	else if (flyingFlg == FALSE) {
+		//右移動
+		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || PAD_INPUT::GetLStick().x >= 32000) {
+			rButtonFlg = TRUE;
+			rFlg = TRUE;
+		}
+		else {
+			rButtonFlg = FALSE;
+			rFlg = FALSE;
 		}
 
-		playerLocationX += playerMoveX;
-		if ((playerMoveX > 0) || aButtonFlg == TRUE) {
-			playerMoveX += INERTIA;
+		if (rButtonFlg == TRUE) {
+			if (playerMoveX <= 0) {
+				playerMoveX += 0.1f;
+			}
+
+			playerLocationX += playerMoveX;
+			if ((playerMoveX > 0) || aButtonFlg == TRUE) {
+				playerMoveX += INERTIA;
+			}
+
+			if (playerMoveX > 3) {
+				playerMoveX = 3;
+			}
 		}
 
-		if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
-			playerMoveX += 1.0f;
+		//左移動
+		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_LEFT) || PAD_INPUT::GetLStick().x <= -32000) {
+			lButtonFlg = TRUE;
+		}
+		else {
+			lButtonFlg = FALSE;
 		}
 
-		if (playerMoveX > 3) {
-			playerMoveX = 3;
-		}
-	}
+		if (lButtonFlg == TRUE) {
+			if (playerMoveX >= 0) {
+				playerMoveX -= 0.1f;
+			}
 
-	//左移動
-	if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_LEFT) || PAD_INPUT::GetLStick().x <= -32000) {
-		lButtonFlg = TRUE;
-	}
-	else {
-		lButtonFlg = FALSE;
-	}
+			playerLocationX += playerMoveX;
+			if ((playerMoveX < 0) || aButtonFlg == TRUE) {
+				playerMoveX -= INERTIA;
+			}
 
-	if (lButtonFlg == TRUE) {
-		if (playerMoveX >= 0) {
-			playerMoveX -= 0.01f;
+
+			if (playerMoveX < -3) {
+				playerMoveX = -3;
+			}
 		}
 
-		playerLocationX += playerMoveX;
-		if ((playerMoveX < 0 ) || aButtonFlg == TRUE) {
-			playerMoveX -= INERTIA;
+		//立ち止まり
+		if (rButtonFlg == FALSE && lButtonFlg == FALSE) {
+
+			if (playerMoveX > -0.1f && playerMoveX < 0.1f) {
+				playerMoveX = 0;
+			}
+
+			if (playerMoveX > 0) {
+				playerMoveX -= 0.1f;
+			}
+			else if (playerMoveX < 0) {
+				playerMoveX += 0.1f;
+			}
+
+			playerLocationX += playerMoveX;
 		}
 
-		if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
-			playerMoveX -= 1.0f;
+		//飛び立ち
+		if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
+			flyingFlg = TRUE;
+			aButtonFlg = TRUE;
+			playerLocationY -= 10;
 		}
-
-		if (playerMoveX < -3) {
-			playerMoveX = -3;
-		}
-	}
-
-	//立ち止まり
-	if (rButtonFlg == FALSE && lButtonFlg == FALSE) {
-
-		if (playerMoveX > -0.0001f && playerMoveX < 0.0001f) {
-			playerMoveX = 0;
-		}
-
-		if (playerMoveX > 0) {
-			playerMoveX -= 0.01f;
-		}
-		else if (playerMoveX < 0) {
-			playerMoveX += 0.01f;
-		}
-
-		playerLocationX += playerMoveX;
 	}
 }
 
@@ -150,14 +220,16 @@ void Player::PlayerMoveY()
 {
 	//Aボタンが押されたか
 	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
-		aButtonFlg = TRUE;
-		if (count < 12) {
+		if (interval % 10 == 0) {
+			aButtonFlg = TRUE;
+		}
+		if (count < 21 && interval % 10 == 0) {
 			count += 3;
-			playerMoveY += 1;
+			playerMoveY = 2;
 		}
 	}
 	//重力と上昇
-	if ((aButtonFlg == TRUE && moveFpsCountY < count) && reboundFlg == FALSE) {//上昇	  ふわふわ感を出すために10フレーム上がり続ける
+	if ((aButtonFlg == TRUE && moveFpsCountY < count) && reboundFlgY == FALSE) {//上昇	  ふわふわ感を出すために10フレーム上がり続ける
 		if (playerLocationY > 0) {
 			playerLocationY -= playerMoveY;
 			moveFpsCountY++;
@@ -165,12 +237,12 @@ void Player::PlayerMoveY()
 		}
 		else {
 			rebound = (count * 0.8f);
-			reboundFlg = TRUE;
+			reboundFlgY = TRUE;
 			moveFpsCountY = 0;
 		}
 	}
 	//反発
-	else if (moveFpsCountY < rebound && reboundFlg == TRUE) {
+	else if (moveFpsCountY < rebound && reboundFlgY == TRUE) {
 		moveFpsCountY++;
 		playerLocationY += playerMoveY;
 	}
@@ -180,8 +252,12 @@ void Player::PlayerMoveY()
 			playerLocationY += 1;
 		}
 		fps++;
+		if (++interval > 10) {
+			interval = 10;
+		}
+		
 		aButtonFlg = FALSE;
-		reboundFlg = FALSE;
+		reboundFlgY = FALSE;
 		if (moveFpsCountY >= count) {
 			moveFpsCountY = 0;
 		}
