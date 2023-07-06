@@ -49,5 +49,6 @@ void GameMain::Draw() const
 	player.PlayerDraw();
 	stage.DrawStage();
 	hit.DrawHitBox();
+	enemy.EnemyDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }
