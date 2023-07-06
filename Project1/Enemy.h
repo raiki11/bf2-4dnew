@@ -5,14 +5,14 @@
 class Enemy
 {
 private:
-	float enemyLocationX;
-	float enemyLocationY;
-	float enemyMoveX;
-	float enemyMoveY;
+	float ELocationX;
+	float ELocationY;
+	float EMoveX;
+	float EMoveY;
 	int time;
 	int fpscount;
 	int i;
-	int imgcount;
+	int Flag;
 
 	int img[24];
 	

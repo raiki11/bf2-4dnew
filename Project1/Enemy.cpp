@@ -3,14 +3,14 @@
 
 Enemy::Enemy()
 {
-	enemyLocationX = 300;
-	enemyLocationY = 240;
-	enemyMoveX = 0;
-	enemyMoveY = 0;
+	ELocationX = 320;
+	ELocationY = 230;
+	EMoveX = 0;
+	EMoveY = 0;
 	time = 0;
 	fpscount = 0;
-	imgcount = 0;
 	i = 0;
+	Flag = FALSE;
 
 	LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 24, 8, 3, 64, 64, img); // 画像の分割読み込み
 
@@ -31,10 +31,10 @@ void Enemy::EnemyUpdate(Player P)
 		EnemyMoveX(P);
 	}
 
-	/*回避行動の残骸
-	if (enemyLocationX == P.GetPlayerLocationX() && enemyLocationY <= P.GetPlayerLocationY()) {
-		enemyMoveX -= 0.01f;
-	}*/
+
+
+	
+	
 
 
 	
@@ -45,11 +45,12 @@ void Enemy::EnemyUpdate(Player P)
 void Enemy::EnemyDraw() const
 {
 	/*DrawCircle(enemyLocationX, enemyLocationY, 4, 0x00ff00, TRUE);*/
-	DrawGraph(enemyLocationX, enemyLocationY, img[i], TRUE);
+	/*DrawGraph(enemyLocationX, enemyLocationY, img[i], TRUE);*/
+	DrawRotaGraph(ELocationX, ELocationY, 1.0f,0,img[i], TRUE, Flag);
 
 
 	//デバッグ用
-	DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", enemyLocationX);
+	DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
 	DrawFormatString(0, 160, 0xffffff, "time::%d", time);
 	DrawFormatString(0, 175, 0xffffff, "i::%d", i);
 
@@ -58,32 +59,45 @@ void Enemy::EnemyDraw() const
 
 void Enemy::EnemyMoveX(Player P)
 {
-	if (enemyLocationX > 640) {
-		enemyLocationX = 0;
-	}
-	if (enemyLocationX < 0) {
-		enemyLocationX = 640;
-	}
+	/*if (ELocationX == P.GetPlayerLocationX() && ELocationY <= P.GetPlayerLocationY()) {
+		if (Flag == TRUE) {
+			EMoveX -= 0.01f;
+		}
+		else
+		{
+			EMoveX += 0.01f;
+		}
 
-	if (enemyMoveX > 1) {
-		enemyMoveX = 1;
+	}*/
+
+	if (ELocationX > 640) {
+		ELocationX = 0;
 	}
-
-	if (enemyLocationX <= P.GetPlayerLocationX()) {
-		enemyMoveX += 0.01f;
-
-	}
-	else if (enemyLocationX >= P.GetPlayerLocationX()) {
-		enemyMoveX -= 0.01f;
-
+	if (ELocationX < 0) {
+		ELocationX = 640;
 	}
 
-	if (enemyMoveX < -1) {
-		enemyMoveX = -1;
+	if (EMoveX > 1) {
+		EMoveX = 1;
+	}
+
+	if (ELocationX <= P.GetPlayerLocationX()) {
+		EMoveX += 0.01f;
+		Flag = TRUE;
+
+	}
+	else if (ELocationX >= P.GetPlayerLocationX()) {
+		EMoveX -= 0.01f;
+		Flag = FALSE;
+
+	}
+
+	if (EMoveX < -1) {
+		EMoveX = -1;
 	}
 
 	
-	enemyLocationX += enemyMoveX;
+	ELocationX += EMoveX;
 }
 
 void Enemy::EAnimation()

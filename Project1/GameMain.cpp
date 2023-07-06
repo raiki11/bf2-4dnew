@@ -47,4 +47,6 @@ void GameMain::Draw() const
 	stage.DrawStage();
 	
 	enemy.EnemyDraw();
+
+	player.PlayerDraw();
 }
