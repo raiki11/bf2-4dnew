@@ -38,4 +38,8 @@ void Stage::DrawStage()const{
 
 	//雲表示
 	DrawGraph(321, 87,cloud,TRUE);
+
+
+	//デバッグ
+	//DrawFormatString(100, 0, 0xffffff, "%d", StageXY[0][0][1]);
 }

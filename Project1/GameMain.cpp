@@ -6,7 +6,7 @@
 GameMain::GameMain()
 {
 	PauseFlg = FALSE;
-
+	a = 0;
 }
 
 GameMain::~GameMain()
@@ -28,14 +28,17 @@ AbstractScene* GameMain::Update()
 
 	player.PlayerUpdate();
 	enemy.EnemyUpdate(player);
+	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
+		player.SetFlyingFlg(FALSE);
+	}
+	else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
+		player.SetFlyingFlg(TRUE);
+	}
 	return this;
 }
 
 void GameMain::Draw() const
 {
-
-	
-
 	if (PauseFlg == FALSE) {
 		DrawFormatString(0, 0, 0xffffff, "Pause");
 	}
@@ -43,10 +46,8 @@ void GameMain::Draw() const
 	{ 
 		DrawFormatString(0, 0, 0xffffff, "ÉQÅ[ÉÄÉÅÉCÉì"); 
 	}
-
-	stage.DrawStage();
-	
-	enemy.EnemyDraw();
-
 	player.PlayerDraw();
+	stage.DrawStage();
+	hit.DrawHitBox();
+	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }
