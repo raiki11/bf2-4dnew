@@ -33,7 +33,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	try // シーンを選ぶとそこからスタートする（最終的にはTitleを入れる）
 	{
-		sceneMng = new SceneManager((AbstractScene*)new Fish());
+		sceneMng = new SceneManager((AbstractScene*)new GameMain());
 
 	}
 	catch (const char* err)

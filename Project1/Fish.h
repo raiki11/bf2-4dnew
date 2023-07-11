@@ -1,11 +1,13 @@
 #pragma once
 #include<DxLib.h>
-#include "AbstractScene.h"
 
-class Fish : public AbstractScene {
+class Fish {
 private:
-
+	
 public:
+
+	/*Player player;
+	Enemy enemy;*/
 
 	// コンストラクタ
 	Fish();
@@ -13,14 +15,16 @@ public:
 	// デストラクタ
 	~Fish();
 
-	AbstractScene* Update() override;
+	void FishUpdate();
 
-	void Draw() const override;
+	void FishDraw() const;
 
-	//int FishAppearance(); // サカナの出現
+	int FishProbability();  // サカナの出現確率の関数
 
 	int sakana;
 	int FishImg[6];
 
+	int FishX = 320;
+	int FishY = 420;
 	
 };

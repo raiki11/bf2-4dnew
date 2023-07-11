@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"PadInput.h"
 #include "Stage.h"
+#include "Fish.h"
 
 GameMain::GameMain()
 {
@@ -28,12 +29,17 @@ AbstractScene* GameMain::Update()
 
 	player.PlayerUpdate();
 	enemy.EnemyUpdate(player);
+	fish.FishUpdate();
 	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
 		player.SetFlyingFlg(FALSE);
 	}
 	else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
 		player.SetFlyingFlg(TRUE);
 	}
+
+	/*if (160 <= player.PlayerMoveX() <= 480 && 419 <= player.PlayerMoveY() <= 478) {
+
+	}*/
 	return this;
 }
 
@@ -49,5 +55,6 @@ void GameMain::Draw() const
 	player.PlayerDraw();
 	stage.DrawStage();
 	hit.DrawHitBox();
+	fish.FishDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }
