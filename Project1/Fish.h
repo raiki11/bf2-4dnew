@@ -1,4 +1,5 @@
 #pragma once
+#include<DxLib.h>
 #include "AbstractScene.h"
 
 class Fish : public AbstractScene {
@@ -16,6 +17,10 @@ public:
 
 	void Draw() const override;
 
+	//int FishAppearance(); // サカナの出現
+
 	int sakana;
-	int FishImg;
+	int FishImg[6];
+
+	
 };
