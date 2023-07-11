@@ -1,8 +1,10 @@
 #pragma once
 #include "AbstractScene.h"
 #include "DxLib.h"
+#include "Stage.h"
 #include "Player.h"
-#include"Enemy.h"
+#include "Enemy.h"
+#include "HitBox.h"
 
 // シーンマネージャークラス
 // 各シーンの切り替えを管理する
@@ -11,10 +13,15 @@ class GameMain :
     public AbstractScene
 {
 private:
-
+    //ゲームメインで使う変数の宣言
+    Stage stage;
+    //ゲームメインで使う変数の宣言
+    Player player;
+    Enemy enemy;
+    HitBox hit;
     bool PauseFlg;            // ポーズ
    
-    
+    int a;
 
 public:
 
@@ -29,8 +36,5 @@ public:
 
     //描画に関することを実装
     void Draw() const override;
-private:
-    //ゲームメインで使う変数の宣言
-    Player player;
-    Enemy enemy;
+
 };

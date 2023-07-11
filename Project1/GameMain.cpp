@@ -1,10 +1,12 @@
 #include "GameMain.h"
 #include"DxLib.h"
 #include"PadInput.h"
+#include "Stage.h"
 
 GameMain::GameMain()
 {
 	PauseFlg = FALSE;
+	a = 0;
 }
 
 GameMain::~GameMain()
@@ -26,6 +28,12 @@ AbstractScene* GameMain::Update()
 
 	player.PlayerUpdate();
 	enemy.EnemyUpdate(player);
+	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
+		player.SetFlyingFlg(FALSE);
+	}
+	else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
+		player.SetFlyingFlg(TRUE);
+	}
 	return this;
 }
 
@@ -38,4 +46,9 @@ void GameMain::Draw() const
 	{ 
 		DrawFormatString(0, 0, 0xffffff, "ÉQÅ[ÉÄÉÅÉCÉì"); 
 	}
+	player.PlayerDraw();
+	stage.DrawStage();
+	hit.DrawHitBox();
+	enemy.EnemyDraw();
+	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }
