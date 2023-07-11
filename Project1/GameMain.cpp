@@ -23,7 +23,35 @@ AbstractScene* GameMain::Update()
 	}
 	//ポーズ中でないとき
 	if (PauseFlg == FALSE) {
-		//
+		// ゲームメイン処理
+		player.PlayerUpdate();
+		enemy.EnemyUpdate(player);
+		if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
+			player.SetFlyingFlg(FALSE);
+		}
+		else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
+			player.SetFlyingFlg(TRUE);
+		}
+
+		if (hit.PlayerAndStageTop(player, stage) == TRUE) {
+			player.SetReboundFlgStageY(TRUE);
+		}
+		else if (hit.PlayerAndStageTop(player, stage) == FALSE) {
+			player.SetReboundFlgStageY(FALSE);
+		}
+
+		if (hit.PlayerAndStageRight(player, stage) == TRUE) {
+			player.SetReboundFlgStageX(TRUE);
+		}
+		else if (hit.PlayerAndStageRight(player, stage) == FALSE) {
+			//if (player.GetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
+			//	player.SetReboundFlgStageX(TRUE);
+			//}
+			//else {
+			//	player.SetReboundFlgStageX(FALSE);
+			//}
+			player.SetReboundFlgStageX(FALSE);
+		}
 	}
 
 	player.PlayerUpdate();
