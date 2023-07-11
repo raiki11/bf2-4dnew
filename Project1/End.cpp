@@ -17,5 +17,5 @@ AbstractScene* End::Update()
 
 void End::Draw() const
 {
-    DrawFormatString(0, 0, 0xffffff, "ƒQ[ƒ€ƒƒCƒ“");
+    DrawFormatString(250, 250, 0xffffff, "GameOver");
 }

@@ -31,7 +31,7 @@ AbstractScene* GameMain::Update()
 
 void GameMain::Draw() const
 {
-	if (PauseFlg == FALSE) {
+	if (PauseFlg == TRUE) {
 		DrawFormatString(0, 0, 0xffffff, "Pause");
 	}
 	else 
