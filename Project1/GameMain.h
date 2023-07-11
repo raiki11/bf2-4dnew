@@ -20,8 +20,9 @@ private:
     Enemy enemy;
     HitBox hit;
     bool PauseFlg;            // É|Å[ÉY
-   
+    
     int a;
+    int reboundFlg;
 
 public:
 

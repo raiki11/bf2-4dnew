@@ -44,6 +44,7 @@ public:
 
 	int GetReboundFlgStageX() { return reboundFlgStageX; }
 	int GetReboundFrameCntX() { return reboundFrameCntX; }
+	float GetPlayerMoveX() { return playerMoveX; }
 
 	void SetFlyingFlg(int f)
 	{

@@ -148,18 +148,21 @@ void Player::PlayerMoveX()
 
 			//playerLocationX += playerMoveX;
 		}
+
+		//リバウンド
 		if (reboundFlgStageX == TRUE) {
 			if (reboundFrameCntX == 0) {
 				playerMoveX = -(playerMoveX * 0.8f);
 			}
-			playerLocationX += playerMoveX;
+			
 			reboundFrameCntX = 1;
 			
 		}
 		else {
-			playerLocationX += playerMoveX;
+			//playerLocationX += playerMoveX;
 		}
 		
+		playerLocationX += playerMoveX;
 	}
 	else if (flyingFlg == FALSE) {
 
@@ -255,7 +258,7 @@ void Player::PlayerMoveY()
 	}
 	//重力と上昇
 	if ((flyButtonFlg == TRUE && moveFpsCountY < count) && reboundFlgY == FALSE) {//上昇	  ふわふわ感を出すために10フレーム上がり続ける
-		if (playerLocationY > 0 && reboundFlgStageY == FALSE) {
+		if (playerLocationY > 25 && reboundFlgStageY == FALSE) {
 			playerLocationY -= playerMoveY;
 			moveFpsCountY++;
 			fps = 0;
