@@ -23,7 +23,7 @@ AbstractScene* GameMain::Update()
 	}
 	//ƒ|[ƒY’†‚Å‚È‚¢‚Æ‚«
 	if (PauseFlg == FALSE) {
-		//
+		
 	}
 
 	player.PlayerUpdate();
