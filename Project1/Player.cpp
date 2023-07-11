@@ -17,6 +17,9 @@ Player::Player()
 	flyingFlg = 1;
 	LoadDivGraph("images/Player/Player_Animation.png", 24, 8, 4, 64, 64, playerImg);
 	interval = 5;
+	reboundFlgStageY = FALSE;
+	reboundFlgStageX = FALSE;
+	reboundFrameCntX = 0;
 }
 
 Player::~Player()
@@ -61,6 +64,8 @@ void Player::PlayerDraw() const
 	DrawFormatString(0, 115, 0xffffff, "playerMoveX::%f", playerMoveX);
 	DrawFormatString(0, 130, 0xffffff, "playerLocatoinX::%f", playerLocationX);
 	DrawFormatString(0, 145, 0xffffff, "flyingflg::%d", flyingFlg);
+	DrawFormatString(0, 160, 0xffffff, "reboundflgx::%d", reboundFlgStageX);
+	DrawFormatString(0, 175, 0xffffff, "reboundcntx::%d", reboundFrameCntX);
 	
 }
 
@@ -71,6 +76,8 @@ void Player::PlayerMoveX()
 		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || PAD_INPUT::GetLStick().x >= 32000) {
 			rButtonFlg = TRUE;
 			rFlg = TRUE;
+			reboundFrameCntX = 0;
+			//reboundFlgStageX = FALSE;
 		}
 		else {
 			rButtonFlg = FALSE;
@@ -82,7 +89,7 @@ void Player::PlayerMoveX()
 				playerMoveX += 0.01f;
 			}
 
-			playerLocationX += playerMoveX;
+			//playerLocationX += playerMoveX;
 			if ((playerMoveX > 0) || flyButtonFlg == TRUE) {
 				playerMoveX += INERTIA;
 			}
@@ -99,6 +106,8 @@ void Player::PlayerMoveX()
 		//左移動
 		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_LEFT) || PAD_INPUT::GetLStick().x <= -32000) {
 			lButtonFlg = TRUE;
+			reboundFrameCntX = 0;
+			//reboundFlgStageX = FALSE;
 		}
 		else {
 			lButtonFlg = FALSE;
@@ -109,7 +118,7 @@ void Player::PlayerMoveX()
 				playerMoveX -= 0.01f;
 			}
 
-			playerLocationX += playerMoveX;
+			//playerLocationX += playerMoveX;
 			if ((playerMoveX < 0) || flyButtonFlg == TRUE) {
 				playerMoveX -= INERTIA;
 			}
@@ -137,10 +146,26 @@ void Player::PlayerMoveX()
 				playerMoveX += 0.01f;
 			}
 
+			//playerLocationX += playerMoveX;
+		}
+		if (reboundFlgStageX == TRUE) {
+			if (reboundFrameCntX == 0) {
+				playerMoveX = -(playerMoveX * 0.8f);
+			}
+			playerLocationX += playerMoveX;
+			reboundFrameCntX = 1;
+			
+		}
+		else {
 			playerLocationX += playerMoveX;
 		}
+		
 	}
 	else if (flyingFlg == FALSE) {
+
+		reboundFrameCntX = 0;
+		reboundFlgStageX = FALSE;
+
 		//右移動
 		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || PAD_INPUT::GetLStick().x >= 32000) {
 			rButtonFlg = TRUE;
@@ -230,7 +255,7 @@ void Player::PlayerMoveY()
 	}
 	//重力と上昇
 	if ((flyButtonFlg == TRUE && moveFpsCountY < count) && reboundFlgY == FALSE) {//上昇	  ふわふわ感を出すために10フレーム上がり続ける
-		if (playerLocationY > 0) {
+		if (playerLocationY > 0 && reboundFlgStageY == FALSE) {
 			playerLocationY -= playerMoveY;
 			moveFpsCountY++;
 			fps = 0;

@@ -34,6 +34,27 @@ AbstractScene* GameMain::Update()
 	else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
 		player.SetFlyingFlg(TRUE);
 	}
+
+	if (hit.PlayerAndStageTop(player, stage) == TRUE) {
+		player.SetReboundFlgStageY(TRUE);
+	}
+	else if (hit.PlayerAndStageTop(player, stage) == FALSE) {
+		player.SetReboundFlgStageY(FALSE);
+	}
+
+	if (hit.PlayerAndStageRight(player, stage) == TRUE) {
+		player.SetReboundFlgStageX(TRUE);
+	}
+	else if (hit.PlayerAndStageRight(player, stage) == FALSE) {
+		//if (player.GetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
+		//	player.SetReboundFlgStageX(TRUE);
+		//}
+		//else {
+		//	player.SetReboundFlgStageX(FALSE);
+		//}
+		player.SetReboundFlgStageX(FALSE);
+	}
+
 	return this;
 }
 
