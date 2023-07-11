@@ -23,17 +23,18 @@ AbstractScene* GameMain::Update()
 	}
 	//ポーズ中でないとき
 	if (PauseFlg == FALSE) {
-		//
+		//ゲームメイン処理
+		player.PlayerUpdate();
+		enemy.EnemyUpdate(player);
+		if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
+			player.SetFlyingFlg(FALSE);
+		}
+		else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
+			player.SetFlyingFlg(TRUE);
+		}
 	}
 
-	player.PlayerUpdate();
-	enemy.EnemyUpdate(player);
-	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
-		player.SetFlyingFlg(FALSE);
-	}
-	else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
-		player.SetFlyingFlg(TRUE);
-	}
+	
 	return this;
 }
 
@@ -41,14 +42,19 @@ void GameMain::Draw() const
 {
 	if (PauseFlg == TRUE) {
 		DrawFormatString(0, 0, 0xffffff, "Pause");
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 0);
 	}
 	else 
 	{ 
 		DrawFormatString(0, 0, 0xffffff, "ゲームメイン"); 
 	}
 	player.PlayerDraw();
-	stage.DrawStage();
-	hit.DrawHitBox();
 	enemy.EnemyDraw();
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	stage.DrawStage();
+	UI.DrawUI();
+	hit.DrawHitBox();
+	
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }
