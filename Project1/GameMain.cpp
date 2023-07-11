@@ -37,6 +37,27 @@ AbstractScene* GameMain::Update()
 		player.SetFlyingFlg(TRUE);
 	}
 
+	if (hit.PlayerAndStageTop(player, stage) == TRUE) {
+		player.SetReboundFlgStageY(TRUE);
+	}
+	else if (hit.PlayerAndStageTop(player, stage) == FALSE) {
+		player.SetReboundFlgStageY(FALSE);
+	}
+
+	if (hit.PlayerAndStageRight(player, stage) == TRUE) {
+		player.SetReboundFlgStageX(TRUE);
+	}
+	else if (hit.PlayerAndStageRight(player, stage) == FALSE) {
+		//if (player.GetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
+		//	player.SetReboundFlgStageX(TRUE);
+		//}
+		//else {
+		//	player.SetReboundFlgStageX(FALSE);
+		//}
+		player.SetReboundFlgStageX(FALSE);
+	}
+
+
 	/*if (160 <= player.PlayerMoveX() <= 480 && 419 <= player.PlayerMoveY() <= 478) {
 
 	}*/
@@ -45,7 +66,7 @@ AbstractScene* GameMain::Update()
 
 void GameMain::Draw() const
 {
-	if (PauseFlg == FALSE) {
+	if (PauseFlg == TRUE) {
 		DrawFormatString(0, 0, 0xffffff, "Pause");
 	}
 	else 
@@ -55,6 +76,7 @@ void GameMain::Draw() const
 	player.PlayerDraw();
 	stage.DrawStage();
 	hit.DrawHitBox();
+	enemy.EnemyDraw();
 	fish.FishDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }

@@ -50,9 +50,9 @@ void Enemy::EnemyDraw() const
 
 
 	//デバッグ用
-	DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
-	DrawFormatString(0, 160, 0xffffff, "time::%d", time);
-	DrawFormatString(0, 175, 0xffffff, "i::%d", i);
+	//DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
+	//DrawFormatString(0, 160, 0xffffff, "time::%d", time);
+	//DrawFormatString(0, 175, 0xffffff, "i::%d", i);
 
 
 }
