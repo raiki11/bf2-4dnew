@@ -62,14 +62,19 @@ void GameMain::Draw() const
 {
 	if (PauseFlg == TRUE) {
 		DrawFormatString(0, 0, 0xffffff, "Pause");
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 0);
 	}
 	else 
 	{ 
 		DrawFormatString(0, 0, 0xffffff, "ÉQÅ[ÉÄÉÅÉCÉì"); 
 	}
 	player.PlayerDraw();
-	stage.DrawStage();
-	hit.DrawHitBox();
 	enemy.EnemyDraw();
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	stage.DrawStage();
+	UI.DrawUI();
+	hit.DrawHitBox();
+	
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }
