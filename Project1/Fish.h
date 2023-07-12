@@ -1,5 +1,6 @@
 #pragma once
 #include<DxLib.h>
+#include"Player.h"
 
 class Fish {
 private:
@@ -15,9 +16,9 @@ public:
 	// デストラクタ
 	~Fish();
 
-	void FishUpdate();
+	void FishUpdate(Player p);
 
-	void FishDraw() const;
+	void FishDraw(Player p) const;
 
 	int FishProbability();  // サカナの出現確率の関数
 
@@ -26,5 +27,5 @@ public:
 
 	int FishX = 320;
 	int FishY = 420;
-	
+	int FishFlg = 0;
 };

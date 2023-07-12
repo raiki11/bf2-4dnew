@@ -29,7 +29,7 @@ AbstractScene* GameMain::Update()
 
 	player.PlayerUpdate();
 	enemy.EnemyUpdate(player);
-	fish.FishUpdate();
+	fish.FishUpdate(player);
 	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
 		player.SetFlyingFlg(FALSE);
 	}
@@ -57,10 +57,13 @@ AbstractScene* GameMain::Update()
 		player.SetReboundFlgStageX(FALSE);
 	}
 
+	//if (160 <= player.GetPlayerLocationX() <= 480 && 419 <= player.GetPlayerLocationY() <= 478) { // プレイヤーがサカナの範囲に入った時
+	//	if (fish.FishProbability() == TRUE) { // サカナの確率がTRUEだった時
+	//		/*fish.FishDraw();*/
+	//		/* 処理を書く */
+	//	}
+	//}
 
-	/*if (160 <= player.PlayerMoveX() <= 480 && 419 <= player.PlayerMoveY() <= 478) {
-
-	}*/
 	return this;
 }
 
@@ -77,6 +80,6 @@ void GameMain::Draw() const
 	stage.DrawStage();
 	hit.DrawHitBox();
 	enemy.EnemyDraw();
-	fish.FishDraw();
+	fish.FishDraw(player);
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }
