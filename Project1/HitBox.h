@@ -15,5 +15,8 @@ public:
 	void DrawHitBox() const;
 	
 	int PlayerAndStageUnder(Player p, Stage s);
+	int PlayerAndStageTop(Player p, Stage s);
+	int PlayerAndStageRight(Player p, Stage s);
+	int PlayerAndStageLeft(Player p, Stage s);
 };
 

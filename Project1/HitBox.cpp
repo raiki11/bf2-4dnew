@@ -16,7 +16,7 @@ void HitBox::UpdetaHitBox(Player p, Stage s)
 
 void HitBox::DrawHitBox() const
 {
-	DrawBox(underPx0, underPy0, underPx1, underPy1, 0xff0000, TRUE);
+	DrawBox(px0, py0, px1, py1, 0xff0000, TRUE);
 	DrawFormatString(200, 0, 0xffffff, "x0:%d", underPx0);
 	DrawFormatString(200, 20, 0xffffff, "y0:%d", underPy0);
 	DrawFormatString(200, 40, 0xffffff, "x1:%d", underPx1);
@@ -25,17 +25,58 @@ void HitBox::DrawHitBox() const
 
 int HitBox::PlayerAndStageUnder(Player p, Stage s)
 {
-	underPx0 = p.GetPlayerLocationX() - 32;
-	underPy0 = p.GetPlayerLocationY() + 32;
-	underPx1 = p.GetPlayerLocationX() + 32;
-	underPy1 = p.GetPlayerLocationY() + 40;		//óví≤êÆ
+	px0 = p.GetPlayerLocationX() - 32;
+	py0 = p.GetPlayerLocationY() + 32;
+	px1 = p.GetPlayerLocationX() + 32;
+	py1 = p.GetPlayerLocationY() + 40;		//óví≤êÆ
 
 	for (int i = 0; i < 6; i += 2) {
-		if (s.GetStageXY(0, i, 0) <= underPx1 && s.GetStageXY(0, i + 1, 0) >= underPx0 &&
-			s.GetStageXY(0, i, 1) <= underPy1 && s.GetStageXY(0, i + 1, 1) >= underPy0) {
+		if (s.GetStageXY(0, i, 0) <= px1 && s.GetStageXY(0, i + 1, 0) >= px0 &&
+			s.GetStageXY(0, i, 1) <= py1 && s.GetStageXY(0, i + 1, 1) >= py0) {
 
 			return TRUE;
 		}
 	}
 	return FALSE;
+}
+
+int HitBox::PlayerAndStageTop(Player p, Stage s)
+{
+	px0 = p.GetPlayerLocationX() - 32;
+	py0 = p.GetPlayerLocationY() - 32;
+	px1 = p.GetPlayerLocationX() + 32;
+	py1 = p.GetPlayerLocationY() - 40;
+
+	for (int i = 0; i < 6; i += 2) {
+		if (s.GetStageXY(0, i, 0) <= px1 && s.GetStageXY(0, i + 1, 0) >= px0 &&
+			s.GetStageXY(0, i, 1) <= py1 && s.GetStageXY(0, i + 1, 1) >= py0) {
+
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+int HitBox::PlayerAndStageRight(Player p, Stage s)
+{
+	px0 = p.GetPlayerLocationX() + 32;
+	py0 = p.GetPlayerLocationY() - 20;
+	px1 = p.GetPlayerLocationX() + 40;
+	py1 = p.GetPlayerLocationY() + 30;
+
+	for (int i = 0; i < 6; i += 2) {
+		if (s.GetStageXY(0, i, 0) <= px1 && s.GetStageXY(0, i + 1, 0) >= px0 &&
+			s.GetStageXY(0, i, 1) <= py1 && s.GetStageXY(0, i + 1, 1) >= py0) {
+
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+int HitBox::PlayerAndStageLeft(Player p, Stage s)
+{
+	return 0;
 }
