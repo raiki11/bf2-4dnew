@@ -30,11 +30,12 @@ Stage::~Stage() {
 
 
 void Stage::DrawStage()const{
-	//Stage1();
+
+	Stage1();
 	//Stage2();
 	//Stage3();
 	//Stage4();
-	Stage5();
+	//Stage5();
 }
 
 void Stage::Stage1()const {
