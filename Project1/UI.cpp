@@ -2,13 +2,16 @@
 #include "DxLib.h"
 UI::UI()
 {
+	LoadDivGraph("images/UI/UI_NumAnimation.png", 10, 10, 1, 32, 32, Num); // 画像の分割読み込み
 	score= LoadGraph("images/UI/UI_Score.png");
 	top= LoadGraph("images/UI/UI_HiScore.png");
 	phase= LoadGraph("images/UI/UI_Phase.png");
 	stock= LoadGraph("images/UI/UI_Stock.png");
-	p_score = 0;
+	p_score = 3;
 	p_top = 0;
 	p_phase = 0;
+	i = 0;
+	Flag = FALSE;	
 }
 
 UI::~UI()
@@ -17,12 +20,26 @@ UI::~UI()
 
 void UI::DrawUI() const
 {
-	DrawGraph(50,30 , score, TRUE);
+	// 現在のスコア
+	DrawGraph(50, 30, score, TRUE);
+	for (int a = 1; a<=6; a++) {
+		DrawGraph((15*a)+60, 25, Num[i], TRUE);
+	}
+	
+	// ハイスコア
 	DrawGraph(220, 30, top, TRUE);
-	DrawGraph(220, 50, phase, TRUE);
+	for (int a = 1; a <= 6; a++) {
+		DrawGraph((15 * a) + 240, 25, Num[i], TRUE);
+	}
+
+	// ステージ数
+	DrawGraph(220, 60, phase, TRUE);
+	for (int a = 1; a <= 2; a++) {
+		DrawGraph((15 * a) + 320, 50, Num[i], TRUE);
+	}
 	DrawGraph(110, 50, stock, TRUE);
 
-	DrawFormatString(80, 30, 0xffffff, "%06d", p_score);
-	DrawFormatString(270, 30, 0xffffff, "%06d", p_top);
-	DrawFormatString(350,50, 0xffffff, "%02d", p_phase);
+	//DrawFormatString(80, 30, 0xffffff, "%06d", p_score);
+	//DrawFormatString(270, 30, 0xffffff, "%06d", p_top);
+	//DrawFormatString(350,50, 0xffffff, "%02d", p_phase);
 }

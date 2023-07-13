@@ -7,12 +7,17 @@ private:
 	int top;
 	int phase;
 	int stock;
+	int Num[10];
+	int Flag;
+	int i;
+	
 	// ÉXÉRÉA
 	int p_score;
 	int p_top;
 	int p_phase;
-public:
 
+public:
+	
 	UI();
 	~UI();
 
