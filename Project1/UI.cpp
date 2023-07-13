@@ -45,7 +45,7 @@ void UI::DrawUI() const
 			DrawGraph((15 * a) + 320, 50, Num[i], TRUE);
 		}
 	}
-
+	
 	
 	
 	DrawGraph(110, 50, stock, TRUE);

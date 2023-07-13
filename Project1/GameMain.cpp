@@ -24,7 +24,7 @@ AbstractScene* GameMain::Update()
 	//ポーズ中でないとき
 	if (PauseFlg == FALSE) {
 		// PHASE点滅カウント
-		UI::m_DrawCount += 1;
+		//UI::m_DrawCount += 1;
 		// ゲームメイン処理
 		player.PlayerUpdate();
 		enemy.EnemyUpdate(player);

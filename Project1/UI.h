@@ -16,6 +16,7 @@ private:
 	int p_score;
 	int p_top;
 	int p_phase;
+	 
 
 	
 public:
