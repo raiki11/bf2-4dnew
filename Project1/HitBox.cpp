@@ -61,7 +61,7 @@ int HitBox::PlayerAndStageTop(Player p, Stage s)
 int HitBox::PlayerAndStageRight(Player p, Stage s)
 {
 	px0 = p.GetPlayerLocationX() + 20;
-	py0 = p.GetPlayerLocationY() - 20;
+	py0 = p.GetPlayerLocationY() - 15;
 	px1 = p.GetPlayerLocationX() + 20;
 	py1 = p.GetPlayerLocationY() + 25;
 
@@ -81,7 +81,7 @@ int HitBox::PlayerAndStageRight(Player p, Stage s)
 int HitBox::PlayerAndStageLeft(Player p, Stage s)
 {
 	px0 = p.GetPlayerLocationX() - 20;
-	py0 = p.GetPlayerLocationY() - 20;
+	py0 = p.GetPlayerLocationY() - 15;
 	px1 = p.GetPlayerLocationX() - 20;
 	py1 = p.GetPlayerLocationY() + 25;
 
