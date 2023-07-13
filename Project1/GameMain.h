@@ -5,7 +5,9 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "HitBox.h"
+#include "Fish.h"
 
+#include "UI.h"
 // シーンマネージャークラス
 // 各シーンの切り替えを管理する
 
@@ -15,10 +17,12 @@ class GameMain :
 private:
     //ゲームメインで使う変数の宣言
     Stage stage;
+    UI UI;
     //ゲームメインで使う変数の宣言
     Player player;
     Enemy enemy;
     HitBox hit;
+    Fish fish;
     bool PauseFlg;            // ポーズ
     
     int a;

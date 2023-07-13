@@ -66,6 +66,7 @@ void Player::PlayerDraw() const
 	DrawFormatString(0, 55, 0xffffff, "flyButtonFlg::%d", flyButtonFlg);
 	DrawFormatString(0, 70, 0xffffff, "moveFpsCountY::%d", moveFpsCountY);
 	DrawFormatString(0, 85, 0xffffff, "playerMoveY::%f", playerMoveY);
+	/*DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", playerLocationY);*/
 	DrawFormatString(0, 100, 0xffffff, "rebound::%d", rebound);
 	DrawFormatString(0, 115, 0xffffff, "playerMoveY::%f", playerMoveY);
 	DrawFormatString(0, 130, 0xffffff, "playerLocatoinY::%f", playerLocationY);
