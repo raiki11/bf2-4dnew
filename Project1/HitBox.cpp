@@ -75,7 +75,6 @@ int HitBox::PlayerAndStageRight(Player p, Stage s)
 		}
 	}
 	
-
 	return FALSE;
 }
 
