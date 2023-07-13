@@ -19,7 +19,7 @@ Stage::Stage() {
 	St_Sea= LoadGraph("images/Stage/Stage_Sea01.png");
 	cloud = LoadGraph("images/Stage/Stage_Cloud01.png");
 
-	stage1 = LoadGraph("images/StageSample/Stage_4.png");
+	stage1 = LoadGraph("images/StageSample/Stage_5.png");
 
 }
 
@@ -33,7 +33,8 @@ void Stage::DrawStage()const{
 	//Stage1();
 	//Stage2();
 	//Stage3();
-	Stage4();
+	//Stage4();
+	Stage5();
 }
 
 void Stage::Stage1()const {
@@ -133,27 +134,27 @@ DrawGraph(441, 253, cloud, TRUE);
 }
 
 void Stage::Stage4()const {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
-	DrawGraph(0, 0, stage1, TRUE);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
 
 	//左端浮島表示
 	DrawGraph(120, 265, St_Footing6, TRUE);
-	DrawBox(120, 265, 182, 283, 0x00ffff, FALSE);
+	DrawBox(120, 267, 182, 283, 0x00ffff, FALSE);
 
 	//左側浮島表示
 	DrawGraph(240, 300, St_Footing6, TRUE);
+	DrawBox(240, 302, 302, 318, 0x00ffff, FALSE);
 
 	//上側浮島表示
 	DrawGraph(320, 182, St_Footing6, TRUE);
+	DrawBox(320, 184, 382, 200, 0x00ffff, FALSE);
 
 	//下側浮島表示
 	DrawGraph(360, 366, St_Footing6, TRUE);
+	DrawBox(360, 368, 422, 384, 0x00ffff, FALSE);
 
 	//右端浮島表示
-	DrawGraph(460, 285, St_Footing6, TRUE);
-
-
+	DrawGraph(460, 285, St_Footing6, TRUE);	
+	DrawBox(460, 287, 522, 303, 0x00ffff, FALSE);
 
 	//左下の地面表示
 	DrawGraph(0, 414, St_LL, TRUE);
@@ -171,5 +172,41 @@ void Stage::Stage4()const {
 	DrawGraph(160, 85, cloud, TRUE);
 	//雲右表示
 	DrawGraph(480, 152, cloud, TRUE);
+
+}
+
+void Stage::Stage5()const {
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+	DrawGraph(0, 0, stage1, TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	DrawGraph(200, 330, St_Footing6, TRUE);
+
+	DrawGraph(220, 80, St_Footing6, TRUE);
+
+	DrawGraph(380, 335, St_Footing6, TRUE);
+
+	//i字型
+	DrawGraph(100, 200, St_Footing7, TRUE);
+	DrawGraph(260, 168, St_Footing7, TRUE);
+	DrawGraph(500, 150, St_Footing8, TRUE);
+
+	//左下の地面表示
+	DrawGraph(0, 414, St_LL, TRUE);
+	DrawBox(0, 419, 160, 480, 0xff0000, FALSE);
+
+	//右下の地面表示
+	DrawGraph(480, 414, St_LR, TRUE);
+	DrawBox(480, 419, 640, 480, 0xff0000, FALSE);
+
+	//海表示
+	DrawGraph(160, 442, St_Sea, TRUE);
+	DrawBox(160, 419, 480, 478, 0x00ff00, FALSE);
+
+	//雲左表示
+	DrawGraph(80, 85, cloud, TRUE);
+	//雲右表示
+	DrawGraph(360, 121, cloud, TRUE);
 
 }
