@@ -137,6 +137,24 @@ void Stage::Stage4()const {
 	DrawGraph(0, 0, stage1, TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
+	//左端浮島表示
+	DrawGraph(120, 265, St_Footing6, TRUE);
+	DrawBox(120, 265, 182, 283, 0x00ffff, FALSE);
+
+	//左側浮島表示
+	DrawGraph(240, 300, St_Footing6, TRUE);
+
+	//上側浮島表示
+	DrawGraph(320, 182, St_Footing6, TRUE);
+
+	//下側浮島表示
+	DrawGraph(360, 366, St_Footing6, TRUE);
+
+	//右端浮島表示
+	DrawGraph(460, 285, St_Footing6, TRUE);
+
+
+
 	//左下の地面表示
 	DrawGraph(0, 414, St_LL, TRUE);
 	DrawBox(0, 419, 160, 480, 0xff0000, FALSE);
@@ -150,8 +168,8 @@ void Stage::Stage4()const {
 	DrawBox(160, 419, 480, 478, 0x00ff00, FALSE);
 
 	//雲左表示
-	DrawGraph(80, 121, cloud, TRUE);
+	DrawGraph(160, 85, cloud, TRUE);
 	//雲右表示
-	DrawGraph(441, 253, cloud, TRUE);
+	DrawGraph(480, 152, cloud, TRUE);
 
 }
