@@ -1,5 +1,6 @@
 #include<time.h>
 #include "Fish.h"
+#include"DxLib.h"
 
 #define FishAreaX0    160;
 #define FishAreaX1    480;

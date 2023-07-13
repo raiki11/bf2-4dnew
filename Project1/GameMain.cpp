@@ -2,7 +2,6 @@
 #include"DxLib.h"
 #include"PadInput.h"
 #include "Stage.h"
-#include "Fish.h"
 
 GameMain::GameMain()
 {
@@ -56,10 +55,6 @@ AbstractScene* GameMain::Update()
 			//}
 			player.SetReboundFlgStageX(FALSE);
 		}
-	}
-
-	
-
 	return this;
 }
 
