@@ -29,7 +29,7 @@ AbstractScene* GameMain::Update()
 
 	player.PlayerUpdate();
 	enemy.EnemyUpdate(player);
-	fish.FishUpdate(player);
+	fish.FishUpdate(player,enemy);
 	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
 		player.SetFlyingFlg(FALSE);
 	}
