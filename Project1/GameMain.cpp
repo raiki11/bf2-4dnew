@@ -56,12 +56,12 @@ AbstractScene* GameMain::Update()
 			//}
 			player.SetReboundFlgStageX(FALSE);
 		}
+
+		return this;
 	}
 
 	
 
-	return this;
-}
 
 void GameMain::Draw() const
 {

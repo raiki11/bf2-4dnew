@@ -30,7 +30,6 @@ Stage::~Stage() {
 
 
 void Stage::DrawStage()const{
-
 	Stage1();
 	//Stage2();
 	//Stage3();
@@ -211,9 +210,6 @@ void Stage::Stage5()const {
 	DrawGraph(360, 121, cloud, TRUE);
 
 }
-	DrawGraph(321, 87,cloud,TRUE);
-
 
 	//デバッグ
 	//DrawFormatString(100, 0, 0xffffff, "%d", StageXY[0][0][1]);
-}
