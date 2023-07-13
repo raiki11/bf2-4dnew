@@ -1,6 +1,6 @@
 #pragma once
 #include<DxLib.h>
-#include"GameMain.h"
+//#include"GameMain.h"
 #include"Player.h"
 #include"Enemy.h"
 

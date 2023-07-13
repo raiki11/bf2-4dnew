@@ -62,18 +62,18 @@ void Player::PlayerDraw() const
 {
 	DrawRotaGraph(playerLocationX, playerLocationY, 1.0f, 0, playerImg[playerImgNum], TRUE, playerImgReturnFlg);
 	DrawCircle(playerLocationX, playerLocationY, 4, 0xff0000, TRUE);
-	DrawFormatString(0, 40, 0xffffff, "count::%d", count);
-	DrawFormatString(0, 55, 0xffffff, "flyButtonFlg::%d", flyButtonFlg);
-	DrawFormatString(0, 70, 0xffffff, "moveFpsCountY::%d", moveFpsCountY);
-	DrawFormatString(0, 85, 0xffffff, "playerMoveY::%f", playerMoveY);
-	/*DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", playerLocationY);*/
-	DrawFormatString(0, 100, 0xffffff, "rebound::%d", rebound);
-	DrawFormatString(0, 115, 0xffffff, "playerMoveY::%f", playerMoveY);
-	DrawFormatString(0, 130, 0xffffff, "playerLocatoinY::%f", playerLocationY);
-	DrawFormatString(0, 145, 0xffffff, "flyingflg::%d", flyingFlg);
-	DrawFormatString(0, 160, 0xffffff, "reboundflgx::%d", reboundFlgStageX);
-	DrawFormatString(0, 175, 0xffffff, "reboundcntx::%d", reboundFrameCntX);
-	DrawFormatString(0, 190, 0xffffff, "interval::%d", interval);
+	//DrawFormatString(0, 40, 0xffffff, "count::%d", count);
+	//DrawFormatString(0, 55, 0xffffff, "flyButtonFlg::%d", flyButtonFlg);
+	//DrawFormatString(0, 70, 0xffffff, "moveFpsCountY::%d", moveFpsCountY);
+	//DrawFormatString(0, 85, 0xffffff, "playerMoveY::%f", playerMoveY);
+	///*DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", playerLocationY);*/
+	//DrawFormatString(0, 100, 0xffffff, "rebound::%d", rebound);
+	//DrawFormatString(0, 115, 0xffffff, "playerMoveY::%f", playerMoveY);
+	//DrawFormatString(0, 130, 0xffffff, "playerLocatoinY::%f", playerLocationY);
+	//DrawFormatString(0, 145, 0xffffff, "flyingflg::%d", flyingFlg);
+	//DrawFormatString(0, 160, 0xffffff, "reboundflgx::%d", reboundFlgStageX);
+	//DrawFormatString(0, 175, 0xffffff, "reboundcntx::%d", reboundFrameCntX);
+	//DrawFormatString(0, 190, 0xffffff, "interval::%d", interval);
 	
 }
 

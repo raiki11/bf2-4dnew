@@ -33,9 +33,9 @@ void UI::DrawUI() const
 	}
 
 	// ステージ数
-	DrawGraph(220, 60, phase, TRUE);
+	//DrawGraph(220, 60, phase, TRUE);
 	for (int a = 1; a <= 2; a++) {
-		DrawGraph((15 * a) + 320, 50, Num[i], TRUE);
+		//DrawGraph((15 * a) + 320, 50, Num[i], TRUE);
 	}
 	DrawGraph(110, 50, stock, TRUE);
 

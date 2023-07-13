@@ -17,10 +17,10 @@ void HitBox::UpdetaHitBox(Player p, Stage s)
 void HitBox::DrawHitBox() const
 {
 	DrawBox(underPx0, underPy0, underPx1, underPy1, 0xff0000, TRUE);
-	DrawFormatString(200, 0, 0xffffff, "x0:%d", px0);
+	/*DrawFormatString(200, 0, 0xffffff, "x0:%d", px0);
 	DrawFormatString(200, 20, 0xffffff, "y0:%d", py0);
 	DrawFormatString(200, 40, 0xffffff, "x1:%d", px1);
-	DrawFormatString(200, 60, 0xffffff, "y1:%d", py1);
+	DrawFormatString(200, 60, 0xffffff, "y1:%d", py1);*/
 }
 
 int HitBox::PlayerAndStageUnder(Player p, Stage s)
