@@ -92,5 +92,10 @@ public:
 	void Stage3() const;
 	void Stage4() const;
 	void Stage5() const;
+
+	int GetStageXY(int snum, int m, int xy)
+	{
+		return StageXY[snum][m][xy];
+	}
 };
 

@@ -10,7 +10,7 @@ private:
 	int balloonNum;
 	
 	int fps;
-	int aButtonFlg;
+	int flyButtonFlg;
 	int rButtonFlg, lButtonFlg;
 	int rFlg, lFlg;
 
@@ -19,9 +19,16 @@ private:
 
 	int upFlg;
 	int rebound;
-	int reboundFlg;
+	int reboundFrameCntX;
+	int reboundFlgY;
+	int reboundFlgStageY;
+	int reboundFlgStageX;
+
+	int interval;
 
 	int flyingFlg;
+
+	int playerImg[24];
 public:
 	Player();
 	~Player();
@@ -34,5 +41,23 @@ public:
 
 	float GetPlayerLocationX() { return playerLocationX; }
 	float GetPlayerLocationY() { return playerLocationY; }
+
+	int GetReboundFlgStageX() { return reboundFlgStageX; }
+	int GetReboundFrameCntX() { return reboundFrameCntX; }
+
+	void SetFlyingFlg(int f)
+	{
+		flyingFlg = f;
+	}
+
+	void SetReboundFlgStageY(int f)
+	{
+		reboundFlgStageY = f;
+	}
+	void SetReboundFlgStageX(int f)
+	{
+		reboundFlgStageX = f;
+	}
+
 };
 
