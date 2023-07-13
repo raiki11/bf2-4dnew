@@ -5,7 +5,7 @@
 #include"GameMain.h"
 #include "FPS.h"
 #include"Fish.h"
-
+#include "End.h"
 //BGM—p•Ï”
 int BGM;
 

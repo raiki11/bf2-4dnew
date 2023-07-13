@@ -37,32 +37,28 @@ AbstractScene* GameMain::Update()
 		player.SetFlyingFlg(TRUE);
 	}
 
-	if (hit.PlayerAndStageTop(player, stage) == TRUE) {
-		player.SetReboundFlgStageY(TRUE);
-	}
-	else if (hit.PlayerAndStageTop(player, stage) == FALSE) {
-		player.SetReboundFlgStageY(FALSE);
+		if (hit.PlayerAndStageTop(player, stage) == TRUE) {
+			player.SetReboundFlgStageY(TRUE);
+		}
+		else if (hit.PlayerAndStageTop(player, stage) == FALSE) {
+			player.SetReboundFlgStageY(FALSE);
+		}
+
+		if (hit.PlayerAndStageRight(player, stage) == TRUE) {
+			player.SetReboundFlgStageX(TRUE);
+		}
+		else if (hit.PlayerAndStageRight(player, stage) == FALSE) {
+			//if (player.GetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
+			//	player.SetReboundFlgStageX(TRUE);
+			//}
+			//else {
+			//	player.SetReboundFlgStageX(FALSE);
+			//}
+			player.SetReboundFlgStageX(FALSE);
+		}
 	}
 
-	if (hit.PlayerAndStageRight(player, stage) == TRUE) {
-		player.SetReboundFlgStageX(TRUE);
-	}
-	else if (hit.PlayerAndStageRight(player, stage) == FALSE) {
-		//if (player.GetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
-		//	player.SetReboundFlgStageX(TRUE);
-		//}
-		//else {
-		//	player.SetReboundFlgStageX(FALSE);
-		//}
-		player.SetReboundFlgStageX(FALSE);
-	}
-
-	//if (160 <= player.GetPlayerLocationX() <= 480 && 419 <= player.GetPlayerLocationY() <= 478) { // プレイヤーがサカナの範囲に入った時
-	//	if (fish.FishProbability() == TRUE) { // サカナの確率がTRUEだった時
-	//		/*fish.FishDraw();*/
-	//		/* 処理を書く */
-	//	}
-	//}
+	
 
 	return this;
 }
@@ -71,13 +67,18 @@ void GameMain::Draw() const
 {
 	if (PauseFlg == TRUE) {
 		DrawFormatString(0, 0, 0xffffff, "Pause");
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 0);
 	}
 	else 
 	{ 
 		DrawFormatString(0, 0, 0xffffff, "ゲームメイン"); 
 	}
 	player.PlayerDraw();
+	enemy.EnemyDraw();
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	stage.DrawStage();
+	UI.DrawUI();
 	hit.DrawHitBox();
 	enemy.EnemyDraw();
 	fish.FishDraw(player);

@@ -27,5 +27,9 @@ public:
 	void EnemyMoveX(Player P);
 
 	void EAnimation();
+
+
+	float GetEnemyLocationX() { return ELocationX; }
+	float GetEnemyLocationY() { return ELocationY; }
 };
 
