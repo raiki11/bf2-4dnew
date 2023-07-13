@@ -28,7 +28,7 @@ AbstractScene* GameMain::Update()
 
 	player.PlayerUpdate();
 	enemy.EnemyUpdate(player);
-	fish.FishUpdate(player,enemy);
+	//fish.FishUpdate(player,enemy);
 	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
 		player.SetFlyingFlg(FALSE);
 	}
@@ -36,25 +36,33 @@ AbstractScene* GameMain::Update()
 		player.SetFlyingFlg(TRUE);
 	}
 
-		if (hit.PlayerAndStageTop(player, stage) == TRUE) {
-			player.SetReboundFlgStageY(TRUE);
-		}
-		else if (hit.PlayerAndStageTop(player, stage) == FALSE) {
-			player.SetReboundFlgStageY(FALSE);
-		}
+	if (hit.PlayerAndStageTop(player, stage) == TRUE) {
+		player.SetReboundFlgStageY(TRUE);
+	}
+	else if (hit.PlayerAndStageTop(player, stage) == FALSE) {
+		player.SetReboundFlgStageY(FALSE);
+	}
 
-		if (hit.PlayerAndStageRight(player, stage) == TRUE) {
+	if (hit.PlayerAndStageRight(player, stage) == TRUE) {
+		player.SetReboundFlgStageX(TRUE);
+	}
+	else if (hit.PlayerAndStageLeft(player, stage) == FALSE) {
+		player.SetReboundFlgStageX(FALSE);
+	}
+	
+	if (hit.PlayerAndStageLeft(player, stage) == TRUE) {
+		player.SetReboundFlgStageX(TRUE);
+	}
+	else if (hit.PlayerAndStageLeft(player, stage) == FALSE) {
+		if (player.GetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
 			player.SetReboundFlgStageX(TRUE);
 		}
-		else if (hit.PlayerAndStageRight(player, stage) == FALSE) {
-			//if (player.GetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
-			//	player.SetReboundFlgStageX(TRUE);
-			//}
-			//else {
-			//	player.SetReboundFlgStageX(FALSE);
-			//}
+		else {
 			player.SetReboundFlgStageX(FALSE);
 		}
+	}
+	
+
 	return this;
 }
 
@@ -76,6 +84,6 @@ void GameMain::Draw() const
 	UI.DrawUI();
 	hit.DrawHitBox();
 	enemy.EnemyDraw();
-	fish.FishDraw(player);
+	//fish.FishDraw(player);
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }

@@ -23,8 +23,9 @@ private:
     HitBox hit;
     Fish fish;
     bool PauseFlg;            // É|Å[ÉY
-   
+    
     int a;
+    int reboundFlg;
 
 public:
 

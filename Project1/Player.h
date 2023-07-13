@@ -1,4 +1,5 @@
 #pragma once
+#include "DxLib.h"
 #define INERTIA (0.1f)
 
 class Player
@@ -29,21 +30,29 @@ private:
 	int flyingFlg;
 
 	int playerImg[24];
+	int playerImgNum;
+	int playerImgReturnFlg;
+	int playerImgFpsCnt;
+	int playerImgFly;
+	int playerImgFlyFlg;
 public:
 	Player();
 	~Player();
-
+	
 	void PlayerUpdate();
 	void PlayerDraw() const;
 
 	void PlayerMoveX();
 	void PlayerMoveY();
 
+	void PlayerFlyAnim();
+
 	float GetPlayerLocationX() { return playerLocationX; }
 	float GetPlayerLocationY() { return playerLocationY; }
 
 	int GetReboundFlgStageX() { return reboundFlgStageX; }
 	int GetReboundFrameCntX() { return reboundFrameCntX; }
+	float GetPlayerMoveX() { return playerMoveX; }
 
 	void SetFlyingFlg(int f)
 	{
