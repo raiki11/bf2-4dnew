@@ -2,7 +2,7 @@
 #include"DxLib.h"
 #include"PadInput.h"
 #include "Stage.h"
-
+#include "UI.h"
 GameMain::GameMain()
 {
 	PauseFlg = FALSE;
@@ -23,6 +23,7 @@ AbstractScene* GameMain::Update()
 	}
 	//ポーズ中でないとき
 	if (PauseFlg == FALSE) {
+		UI::m_DrawCount += 1;
 		// ゲームメイン処理
 		player.PlayerUpdate();
 		enemy.EnemyUpdate(player);

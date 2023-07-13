@@ -1,4 +1,5 @@
 #pragma once
+#include "AbstractScene.h"
 class UI
 {
 private:
@@ -16,10 +17,14 @@ private:
 	int p_top;
 	int p_phase;
 
-public:
 	
+public:
+	static int m_DrawCount;
+
 	UI();
 	~UI();
+	
 
 	void DrawUI() const;
+	
 };
