@@ -73,9 +73,9 @@ void GameMain::Draw() const
 	}
 	player.PlayerDraw();
 	enemy.EnemyDraw();
-	stage.DrawStage();
+	
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
+	stage.DrawStage();
 	UI.DrawUI();
 	hit.DrawHitBox();
 	
