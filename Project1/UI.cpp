@@ -1,6 +1,8 @@
 #include "UI.h"
 #include "DxLib.h"
+#include "FPS.h"
 int UI:: m_DrawCount;
+int UI::b;
 UI::UI()
 {
 	m_DrawCount = 0;
@@ -14,11 +16,28 @@ UI::UI()
 	p_phase = 0;
 	i = 0;
 	Flag = FALSE;	
+	b = 0;
 }
 
 UI::~UI()
 {
 }
+
+void UI::Update()
+{
+	m_DrawCount++;
+
+	if (m_DrawCount == 60) {
+		b++;
+	}
+
+	if (m_DrawCount >= 120) {
+		m_DrawCount = 0;
+	}
+}
+
+
+
 
 
 
@@ -27,7 +46,7 @@ void UI::DrawUI() const
 	// 現在のスコア
 	DrawGraph(50, 30, score, TRUE);
 	for (int a = 1; a<=6; a++) {
-		DrawGraph((15*a)+60, 25, Num[i], TRUE);
+		DrawGraph((15*a)+50, 25, Num[i], TRUE);
 	}
 	
 	// ハイスコア
@@ -36,19 +55,21 @@ void UI::DrawUI() const
 		DrawGraph((15 * a) + 240, 25, Num[i], TRUE);
 	}
 
-	// 2フレームに1回描画
-	if (m_DrawCount % 50 == 0)
+	if (b <= 2)
 	{
 		// ステージ数
-		DrawGraph(220, 60, phase, TRUE);
-		for (int a = 1; a <= 2; a++) {
-			DrawGraph((15 * a) + 320, 50, Num[i], TRUE);
+		if (m_DrawCount <= 60) {
+			DrawGraph(220, 60, phase, TRUE);
+			for (int a = 1; a <= 2; a++) {
+				DrawGraph((15 * a) + 320, 50, Num[i], TRUE);
+			}
 		}
 	}
+
+	DrawFormatString(400, 300, GetColor(255, 0, 0), "UI_FPS:%d", m_DrawCount);
 	
-	
-	
-	DrawGraph(110, 50, stock, TRUE);
+	// ライフ
+	DrawGraph(130, 50, stock, TRUE);
 
 	//DrawFormatString(80, 30, 0xffffff, "%06d", p_score);
 	//DrawFormatString(270, 30, 0xffffff, "%06d", p_top);

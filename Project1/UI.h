@@ -1,6 +1,6 @@
 #pragma once
 #include "AbstractScene.h"
-class UI
+class UI   
 {
 private:
 	// UI‰æ‘œ
@@ -11,6 +11,7 @@ private:
 	int Num[10];
 	int Flag;
 	int i;
+
 	
 	// ƒXƒRƒA
 	int p_score;
@@ -21,10 +22,10 @@ private:
 	
 public:
 	static int m_DrawCount;
-
+	static int b;
 	UI();
 	~UI();
-	
+	void Update();
 
 	void DrawUI() const;
 	
