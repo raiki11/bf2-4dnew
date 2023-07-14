@@ -23,6 +23,7 @@ private:
 	int cloud;			//雲の画像
 	int stage1;			//ステージの仮画像
 
+
 	int a;
 
 	int StageXY[stagenum][maxcie][blockxy] = 
@@ -71,6 +72,7 @@ private:
 		},
 		{
 			//Stage4
+
 }
 	};
 
@@ -92,6 +94,8 @@ public:
 	void Stage3() const;
 	void Stage4() const;
 	void Stage5() const;
+
+	static float EnemyX[6];
 
 	int GetStageXY(int snum, int m, int xy)
 	{

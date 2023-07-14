@@ -42,11 +42,11 @@ void Enemy::EnemyUpdate(Player P)
 	
 }
 
-void Enemy::EnemyDraw() const
+void Enemy::EnemyDraw(float& x) const
 {
 	/*DrawCircle(enemyLocationX, enemyLocationY, 4, 0x00ff00, TRUE);*/
 	/*DrawGraph(enemyLocationX, enemyLocationY, img[i], TRUE);*/
-	DrawRotaGraph(ELocationX, ELocationY, 1.0f,0,img[i], TRUE, Flag);
+	DrawRotaGraph(ELocationX+x, ELocationY, 1.0f,0,img[i], TRUE, Flag);
 
 
 	//デバッグ用

@@ -21,10 +21,12 @@ private:
     //ゲームメインで使う変数の宣言
     Player player;
     Enemy enemy;
+    Enemy enemy2;
     HitBox hit;
     Fish fish;
     bool PauseFlg;            // ポーズ
    
+
     int a;
 
 public:

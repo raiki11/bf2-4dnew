@@ -1,6 +1,8 @@
 #include "Stage.h"
 #include "DxLib.h"
 
+float Stage::EnemyX[6]={20,100,0,0,0,0};
+
 Stage::Stage() {
 	St_Footing = LoadGraph("images/Stage/Stage_Footing01.png");
 	St_Footing2 = LoadGraph("images/Stage/Stage_Footing02.png");
@@ -181,16 +183,30 @@ void Stage::Stage5()const {
 	DrawGraph(0, 0, stage1, TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
+	//茶色の浮島　海面付近の左
 	DrawGraph(200, 330, St_Footing6, TRUE);
+	DrawBox(201, 332, 260, 348, 0x00ff00, FALSE);
 
-	DrawGraph(220, 80, St_Footing6, TRUE);
-
+	//茶色の浮島　海面付近の右
 	DrawGraph(380, 335, St_Footing6, TRUE);
+	DrawBox(381, 337, 440, 353, 0x00ff00, FALSE);
 
-	//i字型
+	//茶色の浮島　上
+	DrawGraph(220, 80, St_Footing6, TRUE);
+	DrawBox(221, 82, 280, 98, 0x00ff00, FALSE);
+
+
+	//i字型浮島左端
 	DrawGraph(100, 200, St_Footing7, TRUE);
+	DrawBox(101, 202, 120, 251, 0x00ff00, FALSE);
+
+	//i字型浮島中央
 	DrawGraph(260, 168, St_Footing7, TRUE);
+	DrawBox(261, 170, 280, 219, 0x00ff00, FALSE);
+
+	//i字型の長い浮島右端
 	DrawGraph(500, 150, St_Footing8, TRUE);
+	DrawBox(501, 152, 520, 217, 0x00ff00, FALSE);
 
 	//左下の地面表示
 	DrawGraph(0, 414, St_LL, TRUE);

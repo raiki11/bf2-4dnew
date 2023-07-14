@@ -23,5 +23,5 @@ void End::Draw() const
 	player.PlayerDraw();
 	stage.DrawStage();
 	UI.DrawUI();
-	enemy.EnemyDraw();
+	//enemy.EnemyDraw();
 }

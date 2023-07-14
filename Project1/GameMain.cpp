@@ -29,6 +29,9 @@ AbstractScene* GameMain::Update()
 
 	player.PlayerUpdate();
 	enemy.EnemyUpdate(player);
+
+	enemy2.EnemyUpdate(player);
+
 	fish.FishUpdate(player,enemy);
 	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
 		player.SetFlyingFlg(FALSE);
@@ -74,13 +77,14 @@ void GameMain::Draw() const
 		DrawFormatString(0, 0, 0xffffff, "ÉQÅ[ÉÄÉÅÉCÉì"); 
 	}
 	player.PlayerDraw();
-	enemy.EnemyDraw();
+	enemy.EnemyDraw(Stage::EnemyX[0]);
+	enemy2.EnemyDraw(Stage::EnemyX[1]);
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	stage.DrawStage();
 	UI.DrawUI();
 	hit.DrawHitBox();
-	enemy.EnemyDraw();
+	//enemy.EnemyDraw();
 	fish.FishDraw(player);
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }

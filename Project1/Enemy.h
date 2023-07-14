@@ -22,7 +22,7 @@ public:
 	~Enemy();
 
 	void EnemyUpdate(Player P);
-	void EnemyDraw() const;
+	void EnemyDraw(float& x) const;
 
 	void EnemyMoveX(Player P);
 
