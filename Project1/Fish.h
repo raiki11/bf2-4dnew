@@ -1,6 +1,5 @@
 #pragma once
 #include<DxLib.h>
-//#include"GameMain.h"
 #include"Player.h"
 #include"Enemy.h"
 
@@ -8,9 +7,6 @@ class Fish {
 private:
 	
 public:
-
-	/*Player player;
-	Enemy enemy;*/
 
 	// コンストラクタ
 	Fish();

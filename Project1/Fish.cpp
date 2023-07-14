@@ -2,9 +2,9 @@
 #include "Fish.h"
 #include"DxLib.h"
 
-#define FishAreaX0    160;
-#define FishAreaX1    480;
-#define FishAreaY     419;
+#define FishAreaX0    160
+#define FishAreaX1    480
+#define FishAreaY     419
 
 Fish::Fish()
 {
@@ -19,17 +19,21 @@ Fish::~Fish()
 void Fish::FishUpdate(Player p , Enemy e)
 {
 	/* プレイヤーがサカナの稼働エリアに入った時 */
-	if (160 <= p.GetPlayerLocationX() <= 480 && 419 <= p.GetPlayerLocationY() && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
-		Flg = 1;
+	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
+		
 		if (FishProbability() == TRUE && Flg == 1) { // サカナの確率
 			/* 処理を書く */
-		FishFlg = 1;         // フィッシュフラグをサカナが上がるフラグに変更
+			FishFlg = 1;         // フィッシュフラグをサカナが上がるフラグに変更
 		}
+		if (p.GetPlayerLocationX() < FishAreaX0 && FishAreaX1 <  p.GetPlayerLocationX() && FishAreaY > p.GetPlayerLocationY()) {// プレイヤーがサカナの範囲を出たとき
+			FishFlg = 0;
+		}
+		else {
+			FishFlg = 3;  // 範囲内に入った時、1回しかif文の中の条件を受付ないように設定
+		}
+		
+		
 	}
-	else {
-		Flg = 0;
-	}
-
 	if (FishFlg == 1) {      // フィッシュフラグがサカナを上げるフラグになった時
 		--FishY;             // フィッシュを上に上げる
 		if (FishY == 420) {  // フィッシュのY座標が４２０になった時
@@ -50,8 +54,9 @@ void Fish:: FishDraw(Player p) const
 		DrawRotaGraph(FishX, FishY, 1.0, 0, FishImg[i], TRUE, FALSE);
 	}
 	/* デバック用 */
-	DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", p.GetPlayerLocationX());
+	DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", p.GetPlayerLocationY());
 	DrawFormatString(0, 230, 0xffffff, "fishLocationY::%d", FishY);
+	DrawFormatString(0, 260, 0xffffff, "fishflg::%d", FishFlg);
 }
 
 int Fish::FishProbability() 
