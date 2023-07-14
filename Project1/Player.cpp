@@ -95,17 +95,22 @@ void Player::PlayerMoveX()
 
 		if (rButtonFlg == TRUE) {
 			if (playerMoveX <= 0) {
-				playerMoveX += 0.1f;
+				playerMoveX += 0.01f;
 			}
 
 			//playerLocationX += playerMoveX;
 			if ((playerMoveX > 0) || flyButtonFlg == TRUE) {
-				playerMoveX += INERTIA;
+				playerMoveX += 0.01f;
 			}
 
-			/*if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
-				playerMoveX += 1.0f;
-			}*/
+			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
+					playerMoveX += 1.0f;
+			}
+			else if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
+				if (interval % 10 == 0) {
+					playerMoveX += 1.0f;
+				}
+			}
 
 			if (playerMoveX > 3) {
 				playerMoveX = 3;
@@ -125,18 +130,23 @@ void Player::PlayerMoveX()
 
 		if (lButtonFlg == TRUE) {
 			if (playerMoveX >= 0) {
-				playerMoveX -= 0.1f;
+				playerMoveX -= 0.01f;
 			}
 
-			//playerLocationX += playerMoveX;
+			////playerLocationX += playerMoveX;
 			if ((playerMoveX < 0) || flyButtonFlg == TRUE) {
-				playerMoveX -= INERTIA;
+				playerMoveX -= 0.01f;
 			}
 
 			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
-				playerMoveX -= 1.0f;
+					playerMoveX -= 1.0f;
 			}
-
+			else if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
+				if (interval % 10 == 0) {
+					playerMoveX -= 1.0f;
+				}
+			}
+			
 			if (playerMoveX < -3) {
 				playerMoveX = -3;
 			}
