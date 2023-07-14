@@ -355,24 +355,30 @@ void Player::PlayerMoveY()
 		moveFpsCountY++;
 		if (moveFpsCountY >= rebound) {
 			reboundFlgY = FALSE;
-			//playerMoveY = 1;
+			//reboundFlgStageY == TRUE;
+			/*playerMoveY = -(playerMoveY);*/
 			//moveFpsCountY = 0;
 		}
+		reboundFlgStageY == TRUE;
 		playerLocationY -= (playerMoveY);
+		
 	}
 	//d—Í
 	else {
 		if (fps % 1 == 0) {
 			if (fps % 1 == 0) {
-				if (flyButtonFlg == TRUE) {
+				if (reboundFlgStageY == TRUE) {
 					playerMoveY = playerMoveY * 0.8f;
-					if (playerMoveY > -1.0f) {
+					/*if (playerMoveY > -1.0f) {
 						playerMoveY = -1.0f;
-					}
+					}*/
 				}
 				
-				if (playerMoveY < 1.0f) {
-					playerMoveY += 0.1f;
+
+				if (flyButtonFlg == FALSE) {
+					if (playerMoveY < 1.0f) {
+						playerMoveY += 0.1f;
+					}
 				}
 			}
 			//playerMoveY = 1;

@@ -29,7 +29,7 @@ AbstractScene* GameMain::Update()
 
 	player.PlayerUpdate();
 	enemy.EnemyUpdate(player);
-	//fish.FishUpdate(player,enemy);
+	fish.FishUpdate(player,enemy);
 	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
 		player.SetFlyingFlg(FALSE);
 	}
@@ -85,6 +85,6 @@ void GameMain::Draw() const
 	UI.DrawUI();
 	hit.DrawHitBox();
 	enemy.EnemyDraw();
-	//fish.FishDraw(player);
+	fish.FishDraw(player);
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }
