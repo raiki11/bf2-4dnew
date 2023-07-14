@@ -36,13 +36,13 @@ void Player::PlayerUpdate()
 {
 	
 	//”ò‚ñ‚Å‚éŽž‚Ìˆ—
-	if (flyingFlg == TRUE) {
-		PlayerMoveY();
+	if (flyingFlg == FALSE) {
 		PlayerMoveX();
 	}
 	//•à‚¢‚Ä‚¢‚é‚Æ‚«‚Ìˆ—
-	else if (flyingFlg == FALSE) {
+	else if (flyingFlg == TRUE) {
 		PlayerMoveX();
+		PlayerMoveY();
 	}
 	
 
@@ -318,16 +318,33 @@ void Player::PlayerMoveY()
 	/*if (++playerImgNum > 20 || playerImgNum < 16) {
 		playerImgNum = 16;
 	}*/
+
+
+	if (playerLocationY < 25 || reboundFlgStageY == TRUE) {
+		playerMoveY = (playerMoveY * 0.8f);
+		rebound = 10;
+		reboundFlgStageY = TRUE;
+		reboundFlgY = TRUE;
+		moveFpsCountY = 0;
+	}
+
+
 	//Aƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚©
 	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
 		if (interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
 			flyButtonFlg = TRUE;
 			playerImgFly = 0;
 			playerImgFlyFlg = TRUE;
+			playerMoveY = -2;
 		}
+
 		if (count < 21 && (interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A))) {
 			count += 3;
 			playerMoveY = -2;
+		}
+
+		if (playerMoveY != -2) {
+			
 		}
 	}
 	else {
@@ -343,7 +360,7 @@ void Player::PlayerMoveY()
 			
 		}
 		else {
-			rebound = (count * 0.8f);
+			playerMoveY = (playerMoveY * 0.8f);
 			reboundFlgY = TRUE;
 			moveFpsCountY = 0;
 		}
@@ -351,25 +368,28 @@ void Player::PlayerMoveY()
 		interval++;
 	}
 	//”½”­
-	else if (moveFpsCountY < rebound && reboundFlgY == TRUE) {
+	else if (moveFpsCountY < count && reboundFlgY == TRUE) {
 		if (moveFpsCountY++ == 0) {
 			//playerMoveY = -1 * playerMoveY;
 		}
-		if (moveFpsCountY >= rebound) {
+		if (moveFpsCountY == count/*moveFpsCountY >= rebound*/) {
 			reboundFlgY = FALSE;
+			playerMoveY = -1 * playerMoveY;
 			
-
 			//reboundFlgStageY == TRUE;
 			/*playerMoveY = -(playerMoveY);*/
 			//moveFpsCountY = 0;
+		}
+		if (playerMoveY < 1.0f) {
+			//playerMoveY += 0.1f;
 		}
 		reboundFlgStageY == TRUE;
 		playerLocationY -= (playerMoveY);
 		
 	}
-	else if (reboundFlgStageY == TRUE) {
+	/*else if (reboundFlgStageY == TRUE) {
 		playerMoveY = 100;
-	}
+	}*/
 	//d—Í
 	else {
 		if (fps % 1 == 0) {
@@ -383,9 +403,12 @@ void Player::PlayerMoveY()
 				
 
 				if (flyButtonFlg == FALSE) {
-					playerMoveY = 1;
+					
 					if (playerMoveY < 1.0f) {
 						playerMoveY += 0.1f;
+					}
+					if (playerMoveY > 1.0f) {
+						playerMoveY = 1.0f;
 					}
 				}
 			}
@@ -431,16 +454,7 @@ void Player::PlayerMoveY()
 	//	moveFpsCountY = 0;
 	//}
 
-	if (playerLocationY < 25) {
-		rebound = 10;
-		reboundFlgStageY = TRUE;
-		reboundFlgY = TRUE;
-		moveFpsCountY = 0;
-	}
-	else {
-		
-	}
-
+	
 	PlayerFlyAnim();
 
 	playerImgFpsCnt++;
