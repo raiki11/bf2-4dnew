@@ -61,10 +61,10 @@ void Fish:: FishDraw(Player p) const
 		DrawRotaGraph(FishX, FishY, 1.0, 0, FishImg[i], TRUE, FALSE);
 	}
 	/* デバック用 */
-	DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", p.GetPlayerLocationY());
+	/*DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", p.GetPlayerLocationY());
 	DrawFormatString(0, 230, 0xffffff, "fishLocationY::%d", FishY);
 	DrawFormatString(0, 260, 0xffffff, "fishflg::%d", FishFlg);
-	DrawFormatString(0, 290, 0xffffff, "flg::%d", Flg);
+	DrawFormatString(0, 290, 0xffffff, "flg::%d", Flg);*/
 }
 
 int Fish::FishProbability() 
