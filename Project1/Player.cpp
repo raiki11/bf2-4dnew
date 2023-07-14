@@ -62,18 +62,18 @@ void Player::PlayerDraw() const
 {
 	DrawRotaGraph(playerLocationX, playerLocationY, 1.0f, 0, playerImg[playerImgNum], TRUE, playerImgReturnFlg);
 	DrawCircle(playerLocationX, playerLocationY, 4, 0xff0000, TRUE);
-	//DrawFormatString(0, 40, 0xffffff, "count::%d", count);
-	//DrawFormatString(0, 55, 0xffffff, "flyButtonFlg::%d", flyButtonFlg);
-	//DrawFormatString(0, 70, 0xffffff, "moveFpsCountY::%d", moveFpsCountY);
-	//DrawFormatString(0, 85, 0xffffff, "playerMoveY::%f", playerMoveY);
-	///*DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", playerLocationY);*/
-	//DrawFormatString(0, 100, 0xffffff, "rebound::%d", rebound);
-	//DrawFormatString(0, 115, 0xffffff, "playerMoveY::%f", playerMoveY);
-	//DrawFormatString(0, 130, 0xffffff, "playerLocatoinY::%f", playerLocationY);
-	//DrawFormatString(0, 145, 0xffffff, "flyingflg::%d", flyingFlg);
-	//DrawFormatString(0, 160, 0xffffff, "reboundflgx::%d", reboundFlgStageX);
-	//DrawFormatString(0, 175, 0xffffff, "reboundcntx::%d", reboundFrameCntX);
-	//DrawFormatString(0, 190, 0xffffff, "interval::%d", interval);
+	DrawFormatString(0, 40, 0xffffff, "count::%d", count);
+	DrawFormatString(0, 55, 0xffffff, "flyButtonFlg::%d", flyButtonFlg);
+	DrawFormatString(0, 70, 0xffffff, "moveFpsCountY::%d", moveFpsCountY);
+	DrawFormatString(0, 85, 0xffffff, "playerMoveY::%f", playerMoveY);
+	/*DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", playerLocationY);*/
+	DrawFormatString(0, 100, 0xffffff, "rebound::%d", rebound);
+	DrawFormatString(0, 115, 0xffffff, "playerMoveY::%f", playerMoveY);
+	DrawFormatString(0, 130, 0xffffff, "playerLocatoinY::%f", playerLocationY);
+	DrawFormatString(0, 145, 0xffffff, "flyingflg::%d", flyingFlg);
+	DrawFormatString(0, 160, 0xffffff, "reboundflgx::%d", reboundFlgStageX);
+	DrawFormatString(0, 175, 0xffffff, "reboundcntx::%d", reboundFrameCntX);
+	DrawFormatString(0, 190, 0xffffff, "interval::%d", interval);
 	
 }
 
@@ -333,6 +333,7 @@ void Player::PlayerMoveY()
 	else {
 		flyButtonFlg = FALSE;
 	}
+
 	//重力と上昇
 	if ((flyButtonFlg == TRUE && moveFpsCountY < count) && reboundFlgY == FALSE) {//上昇	  ふわふわ感を出すために10フレーム上がり続ける
 		if (playerLocationY > 25 && reboundFlgStageY == FALSE) {
@@ -347,14 +348,17 @@ void Player::PlayerMoveY()
 			moveFpsCountY = 0;
 		}
 
-		
 		interval++;
 	}
 	//反発
 	else if (moveFpsCountY < rebound && reboundFlgY == TRUE) {
-		moveFpsCountY++;
+		if (moveFpsCountY++ == 0) {
+			//playerMoveY = -1 * playerMoveY;
+		}
 		if (moveFpsCountY >= rebound) {
 			reboundFlgY = FALSE;
+			
+
 			//reboundFlgStageY == TRUE;
 			/*playerMoveY = -(playerMoveY);*/
 			//moveFpsCountY = 0;
@@ -363,25 +367,29 @@ void Player::PlayerMoveY()
 		playerLocationY -= (playerMoveY);
 		
 	}
+	else if (reboundFlgStageY == TRUE) {
+		playerMoveY = 100;
+	}
 	//重力
 	else {
 		if (fps % 1 == 0) {
 			if (fps % 1 == 0) {
-				if (reboundFlgStageY == TRUE) {
-					playerMoveY = playerMoveY * 0.8f;
-					/*if (playerMoveY > -1.0f) {
-						playerMoveY = -1.0f;
-					}*/
-				}
+				//if (reboundFlgStageY == TRUE) {
+				//	playerMoveY = playerMoveY * 0.8f;
+				//	/*if (playerMoveY > -1.0f) {
+				//		playerMoveY = -1.0f;
+				//	}*/
+				//}
 				
 
 				if (flyButtonFlg == FALSE) {
+					playerMoveY = 1;
 					if (playerMoveY < 1.0f) {
 						playerMoveY += 0.1f;
 					}
 				}
 			}
-			//playerMoveY = 1;
+			
 			playerLocationY += playerMoveY;
 		}
 		
@@ -426,6 +434,7 @@ void Player::PlayerMoveY()
 	if (playerLocationY < 25) {
 		rebound = 10;
 		reboundFlgStageY = TRUE;
+		reboundFlgY = TRUE;
 		moveFpsCountY = 0;
 	}
 	else {
