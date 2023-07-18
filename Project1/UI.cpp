@@ -31,7 +31,7 @@ void UI::Update()
 		b++;
 	}
 
-	if (m_DrawCount >= 120) {
+	if (m_DrawCount >= 70) {		
 		m_DrawCount = 0;
 	}
 }
@@ -55,7 +55,7 @@ void UI::DrawUI() const
 		DrawGraph((15 * a) + 240, 25, Num[i], TRUE);
 	}
 
-	if (b <= 2)
+	if (b <= 3)			// 4回表示
 	{
 		// ステージ数
 		if (m_DrawCount <= 60) {
