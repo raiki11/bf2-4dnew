@@ -77,8 +77,8 @@ void GameMain::Draw() const
 		DrawFormatString(0, 0, 0xffffff, "ƒQ[ƒ€ƒƒCƒ“"); 
 	}
 	player.PlayerDraw();
-	enemy.EnemyDraw(Stage::EnemyX[0]);
-	enemy2.EnemyDraw(Stage::EnemyX[1]);
+	enemy.EnemyDraw();
+	enemy2.EnemyDraw();
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	stage.DrawStage();

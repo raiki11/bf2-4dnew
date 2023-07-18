@@ -1,7 +1,19 @@
 #include "Stage.h"
 #include "DxLib.h"
 
-float Stage::EnemyX[6]={20,100,0,0,0,0};
+float Stage::EnemyX[stagenum][6] = { {320,420,220} };
+float Stage::EnemyY[stagenum][6] = { {230,230,230} };
+//ステージごとのエネミー数
+
+float Stage::EnemyXY[stagenum][6][6] = {
+	{//ステージ１のエネミー座標
+		{320,230},
+		{420,230},
+		{220,230},
+	}
+};
+
+int Stage::Snum=0;
 
 Stage::Stage() {
 	St_Footing = LoadGraph("images/Stage/Stage_Footing01.png");

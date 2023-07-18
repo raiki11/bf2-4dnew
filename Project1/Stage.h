@@ -95,7 +95,10 @@ public:
 	void Stage4() const;
 	void Stage5() const;
 
-	static float EnemyX[6];
+	static float EnemyX[stagenum][6];
+	static float EnemyY[stagenum][6];
+	static float EnemyXY[stagenum][6][6];
+	static int Snum;
 
 	int GetStageXY(int snum, int m, int xy)
 	{

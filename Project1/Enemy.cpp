@@ -1,10 +1,14 @@
 #include"DxLib.h"
 #include "Enemy.h"
+#include "Stage.h"
+
 
 Enemy::Enemy()
 {
-	ELocationX = 320;
-	ELocationY = 230;
+	//ELocationX = 320;
+	//ELocationY = 230;
+	ELocationX = Stage::EnemyX[Stage::Snum][0];
+	ELocationY = Stage::EnemyY[Stage::Snum][0];
 	EMoveX = 0;
 	EMoveY = 0;
 	time = 0;
@@ -42,11 +46,11 @@ void Enemy::EnemyUpdate(Player P)
 	
 }
 
-void Enemy::EnemyDraw(float& x) const
+void Enemy::EnemyDraw() const
 {
 	/*DrawCircle(enemyLocationX, enemyLocationY, 4, 0x00ff00, TRUE);*/
 	/*DrawGraph(enemyLocationX, enemyLocationY, img[i], TRUE);*/
-	DrawRotaGraph(ELocationX+x, ELocationY, 1.0f,0,img[i], TRUE, Flag);
+	DrawRotaGraph(ELocationX, ELocationY, 1.0f,0,img[i], TRUE, Flag);
 
 
 	//デバッグ用
