@@ -3,12 +3,12 @@
 #include "Stage.h"
 
 
-Enemy::Enemy()
+Enemy::Enemy(int set_X,int set_Y)
 {
 	//ELocationX = 320;
 	//ELocationY = 230;
-	ELocationX = Stage::EnemyX[Stage::Snum][0];
-	ELocationY = Stage::EnemyY[Stage::Snum][0];
+	ELocationX = Stage::EnemyX[Stage::Snum][set_X];
+	ELocationY = Stage::EnemyY[Stage::Snum][set_Y];
 	EMoveX = 0;
 	EMoveY = 0;
 	time = 0;
@@ -34,13 +34,6 @@ void Enemy::EnemyUpdate(Player P)
 	if (i >= 8) {
 		EnemyMoveX(P);
 	}
-
-
-
-	
-	
-
-
 	
 	//デバッグ用
 	

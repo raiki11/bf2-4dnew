@@ -20,8 +20,10 @@ private:
     UI UI;
     //ゲームメインで使う変数の宣言
     Player player;
-    Enemy enemy;
-    Enemy enemy2;
+    Enemy* enemy[6];
+
+    //Enemy enemy2;
+    //Enemy enemy3;
     HitBox hit;
     Fish fish;
     bool PauseFlg;            // ポーズ

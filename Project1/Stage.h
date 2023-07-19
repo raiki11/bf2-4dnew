@@ -98,7 +98,8 @@ public:
 	static float EnemyX[stagenum][6];
 	static float EnemyY[stagenum][6];
 	static float EnemyXY[stagenum][6][6];
-	static int Snum;
+	static int Snum;	//今のステージ
+	static int EnemyMax[5];//ステージごとに現れるエネミー数
 
 	int GetStageXY(int snum, int m, int xy)
 	{

@@ -18,7 +18,7 @@ private:
 	
 
 public:
-	Enemy();
+	Enemy(int set_X,int set_Y);
 	~Enemy();
 
 	void EnemyUpdate(Player P);

@@ -4,10 +4,16 @@
 #include "Stage.h"
 #include "Fish.h"
 
+
+
 GameMain::GameMain()
 {
 	PauseFlg = FALSE;
 	a = 0;
+
+	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+		enemy[i] = new Enemy(i, i);
+	}
 }
 
 GameMain::~GameMain()
@@ -28,11 +34,14 @@ AbstractScene* GameMain::Update()
 	}
 
 	player.PlayerUpdate();
-	enemy.EnemyUpdate(player);
 
-	enemy2.EnemyUpdate(player);
 
-	fish.FishUpdate(player,enemy);
+
+	for (int i=0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+		enemy[i]->EnemyUpdate(player);
+	}
+
+	fish.FishUpdate(player,enemy[0]);
 	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
 		player.SetFlyingFlg(FALSE);
 	}
@@ -77,8 +86,13 @@ void GameMain::Draw() const
 		DrawFormatString(0, 0, 0xffffff, "ÉQÅ[ÉÄÉÅÉCÉì"); 
 	}
 	player.PlayerDraw();
-	enemy.EnemyDraw();
-	enemy2.EnemyDraw();
+
+	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+
+		DrawFormatString(200, 300, 0xffffff, "EnemyMax%d", Stage::EnemyMax[Stage::Snum]);
+		enemy[i]->EnemyDraw();
+	}
+
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	stage.DrawStage();

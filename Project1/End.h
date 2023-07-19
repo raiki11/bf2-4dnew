@@ -2,7 +2,7 @@
 #include "AbstractScene.h"
 #include "Player.h"
 #include "UI.h"
-#include "Enemy.h"
+//#include "Enemy.h"
 #include "Stage.h"
 // シーンマネージャークラス
 // 各シーンの切り替えを管理する
@@ -16,7 +16,7 @@ private:
     UI UI;
     //ゲームメインで使う変数の宣言
     Player player;
-    Enemy enemy;
+//    Enemy enemy;
 public:
     int EndCount = 0;
 

@@ -15,7 +15,7 @@ Fish::~Fish()
 
 }
 
-void Fish::FishUpdate(Player p , Enemy e)
+void Fish::FishUpdate(Player p , Enemy e[])
 {
 	/* プレイヤーがサカナの稼働エリアに入った時 */
 	if (160 <= p.GetPlayerLocationX() <= 480 && 419 <= p.GetPlayerLocationY() && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時

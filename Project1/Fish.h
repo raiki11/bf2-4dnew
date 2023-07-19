@@ -17,7 +17,7 @@ public:
 	// デストラクタ
 	~Fish();
 
-	void FishUpdate(Player p, Enemy e);
+	void FishUpdate(Player p, Enemy e[]);
 
 	void FishDraw(Player p) const;
 
