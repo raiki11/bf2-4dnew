@@ -30,10 +30,19 @@ AbstractScene* GameMain::Update()
 	player.PlayerUpdate();
 	enemy.EnemyUpdate(player);
 	fish.FishUpdate(player,enemy);
+
 	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
-		player.SetFlyingFlg(FALSE);
+		//if (player.GetTakeOffFlg() == FALSE) {
+			player.SetFlyingFlg(FALSE);
+		/*}
+		else {
+			player.SetFlyingFlg(TRUE);
+		}*/
 	}
 	else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
+		if (player.GetFlyingFlg() == FALSE) {
+			player.SetPlayerImgFpsCnt(0);
+		}
 		player.SetFlyingFlg(TRUE);
 	}
 

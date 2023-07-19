@@ -28,12 +28,15 @@ private:
 	int interval;
 
 	int flyingFlg;
+	int takeOffFlg;
+	int flapFlg;
+	int flapInterval;
 
 	int playerImg[24];
 	int playerImgNum;
 	int playerImgReturnFlg;
 	int playerImgFpsCnt;
-	int playerImgFly;
+	int playerImgTakeOffNum;
 	int playerImgFlyFlg;
 public:
 	Player();
@@ -45,11 +48,14 @@ public:
 	void PlayerMoveX();
 	void PlayerMoveY();
 
+	int PlayerTakeOffAnim();
 	int PlayerFlyAnim();
 
 	float GetPlayerLocationX() { return playerLocationX; }
 	float GetPlayerLocationY() { return playerLocationY; }
 
+	int GetTakeOffFlg() { return takeOffFlg; }
+	int GetFlyingFlg() { return flyingFlg; }
 	int GetReboundFlgStageX() { return reboundFlgStageX; }
 	int GetReboundFrameCntX() { return reboundFrameCntX; }
 	float GetPlayerMoveX() { return playerMoveX; }
@@ -66,6 +72,11 @@ public:
 	void SetReboundFlgStageX(int f)
 	{
 		reboundFlgStageX = f;
+	}
+
+	void SetPlayerImgFpsCnt(int n)
+	{
+		playerImgFpsCnt = n;
 	}
 
 };

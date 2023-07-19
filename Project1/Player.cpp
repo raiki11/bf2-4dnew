@@ -15,11 +15,15 @@ Player::Player()
 	moveFpsCountY = 0;
 	rebound = 10000.0f;
 	flyingFlg = 1;
+	takeOffFlg = FALSE;
+	flapFlg = FALSE;
+	flapInterval = 3;
+
 	LoadDivGraph("images/Player/Player_Animation.png", 24, 8, 4, 64, 64, playerImg);
 	playerImgNum = 0;
 	playerImgReturnFlg = TRUE;
 	playerImgFpsCnt = 0;
-	playerImgFly = 0;
+	playerImgTakeOffNum = 0;
 	playerImgFlyFlg = FALSE;
 	interval = 5;
 	reboundFlgStageY = FALSE;
@@ -45,6 +49,19 @@ void Player::PlayerUpdate()
 		PlayerMoveY();
 	}
 	
+	if (takeOffFlg == TRUE) {
+		playerMoveY = -0.5;
+		if (PlayerTakeOffAnim() == TRUE) {
+			takeOffFlg = FALSE;
+			//playerMoveY = 1;
+		}
+	}
+	
+	if (flapFlg == TRUE && takeOffFlg == FALSE) {
+		if (PlayerFlyAnim() == TRUE) {
+			flapFlg = FALSE;
+		}
+	}
 
 	/***ˆÚ“®§ŒÀ@‚±‚±‚©‚ç***/
 
@@ -74,6 +91,8 @@ void Player::PlayerDraw() const
 	DrawFormatString(0, 160, 0xffffff, "reboundflgx::%d", reboundFlgStageX);
 	DrawFormatString(0, 175, 0xffffff, "reboundcntx::%d", reboundFrameCntX);
 	DrawFormatString(0, 190, 0xffffff, "interval::%d", interval);
+	DrawFormatString(0, 205, 0xffffff, "imgnum::%d", playerImgNum);
+	DrawFormatString(0, 220, 0xffffff, "takeoff::%d", takeOffFlg);
 	
 }
 
@@ -264,7 +283,7 @@ void Player::PlayerMoveX()
 			if (playerImgFlyFlg == FALSE) {
 				playerImgFlyFlg = TRUE;
 				playerImgFpsCnt = 0;
-				playerImgFly = 0;
+				playerImgTakeOffNum = 0;
 			}
 
 
@@ -294,7 +313,7 @@ void Player::PlayerMoveX()
 				playerImgFpsCnt = 0;
 				playerMoveX = 0;
 			}
-			if (playerImgFpsCnt % 150 == 0) {
+			if (playerImgFpsCnt % 30 == 0) {
 				if (++playerImgNum > 2) {
 					playerImgNum = 0;
 				}
@@ -312,13 +331,21 @@ void Player::PlayerMoveX()
 			flyButtonFlg = TRUE;
 			playerImgFlyFlg = TRUE;
 		
-			if (rButtonFlg == TRUE || lButtonFlg == TRUE) {
+			/*if (rButtonFlg == TRUE || lButtonFlg == TRUE) {
 				playerLocationX += playerMoveX + 5;
-			}
+			}*/
 
-			playerLocationY -= 15;
-			PlayerFlyAnim();
+			//playerLocationY -= 15;
+			takeOffFlg = TRUE;
+			playerImgTakeOffNum = 0;
 		}
+
+
+		/*if (takeOffFlg == TRUE) {
+			if (PlayerFlyAnim() == TRUE) {
+				takeOffFlg = FALSE;
+			}
+		}*/
 		
 	}
 }
@@ -341,11 +368,21 @@ void Player::PlayerMoveY()
 
 	//Aƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚©
 	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
+		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
+			flapInterval = 6;
+			
+		}
+		else {
+			flapInterval = 4;
+		}
+		flapFlg = TRUE;
+		/*playerImgFpsCnt = 0;*/
 		if (interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
 			flyButtonFlg = TRUE;
-			playerImgFly = 0;
-			playerImgFlyFlg = TRUE;
+			//playerImgFly = 0;
+			//playerImgFlyFlg = TRUE;
 			playerMoveY = -2;
+			
 		}
 
 		if (count < 21 && (/*flyButtonFlg == TRUE*/interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A))) {
@@ -465,16 +502,16 @@ void Player::PlayerMoveY()
 	//}
 
 	
-	PlayerFlyAnim();
+	//PlayerFlyAnim();
 
 	playerImgFpsCnt++;
 }
 
-int Player::PlayerFlyAnim()
+int Player::PlayerTakeOffAnim()
 {
 	if (playerImgFlyFlg == TRUE) {
-		if (playerImgFpsCnt % 2 == 0) {
-			switch (playerImgFly)
+		if (playerImgFpsCnt % 3 == 0) {
+			switch (playerImgTakeOffNum)
 			{
 			case 0:
 				if (playerImgNum == 16) {
@@ -483,7 +520,7 @@ int Player::PlayerFlyAnim()
 				else {
 					playerImgNum = 18;
 				}
-				playerImgFly = 1;
+				playerImgTakeOffNum = 1;
 				break;
 			case 1:
 				if (playerImgNum == 17) {
@@ -492,26 +529,65 @@ int Player::PlayerFlyAnim()
 				else {
 					playerImgNum = 17;
 				}
-				playerImgFly = 2;
+				playerImgTakeOffNum = 2;
 				break;
 			case 2:
 				if (playerImgNum == 18) {
-					playerImgFly = 3;
+					playerImgNum = 19;
+					playerImgTakeOffNum = 3;
 					break;
 				}
 				playerImgNum = 16;
-				playerImgFly = 0;
+				playerImgTakeOffNum = 0;
 				break;
 			case 3:
-				playerImgNum = 19;
+				
 				playerImgFlyFlg = FALSE;
-				playerImgFly = 0;
+				playerImgTakeOffNum = 0;
 				playerImgFpsCnt = 0;
+				playerLocationY += playerMoveY;
 				return TRUE;
 				break;
 			}
 		}
+		playerLocationY += playerMoveY;
 		return FALSE;
 	}
 	return FALSE;
+}
+
+int Player::PlayerFlyAnim()
+{
+
+	//playerImgNum = 17;
+
+	/*if (playerImgNum >= 18) {
+		playerImgNum = 17;
+	}
+	else if (playerImgNum == 17) {
+		playerImgNum = 16;
+	}
+	else if (playerImgNum == 16) {
+		playerImgNum = 17;
+	}*/
+
+	if (playerImgFpsCnt % flapInterval == 0) {
+
+		switch (playerImgNum)
+		{
+		case 17:
+			playerImgNum = 16;
+			break;
+		case 16:
+			playerImgNum = 17;
+			playerImgFpsCnt = 0;
+			return TRUE;
+			break;
+		default:
+			playerImgNum = 17;
+			break;
+		}
+	}
+	return FALSE;
+	
 }
