@@ -385,7 +385,7 @@ void Player::PlayerMoveY()
 			
 		}
 
-		if (count < 21 && (/*flyButtonFlg == TRUE*/interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A))) {
+		if (count < 21 && (interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A))) {
 			count += 3;
 			playerMoveY = -2;
 		}

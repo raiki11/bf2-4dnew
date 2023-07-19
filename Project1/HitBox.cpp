@@ -42,9 +42,9 @@ int HitBox::PlayerAndStageUnder(Player p, Stage s)
 
 int HitBox::PlayerAndStageTop(Player p, Stage s)
 {
-	px0 = p.GetPlayerLocationX() - 25;
+	px0 = p.GetPlayerLocationX() - 22;
 	py0 = p.GetPlayerLocationY() - 22;
-	px1 = p.GetPlayerLocationX() + 25;
+	px1 = p.GetPlayerLocationX() + 22;
 	py1 = p.GetPlayerLocationY() - 22;
 
 	for (int i = 0; i < 6; i += 2) {
