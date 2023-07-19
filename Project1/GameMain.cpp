@@ -3,6 +3,7 @@
 #include"PadInput.h"
 #include "Stage.h"
 
+#include "UI.h"
 GameMain::GameMain()
 {
 	PauseFlg = FALSE;
@@ -23,49 +24,46 @@ AbstractScene* GameMain::Update()
 	}
 	//ポーズ中でないとき
 	if (PauseFlg == FALSE) {
-		//
-	}
+		// PHASE点滅カウント
+		UI.Update();
+		// ゲームメイン処理
+		player.PlayerUpdate();
+		enemy.EnemyUpdate(player);
+		if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
+			player.SetFlyingFlg(FALSE);
+		}
+		else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
+			player.SetFlyingFlg(TRUE);
+		}
 
-	player.PlayerUpdate();
-	enemy.EnemyUpdate(player);
-	fish.FishUpdate(player,enemy);
-	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
-		player.SetFlyingFlg(FALSE);
-	}
-	else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
-		player.SetFlyingFlg(TRUE);
-	}
+		if (hit.PlayerAndStageTop(player, stage) == TRUE) {
+			player.SetReboundFlgStageY(TRUE);
+		}
+		else if (hit.PlayerAndStageTop(player, stage) == FALSE) {
+			player.SetReboundFlgStageY(FALSE);
+		}
 
-	if (hit.PlayerAndStageTop(player, stage) == TRUE) {
-		player.SetReboundFlgStageY(TRUE);
-	}
-	else if (hit.PlayerAndStageTop(player, stage) == FALSE) {
-		player.SetReboundFlgStageY(FALSE);
-	}
-
-	if (hit.PlayerAndStageRight(player, stage) == TRUE) {
-		player.SetReboundFlgStageX(TRUE);
-	}
-	else if (hit.PlayerAndStageLeft(player, stage) == FALSE) {
-		player.SetReboundFlgStageX(FALSE);
-	}
-	
-	if (hit.PlayerAndStageLeft(player, stage) == TRUE) {
-		player.SetReboundFlgStageX(TRUE);
-	}
-	else if (hit.PlayerAndStageLeft(player, stage) == FALSE) {
-		if (player.GetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
+		if (hit.PlayerAndStageRight(player, stage) == TRUE) {
 			player.SetReboundFlgStageX(TRUE);
 		}
-		else {
+		else if (hit.PlayerAndStageLeft(player, stage) == FALSE) {
 			player.SetReboundFlgStageX(FALSE);
 		}
-	}
-	
 
+		if (hit.PlayerAndStageLeft(player, stage) == TRUE) {
+			player.SetReboundFlgStageX(TRUE);
+		}
+		else if (hit.PlayerAndStageLeft(player, stage) == FALSE) {
+			if (player.GetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
+				player.SetReboundFlgStageX(TRUE);
+			}
+			else {
+				player.SetReboundFlgStageX(FALSE);
+			}
+		}
+	}
 	return this;
 }
-
 void GameMain::Draw() const
 {
 	if (PauseFlg == TRUE) {
@@ -78,7 +76,7 @@ void GameMain::Draw() const
 	}
 	player.PlayerDraw();
 	enemy.EnemyDraw();
-
+	
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	stage.DrawStage();
 	UI.DrawUI();
