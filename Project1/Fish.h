@@ -22,6 +22,10 @@ public:
 
 	int FishProbability();  // サカナの出現確率の関数
 
+	void FishUpAnimation(); // サカナの上がるアニメーション
+	void FishDownAnimation(); // サカナの下がるアニメーション
+	void FishHitAnimation(); // サカナに当たった時のアニメーション
+
 	int sakana;       // 確率結果を入れる変数
 	int FishImg[10];   // 画像を入れる配列 
 
