@@ -69,20 +69,20 @@ void GameMain::Draw() const
 {
 	if (PauseFlg == TRUE) {
 		DrawFormatString(0, 0, 0xffffff, "Pause");
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 0);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 0);	// ポーズ中に消したい描画↓
 	}
 	else 
 	{ 
 		DrawFormatString(0, 0, 0xffffff, "ゲームメイン"); 
 	}
+	
 	player.PlayerDraw();
 	enemy.EnemyDraw();
-	
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	fish.FishDraw(player);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		// ポーズ中に消したい描画↑
 	stage.DrawStage();
 	UI.DrawUI();
 	hit.DrawHitBox();
-	enemy.EnemyDraw();
-	fish.FishDraw(player);
+	//enemy.EnemyDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }
