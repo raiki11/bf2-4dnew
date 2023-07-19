@@ -348,7 +348,7 @@ void Player::PlayerMoveY()
 			playerMoveY = -2;
 		}
 
-		if (count < 21 && (interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A))) {
+		if (count < 21 && (/*flyButtonFlg == TRUE*/interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A))) {
 			count += 3;
 			playerMoveY = -2;
 		}
@@ -470,7 +470,7 @@ void Player::PlayerMoveY()
 	playerImgFpsCnt++;
 }
 
-void Player::PlayerFlyAnim()
+int Player::PlayerFlyAnim()
 {
 	if (playerImgFlyFlg == TRUE) {
 		if (playerImgFpsCnt % 2 == 0) {
@@ -507,8 +507,11 @@ void Player::PlayerFlyAnim()
 				playerImgFlyFlg = FALSE;
 				playerImgFly = 0;
 				playerImgFpsCnt = 0;
+				return TRUE;
 				break;
 			}
 		}
+		return FALSE;
 	}
+	return FALSE;
 }

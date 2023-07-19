@@ -45,7 +45,7 @@ public:
 	void PlayerMoveX();
 	void PlayerMoveY();
 
-	void PlayerFlyAnim();
+	int PlayerFlyAnim();
 
 	float GetPlayerLocationX() { return playerLocationX; }
 	float GetPlayerLocationY() { return playerLocationY; }
