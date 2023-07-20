@@ -22,7 +22,7 @@ Fish::~Fish()
 void Fish::FishUpdate(Player p , Enemy e)
 {
 	/* プレイヤーがサカナの稼働エリアに入った時 */
-	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY()) {// プレイヤーがサカナの範囲に入った時
+	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
 		if (PFlg == 0) {
 			PFlg = 1;
 		}
@@ -54,13 +54,14 @@ void Fish::FishUpdate(Player p , Enemy e)
 	}
 	
 	if (PFlg == 3) {      // フィッシュフラグがサカナを下げるフラグになった時
-
+		//FishY += 2;             // フィッシュを下に下げる
 		/* アニメーション処理 */
 		FishDownAnimation();
 		if (i == 5) {
 			i = 10;
 			PFlg = 0;
 			FishFlg = 0;     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
+			fpscount = 0;
 		}
 	}
 
@@ -128,7 +129,7 @@ int Fish::FishProbability()
 void Fish::FishUpAnimation()
 {
 	Time;
-	
+	if (i == 10) i = 0;   // サカナが出てないときiをリセットする
 
 	if (i < 2 && ++Time % 20 == 0) {
 		i++;
