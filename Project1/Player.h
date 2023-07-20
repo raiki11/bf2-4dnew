@@ -10,7 +10,10 @@ private:
 	float fallLimit;
 
 	int remainBalloon;
-	
+	int deathFlg;
+	int playerLife;
+	int splashFlg;
+
 	int fps;
 	int flyButtonFlg;
 	int rButtonFlg, lButtonFlg;
@@ -34,11 +37,14 @@ private:
 	int flapInterval;
 
 	int playerImg[32];
+	int splashImg[3];
 	int playerImgNum;
 	int playerImgReturnFlg;
 	int playerImgFpsCnt;
 	int playerImgTakeOffNum;
 	int playerImgFlyFlg;
+
+	int splashNum;
 public:
 	Player();
 	~Player();
@@ -54,6 +60,8 @@ public:
 	int PlayerWaitAnim();
 	int PlayerWalkAnim();
 	int PlayerFlyingAnim();
+	int PlayerDeathAnim();
+	int PlayerSplashAnim();
 
 	float GetPlayerLocationX() { return playerLocationX; }
 	float GetPlayerLocationY() { return playerLocationY; }
@@ -63,6 +71,7 @@ public:
 	int GetReboundFlgStageX() { return reboundFlgStageX; }
 	int GetReboundFrameCntX() { return reboundFrameCntX; }
 	float GetPlayerMoveX() { return playerMoveX; }
+	int GetPlayerLife() { return playerLife; }
 
 	void SetFlyingFlg(int f)
 	{

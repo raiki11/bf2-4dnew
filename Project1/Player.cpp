@@ -13,6 +13,9 @@ Player::Player()
 	fallLimit = 1.0f;
 
 	remainBalloon = 2;
+	deathFlg = FALSE;
+	playerLife = 2;
+	splashFlg = FALSE;
 
 	fps = 0;
 	count = 0;
@@ -24,6 +27,7 @@ Player::Player()
 	flapInterval = 3;
 
 	LoadDivGraph("images/Player/Player_Animation.png", 32, 8, 4, 64, 64, playerImg);
+	LoadDivGraph("images/Stage/Stage_SplashAnimation.png", 3, 3, 1, 64, 32, splashImg);
 	playerImgNum = 0;
 	playerImgReturnFlg = TRUE;
 	playerImgFpsCnt = 0;
@@ -34,6 +38,7 @@ Player::Player()
 	reboundFlgStageX = FALSE;
 	reboundFrameCntX = 0;
 
+	splashNum = 99;
 }
 
 Player::~Player()
@@ -42,50 +47,69 @@ Player::~Player()
 
 void Player::PlayerUpdate()
 {
-	
-	//飛んでる時の処理
-	if (flyingFlg == FALSE) {
-		PlayerMoveX();
-	}
-	//歩いているときの処理
-	else if (flyingFlg == TRUE) {
-		PlayerMoveX();
-		PlayerMoveY();
-	}
-	
-	if (takeOffFlg == TRUE) {
-		playerMoveY = -0.5;
-		if (PlayerTakeOffAnim() == TRUE) {
-			takeOffFlg = FALSE;
-			//playerMoveY = 1;
+	if (deathFlg == TRUE) {
+		
+		if (PlayerDeathAnim() == TRUE) {
+			deathFlg = FALSE;
+			playerLocationX = 320;
+			playerLocationY = 140;
+			playerMoveX = 0;
+			playerMoveY = 1.0f;
+			remainBalloon = 2;
+			splashNum = 99;
+			playerLife--;
 		}
 	}
-	
-	if (flapFlg == TRUE && takeOffFlg == FALSE) {
-		if (PlayerFlyAnim() == TRUE) {
-			flapFlg = FALSE;
+	else {
+		//飛んでる時の処理
+		if (flyingFlg == FALSE) {
+			PlayerMoveX();
+		}
+		//歩いているときの処理
+		else if (flyingFlg == TRUE) {
+			PlayerMoveX();
+			PlayerMoveY();
+		}
+
+		if (takeOffFlg == TRUE) {
+			playerMoveY = -0.5;
+			if (PlayerTakeOffAnim() == TRUE) {
+				takeOffFlg = FALSE;
+				//playerMoveY = 1;
+			}
+		}
+
+		if (flapFlg == TRUE && takeOffFlg == FALSE) {
+			if (PlayerFlyAnim() == TRUE) {
+				flapFlg = FALSE;
+			}
+		}
+
+		/***移動制限　ここから***/
+
+		if (playerLocationX > 640) {
+			playerLocationX = 0;
+		}
+		if (playerLocationX < 0) {
+			playerLocationX = 640;
+		}
+
+		/***移動制限　ここまで***/
+
+
+		SetRemainBalloon();
+		SetFallLimit();
+
+		if (remainBalloon == 0 || playerLocationY > 500) {
+			deathFlg = TRUE;
 		}
 	}
-
-	/***移動制限　ここから***/
-
-	if (playerLocationX > 640) {
-		playerLocationX = 0;
-	}
-	if (playerLocationX < 0) {
-		playerLocationX = 640;
-	}
-
-	/***移動制限　ここまで***/
-
-
-	SetRemainBalloon();
-	SetFallLimit();
 }
 
 void Player::PlayerDraw() const
 {
 	DrawRotaGraph(playerLocationX, playerLocationY, 1.0f, 0, playerImg[playerImgNum], TRUE, playerImgReturnFlg);
+	DrawRotaGraph(playerLocationX, 430, 1.0f, 0, splashImg[splashNum], TRUE, FALSE);
 	DrawCircle(playerLocationX, playerLocationY, 4, 0xff0000, TRUE);
 	DrawFormatString(0, 40, 0xffffff, "count::%d", count);
 	DrawFormatString(0, 55, 0xffffff, "flyButtonFlg::%d", flyButtonFlg);
@@ -698,6 +722,53 @@ int Player::PlayerFlyingAnim()
 	return 0;
 }
 
+int Player::PlayerDeathAnim()
+{
+	if (playerImgNum < 21 || playerImgNum > 23) {
+		playerImgNum = 21;
+		playerMoveY = -2;
+		playerImgFpsCnt = 0;
+	}
+
+	if (playerImgFpsCnt++ % 5 == 0) {
+		if (++playerImgNum > 23 || playerImgNum < 21) {
+			playerImgNum = 21;
+		}
+	}
+
+	if (playerImgFpsCnt > 10) {
+		playerMoveY += 0.1f;
+		if (playerMoveY > 5.0f) {
+			playerMoveY = 5.0f;
+		}
+	}
+
+	
+	playerLocationY += playerMoveY;
+
+	if (playerLocationY > 500) {
+		if (PlayerSplashAnim() == TRUE) {
+			return TRUE;
+		}
+	}
+
+	return 0;
+}
+
+int Player::PlayerSplashAnim()
+{
+	if (splashNum == 99) {
+		splashNum = 0;
+	}
+	if (playerImgFpsCnt % 5 == 0) {
+		if (splashNum++ > 3) {
+			return TRUE;
+		}
+	}
+
+	return 0;
+}
+
 void Player::SetFallLimit()
 {
 	if (remainBalloon == 2) {
@@ -716,5 +787,9 @@ void Player::SetRemainBalloon()
 
 	if (CheckHitKey(KEY_INPUT_2) == TRUE) {
 		remainBalloon = 2;
+	}
+
+	if (CheckHitKey(KEY_INPUT_0) == TRUE) {
+		remainBalloon = 0;
 	}
 }

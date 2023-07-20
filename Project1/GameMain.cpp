@@ -26,7 +26,7 @@ AbstractScene* GameMain::Update()
 	//ポーズ中でないとき
 	if (PauseFlg == FALSE) {
 		// PHASE点滅カウント
-		UI.Update();
+		UI.Update(player.GetPlayerLife());
 		// ゲームメイン処理
 		player.PlayerUpdate();
 		enemy.EnemyUpdate(player);
