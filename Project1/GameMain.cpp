@@ -56,7 +56,7 @@ AbstractScene* GameMain::Update()
 	if (hit.PlayerAndStageRight(player, stage) == TRUE) {
 		player.SetReboundFlgStageX(TRUE);
 	}
-	else if (hit.PlayerAndStageLeft(player, stage) == FALSE) {
+	else if (hit.PlayerAndStageRight(player, stage) == FALSE) {
 		player.SetReboundFlgStageX(FALSE);
 	}
 	

@@ -7,8 +7,9 @@ class Player
 private:
 	float playerLocationX, playerLocationY;
 	float playerMoveX, playerMoveY;
+	float fallLimit;
 
-	int balloonNum;
+	int remainBalloon;
 	
 	int fps;
 	int flyButtonFlg;
@@ -32,7 +33,7 @@ private:
 	int flapFlg;
 	int flapInterval;
 
-	int playerImg[24];
+	int playerImg[32];
 	int playerImgNum;
 	int playerImgReturnFlg;
 	int playerImgFpsCnt;
@@ -50,6 +51,9 @@ public:
 
 	int PlayerTakeOffAnim();
 	int PlayerFlyAnim();
+	int PlayerWaitAnim();
+	int PlayerWalkAnim();
+	int PlayerFlyingAnim();
 
 	float GetPlayerLocationX() { return playerLocationX; }
 	float GetPlayerLocationY() { return playerLocationY; }
@@ -79,5 +83,7 @@ public:
 		playerImgFpsCnt = n;
 	}
 
+	void SetFallLimit();
+	void SetRemainBalloon();
 };
 
