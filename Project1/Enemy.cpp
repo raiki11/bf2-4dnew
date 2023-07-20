@@ -40,50 +40,17 @@ void Enemy::EnemyUpdate(Player P)
 		EnemyMoveX(P);
 	}
 
+
 	if (CheckHitKey(KEY_INPUT_A) == TRUE) {
 		cflg = TRUE;
 	}
 
 	if (cflg == TRUE) {
-
-		switch (swy)
-		{
-		case 0:
-			cy -= 2.5;
-			cycount++;
-			if (cycount > 12) {
-				swy += 1;
-				cycount = 0;
-			}
-			break;
-		case 1:
-			cy += 0.5;
-			cycount++;
-			if (cycount > 18)swy += 1;
-		case 2:
-			cy+=3;
-			if (cy >= 300)swy += 1;
-			break;
-		default:
-			break;
-		}
-
-		//敵やられたときのモーション
-		if (changeCt <= 5) {
-			++changeCt;
-			changeimg = 13;
-		}
-		if (changeCt >= 6) {
-			++changeCt;
-			changeimg = 14;
-		}
-		if (changeCt == 12) {
-			changeCt = 0;
-		}
+		EDeadAnim();
 	}
-	
 	//デバッグ用
-	
+	//DebagHit(P);
+
 }
 
 void Enemy::EnemyDraw() const
@@ -91,20 +58,25 @@ void Enemy::EnemyDraw() const
 	/*DrawCircle(enemyLocationX, enemyLocationY, 4, 0x00ff00, TRUE);*/
 	/*DrawGraph(enemyLocationX, enemyLocationY, img[i], TRUE);*/
 
-	//DrawRotaGraph(ELocationX, ELocationY, 1.0f,0,img[i], TRUE, Flag);
+	if (cflg == TRUE) {
+		DrawRotaGraph(ELocationX, ELocationY + cy, 1.0f, 0, img[changeimg], TRUE, Flag);
 
+	}
+	else {
+		DrawRotaGraph(ELocationX, ELocationY, 1.0f, 0, img[i], TRUE, Flag);
 
+	}
 
 	//デバッグ用
 	//DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
 	//DrawFormatString(0, 160, 0xffffff, "time::%d", time);
 	//DrawFormatString(0, 175, 0xffffff, "i::%d", i);
 	//DrawFormatString(0, 300, 0xffffff, "changeimg::%d", changeimg);
-	DrawFormatString(0, 300, 0xffffff, "fpscount::%d", fpscount);
-	DrawFormatString(0, 340, 0xffffff, "cy::%d", cy);
-	DrawFormatString(0, 380, 0xffffff, "swy::%d", swy);
 
-	DrawRotaGraph(ELocationX, ELocationY + cy, 1.0f, 0, img[changeimg], TRUE, Flag);
+
+	//DrawFormatString(0, 300, 0xffffff, "swy::%d", swy);
+	
+
 
 }
 
@@ -147,8 +119,10 @@ void Enemy::EnemyMoveX(Player P)
 		EMoveX = -1;
 	}
 
-	
-	ELocationX += EMoveX;
+	if (cflg == FALSE) {
+		ELocationX += EMoveX;
+
+	}
 }
 
 void Enemy::EAnimation()
@@ -166,13 +140,57 @@ void Enemy::EAnimation()
 		if (i == 13) {
 		i = 8;
 		}
-		
-		
-	
-
-
 	
 }
 
+void Enemy::EDeadAnim() {
 
 
+		switch (swy)
+		{
+		case 0:
+			cycount++;
+			cy -= 2.8;
+			if (cycount > 9) {
+				swy += 1;
+				cycount = 0;
+			}
+			break;
+		case 1:
+			cycount++;
+			if (cycount > 6) {
+					cy += 3;
+			}
+			if (cy >= 300)swy += 1;
+			break;
+		default:
+			break;
+		}
+
+		//敵やられたときのモーション
+		if (changeCt <= 5) {
+			++changeCt;
+			changeimg = 13;
+		}
+		if (changeCt >= 6) {
+			++changeCt;
+			changeimg = 14;
+		}
+		if (changeCt == 12) {
+			changeCt = 0;
+		}
+	
+}
+
+void Enemy::DebagHit(Player P) {
+	float Ex = ELocationX;
+	float Exwidth = ELocationX + 64;
+
+	float px = P.GetPlayerLocationX();
+	float pxwidth = px + 64;
+
+	if (Ex<=pxwidth && Exwidth>=px) {
+		cflg = TRUE;
+
+	}
+}
