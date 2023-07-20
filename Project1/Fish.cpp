@@ -49,8 +49,8 @@ void Fish:: FishDraw(Player p) const
 		DrawRotaGraph(FishX, FishY, 1.0, 0, FishImg[i], TRUE, FALSE);
 	}
 	/* デバック用 */
-	DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", p.GetPlayerLocationX());
-	DrawFormatString(0, 230, 0xffffff, "fishLocationY::%d", FishY);
+	/*DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", p.GetPlayerLocationX());
+	DrawFormatString(0, 230, 0xffffff, "fishLocationY::%d", FishY);*/
 }
 
 int Fish::FishProbability() 
