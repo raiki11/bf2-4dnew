@@ -30,19 +30,10 @@ AbstractScene* GameMain::Update()
 		// ÉQÅ[ÉÄÉÅÉCÉìèàóù
 		player.PlayerUpdate();
 		enemy.EnemyUpdate(player);
-
-		if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
-			player.SetFlyingFlg(FALSE);
-		}
-		else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
-			player.SetFlyingFlg(TRUE);
-		}
-		//
+		fish.FishUpdate(player, enemy);
 	}
 
-	player.PlayerUpdate();
-	enemy.EnemyUpdate(player);
-	fish.FishUpdate(player,enemy);
+	
 
 	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
 		//if (player.GetTakeOffFlg() == FALSE) {
@@ -59,12 +50,12 @@ AbstractScene* GameMain::Update()
 		player.SetFlyingFlg(TRUE);
 	}
 
-		if (hit.PlayerAndStageTop(player, stage) == TRUE) {
-			player.SetReboundFlgStageY(TRUE);
-		}
-		else if (hit.PlayerAndStageTop(player, stage) == FALSE) {
-			player.SetReboundFlgStageY(FALSE);
-		}
+	if (hit.PlayerAndStageTop(player, stage) == TRUE) {
+		player.SetReboundFlgStageY(TRUE);
+	}
+	else if (hit.PlayerAndStageTop(player, stage) == FALSE) {
+		player.SetReboundFlgStageY(FALSE);
+	}
 
 	if (hit.PlayerAndStageRight(player, stage) == TRUE) {
 		player.SetReboundFlgStageX(TRUE);
@@ -84,61 +75,41 @@ AbstractScene* GameMain::Update()
 			player.SetReboundFlgStageX(FALSE);
 		}
 	}
-	
 
-		if (hit.PlayerAndStageRight(player, stage) == TRUE) {
-			player.SetReboundFlgStageX(TRUE);
-		}
-		else if (hit.PlayerAndStageRight(player, stage) == FALSE) {
-			player.SetReboundFlgStageX(FALSE);
-		}
 
-		if (hit.PlayerAndStageLeft(player, stage) == TRUE) {
-			player.SetReboundFlgStageX(TRUE);
-		}
-		else if (hit.PlayerAndStageLeft(player, stage) == FALSE) {
-			if (player.GetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
-				player.SetReboundFlgStageX(TRUE);
-			}
-			else {
-				player.SetReboundFlgStageX(FALSE);
-			}
-		}
+	//ìGÇÃìñÇΩÇËîªíË
 
-		//ìGÇÃìñÇΩÇËîªíË
+	if (hit.EnemyAndStageUnder(enemy, stage) == TRUE) {
+		enemy.ESetFlyingFlg(TRUE);
+	}
+	else if (hit.EnemyAndStageUnder(enemy, stage) == FALSE) {
+		enemy.ESetFlyingFlg(FALSE);
 
-		if (hit.EnemyAndStageUnder(enemy, stage) == TRUE) {
-			enemy.ESetFlyingFlg(TRUE);
-		}
-		else if (hit.EnemyAndStageUnder(enemy, stage) == FALSE) {
-			enemy.ESetFlyingFlg(FALSE);
-
-		}
+	}
 		
-		if (hit.EnemyAndStageTop(enemy, stage) == TRUE) {
-			enemy.ESetReboundFlgStageY(TRUE);
-		}
-		else if (hit.EnemyAndStageTop(enemy, stage) == FALSE) {
-			enemy.ESetReboundFlgStageY(FALSE);
-		}
+	if (hit.EnemyAndStageTop(enemy, stage) == TRUE) {
+		enemy.ESetReboundFlgStageY(TRUE);
+	}
+	else if (hit.EnemyAndStageTop(enemy, stage) == FALSE) {
+		enemy.ESetReboundFlgStageY(FALSE);
+	}
 
-		if (hit.EnemyAndStageRight(enemy, stage) == TRUE) {
+	if (hit.EnemyAndStageRight(enemy, stage) == TRUE) {
+		enemy.ESetReboundFlgStageX(TRUE);
+	}
+	else if (hit.EnemyAndStageRight(enemy, stage) == FALSE) {
+		enemy.ESetReboundFlgStageX(FALSE);
+	}
+
+	if (hit.EnemyAndStageLeft(enemy, stage) == TRUE) {
+		enemy.ESetReboundFlgStageX(TRUE);
+	}
+	else if (hit.EnemyAndStageLeft(enemy, stage) == FALSE) {
+		if (enemy.EGetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
 			enemy.ESetReboundFlgStageX(TRUE);
 		}
-		else if (hit.EnemyAndStageRight(enemy, stage) == FALSE) {
+		else {
 			enemy.ESetReboundFlgStageX(FALSE);
-		}
-
-		if (hit.EnemyAndStageLeft(enemy, stage) == TRUE) {
-			enemy.ESetReboundFlgStageX(TRUE);
-		}
-		else if (hit.EnemyAndStageLeft(enemy, stage) == FALSE) {
-			if (enemy.EGetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
-				enemy.ESetReboundFlgStageX(TRUE);
-			}
-			else {
-				enemy.ESetReboundFlgStageX(FALSE);
-			}
 		}
 	}
 	return this;
