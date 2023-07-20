@@ -8,7 +8,7 @@
 
 Fish::Fish()
 {
-	LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 10, 6, 2, 64, 64, FishImg);
+	LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 11, 6, 2, 64, 64, FishImg);
 	Time = 0;
 	fpscount = 0;
 	i = 0;
@@ -22,7 +22,7 @@ Fish::~Fish()
 void Fish::FishUpdate(Player p , Enemy e)
 {
 	/* プレイヤーがサカナの稼働エリアに入った時 */
-	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
+	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY()) {// プレイヤーがサカナの範囲に入った時
 		if (PFlg == 0) {
 			PFlg = 1;
 		}
@@ -42,23 +42,25 @@ void Fish::FishUpdate(Player p , Enemy e)
 	else fpscount = 0;
 
 	if (FishFlg == 1 && PFlg == 2) {      // フィッシュフラグがサカナを上げるフラグになった時
-		FishY -= 2;             // フィッシュを上に上げる
 		/* アニメーション処理 */
 		FishUpAnimation();
-		if (p.GetPlayerLocationX() == FishX && p.GetPlayerLocationY() == FishY) {
+		/*if (p.GetPlayerLocationX() == FishX && p.GetPlayerLocationY() == FishY) {
 			FishHitAnimation();
-		}
-		if (FishY == 420) {  // フィッシュのY座標が４２０になった時
-			FishFlg = 2;     // フィッシュフラグをサカナが下がるフラグに変更
+			
+		}*/
+		if (i == 2) {
+			PFlg = 3;
 		}
 	}
 	
-	if (FishFlg == 2) {      // フィッシュフラグがサカナを下げるフラグになった時
-		FishY += 2;             // フィッシュを下に下げる
+	if (PFlg == 3) {      // フィッシュフラグがサカナを下げるフラグになった時
+
 		/* アニメーション処理 */
-		if (FishY == 500) {  // フィッシュのY座標が５００になった時
-			FishFlg = 0;     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
+		FishDownAnimation();
+		if (i == 5) {
+			i = 10;
 			PFlg = 0;
+			FishFlg = 0;     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
 		}
 	}
 
@@ -125,20 +127,20 @@ int Fish::FishProbability()
 
 void Fish::FishUpAnimation()
 {
-	/*++Time;
-	fpscount = 0;*/
+	Time;
+	
 
-	if (i < 2 /*&& ++fpscount % 20 == 0*/) {
+	if (i < 2 && ++Time % 20 == 0) {
 		i++;
 	}
 }
 
 void Fish::FishDownAnimation()
 {
-	i = 3;
+	
 	++Time;
 
-	if (i < 6) {
+	if (i < 5 && Time % 20 == 0) {
 		++i;
 	}
 }
