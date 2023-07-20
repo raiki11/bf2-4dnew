@@ -9,6 +9,7 @@ GameMain::GameMain()
 {
 	PauseFlg = FALSE;
 	a = 0;
+	
 }
 
 GameMain::~GameMain()

@@ -26,7 +26,7 @@ private:
     
     int a;
     int reboundFlg;
-
+   
 public:
 
     // コンストラクタ

@@ -1,6 +1,7 @@
 #include "UI.h"
 #include "DxLib.h"
 #include "FPS.h"
+#include "Enemy.h"
 int UI:: m_DrawCount;
 int UI::b;
 UI::UI()
@@ -17,6 +18,7 @@ UI::UI()
 	i = 0;
 	Flag = FALSE;	
 	b = 0;
+	
 }
 
 UI::~UI()
@@ -71,6 +73,8 @@ void UI::DrawUI() const
 	
 	// ƒ‰ƒCƒt
 	DrawGraph(130, 50, stock, TRUE);
+
+
 
 	//DrawFormatString(80, 30, 0xffffff, "%06d", p_score);
 	//DrawFormatString(270, 30, 0xffffff, "%06d", p_top);

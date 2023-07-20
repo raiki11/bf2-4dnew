@@ -16,7 +16,7 @@ private:
 
 	int img[24];
 	
-
+	int Epoint;
 public:
 	Enemy();
 	~Enemy();
