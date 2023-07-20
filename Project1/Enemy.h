@@ -37,7 +37,8 @@ public:
 
 	void EDeadAnim();
 
-	void DebagHit(Player P);//デバック用
+	//敵が死ぬアニメーションになるか確認する用
+	void DebagHit(Player P);
 
 	float GetEnemyLocationX() { return ELocationX; }
 	float GetEnemyLocationY() { return ELocationY; }
