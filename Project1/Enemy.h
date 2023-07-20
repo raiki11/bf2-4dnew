@@ -18,6 +18,8 @@ private:
 	int flyingFlg;
 
 	int img[24];
+	
+	int Epoint;
 	int cnt;
 
 public:
