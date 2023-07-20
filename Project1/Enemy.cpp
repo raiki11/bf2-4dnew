@@ -70,24 +70,24 @@ void Enemy::EnemyDraw() const
 	else {
 		DrawRotaGraph(ELocationX, ELocationY, 1.0f, 0, img[i], TRUE, Flag);
 
-	DrawFormatString(ELocationX-15 , ELocationY-30, GetColor(255, 0, 0), "%03d", Epoint);
-	//デバッグ用
-	//DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
-	//DrawFormatString(0, 160, 0xffffff, "time::%d", time);
-	//DrawFormatString(0, 175, 0xffffff, "i::%d", i);
-	if (reboundFlgStageY == TRUE) {
-		DrawFormatString(0, 205, 0xffffff, "Y:TRUE");
+		DrawFormatString(ELocationX - 15, ELocationY - 30, GetColor(255, 0, 0), "%03d", Epoint);
+		//デバッグ用
+		//DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
+		//DrawFormatString(0, 160, 0xffffff, "time::%d", time);
+		//DrawFormatString(0, 175, 0xffffff, "i::%d", i);
+		if (reboundFlgStageY == TRUE) {
+			DrawFormatString(0, 205, 0xffffff, "Y:TRUE");
+		}
+		else {
+			DrawFormatString(0, 205, 0xffffff, "Y:FALSE");
+		}
+		if (reboundFlgStageX == TRUE) {
+			DrawFormatString(0, 220, 0xffffff, "X:TRUE");
+		}
+		else {
+			DrawFormatString(0, 220, 0xffffff, "X:FALSE");
+		}
 	}
-	else {
-		DrawFormatString(0, 205, 0xffffff, "Y:FALSE");
-	}
-	if (reboundFlgStageX == TRUE) {
-		DrawFormatString(0, 220, 0xffffff, "X:TRUE");
-	}
-	else {
-		DrawFormatString(0, 220, 0xffffff, "X:FALSE");
-	}
-
 }
 
 void Enemy::EnemyMoveX(Player P)
