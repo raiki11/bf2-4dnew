@@ -5,6 +5,9 @@
 #include "Fish.h"
 
 #include "UI.h"
+
+Enemy* enemy[6];
+
 GameMain::GameMain()
 {
 	PauseFlg = FALSE;
@@ -41,14 +44,6 @@ AbstractScene* GameMain::Update()
 	}
 
 	
-
-		
-	}
-
-
-
-
-
 	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
 		//if (player.GetTakeOffFlg() == FALSE) {
 			player.SetFlyingFlg(FALSE);
@@ -90,44 +85,47 @@ AbstractScene* GameMain::Update()
 		}
 	}
 
-
-	//“G‚Ì“–‚½‚è”»’è
-
-	if (hit.EnemyAndStageUnder(enemy, stage) == TRUE) {
-		enemy.ESetFlyingFlg(TRUE);
-	}
-	else if (hit.EnemyAndStageUnder(enemy, stage) == FALSE) {
-		enemy.ESetFlyingFlg(FALSE);
-
-	}
-		
-	if (hit.EnemyAndStageTop(enemy, stage) == TRUE) {
-		enemy.ESetReboundFlgStageY(TRUE);
-	}
-	else if (hit.EnemyAndStageTop(enemy, stage) == FALSE) {
-		enemy.ESetReboundFlgStageY(FALSE);
-	}
-
-	if (hit.EnemyAndStageRight(enemy, stage) == TRUE) {
-		enemy.ESetReboundFlgStageX(TRUE);
-	}
-	else if (hit.EnemyAndStageRight(enemy, stage) == FALSE) {
-		enemy.ESetReboundFlgStageX(FALSE);
-	}
-
-	if (hit.EnemyAndStageLeft(enemy, stage) == TRUE) {
-		enemy.ESetReboundFlgStageX(TRUE);
-	}
-	else if (hit.EnemyAndStageLeft(enemy, stage) == FALSE) {
-		if (enemy.EGetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
-			enemy.ESetReboundFlgStageX(TRUE);
+	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+		//“G‚Ì“–‚½‚è”»’è
+		if (hit.EnemyAndStageUnder(enemy[i][i], stage) == TRUE) {
+			enemy[i]->ESetFlyingFlg(TRUE);
 		}
-		else {
-			enemy.ESetReboundFlgStageX(FALSE);
+		else if (hit.EnemyAndStageUnder(enemy[i][i], stage) == FALSE) {
+			enemy[i]->ESetFlyingFlg(FALSE);
+
+		}
+
+		if (hit.EnemyAndStageTop(enemy[i][i], stage) == TRUE) {
+			enemy[i]->ESetReboundFlgStageY(TRUE);
+		}
+		else if (hit.EnemyAndStageTop(enemy[i][i], stage) == FALSE) {
+			enemy[i]->ESetReboundFlgStageY(FALSE);
+		}
+
+		if (hit.EnemyAndStageRight(enemy[i][i], stage) == TRUE) {
+			enemy[i]->ESetReboundFlgStageX(TRUE);
+		}
+		else if (hit.EnemyAndStageRight(enemy[i][i], stage) == FALSE) {
+			enemy[i]->ESetReboundFlgStageX(FALSE);
+		}
+
+		if (hit.EnemyAndStageLeft(enemy[i][i], stage) == TRUE) {
+			enemy[i]->ESetReboundFlgStageX(TRUE);
+		}
+		else if (hit.EnemyAndStageLeft(enemy[i][i], stage) == FALSE) {
+			if (enemy[i]->EGetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
+				enemy[i]->ESetReboundFlgStageX(TRUE);
+			}
+			else {
+				enemy[i]->ESetReboundFlgStageX(FALSE);
+			}
 		}
 	}
+	
 	return this;
 }
+
+
 void GameMain::Draw() const
 {
 	if (PauseFlg == TRUE) {

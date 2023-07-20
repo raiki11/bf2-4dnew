@@ -19,7 +19,7 @@ private:
     UI UI;
     //ƒQ[ƒ€ƒƒCƒ“‚Åg‚¤•Ï”‚ÌéŒ¾
     Player player;
-    Enemy* enemy[6];
+    //Enemy enemy;
 
     //Enemy enemy2;
     //Enemy enemy3;

@@ -55,7 +55,7 @@ void Enemy::EnemyUpdate(Player P)
 		EDeadAnim();
 	}
 	//デバッグ用
-	//DebagHit(P);
+	DebagHit(P);
 
 }
 
@@ -140,12 +140,13 @@ void Enemy::EnemyMoveX(Player P)
 		EMoveX = -1 * EMoveX*10;
 
 	}
-	ELocationX += EMoveX;
-}
 	if (cflg == FALSE) {
+		ELocationX += EMoveX;
 
 	}
 }
+
+
 
 void Enemy::EnemyMoveY(Player P)
 {
@@ -254,11 +255,16 @@ void Enemy::EDeadAnim() {
 void Enemy::DebagHit(Player P) {
 	float Ex = ELocationX;
 	float Exwidth = ELocationX + 64;
+	float Ey = ELocationY;
+	float Eywidth = ELocationY + 64;
 
 	float px = P.GetPlayerLocationX();
 	float pxwidth = px + 64;
+	float py = P.GetPlayerLocationY();
+	float pywidth = py + 64;
 
-	if (Ex<=pxwidth && Exwidth>=px) {
+
+	if (Ex<=pxwidth && Exwidth>=px &&Ey<=pywidth && Eywidth>=py) {
 		cflg = TRUE;
 
 	}
