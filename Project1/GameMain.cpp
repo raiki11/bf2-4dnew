@@ -89,7 +89,7 @@ void GameMain::Draw() const
 
 	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 
-		DrawFormatString(200, 300, 0xffffff, "EnemyMax%d", Stage::EnemyMax[Stage::Snum]);
+		//DrawFormatString(200, 300, 0xffffff, "EnemyMax%d", Stage::EnemyMax[Stage::Snum]);
 		enemy[i]->EnemyDraw();
 	}
 

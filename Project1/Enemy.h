@@ -14,6 +14,13 @@ private:
 	int i;
 	int Flag;
 
+	int changeimg;//エネミー落下画像切り替え用
+	int changeCt;//画像切り替えのカウント
+	int cflg;
+	float cy;		//やられたときのY座標加算用
+	int swy;
+	int cycount;
+
 	int img[24];
 	
 
