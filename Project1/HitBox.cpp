@@ -25,9 +25,9 @@ void HitBox::DrawHitBox() const
 
 int HitBox::PlayerAndStageUnder(Player p, Stage s)
 {
-	px0 = p.GetPlayerLocationX() - 15;
+	px0 = p.GetPlayerLocationX() - 10;
 	py0 = p.GetPlayerLocationY() + 32;
-	px1 = p.GetPlayerLocationX() + 15;
+	px1 = p.GetPlayerLocationX() + 10;
 	py1 = p.GetPlayerLocationY() + 32;		//ЧvТ▓Ро
 
 	for (int i = 0; i < 6; i += 2) {
@@ -42,9 +42,9 @@ int HitBox::PlayerAndStageUnder(Player p, Stage s)
 
 int HitBox::PlayerAndStageTop(Player p, Stage s)
 {
-	px0 = p.GetPlayerLocationX() - 25;
+	px0 = p.GetPlayerLocationX() - 22;
 	py0 = p.GetPlayerLocationY() - 22;
-	px1 = p.GetPlayerLocationX() + 25;
+	px1 = p.GetPlayerLocationX() + 22;
 	py1 = p.GetPlayerLocationY() - 22;
 
 	for (int i = 0; i < 6; i += 2) {
@@ -63,7 +63,7 @@ int HitBox::PlayerAndStageRight(Player p, Stage s)
 	px0 = p.GetPlayerLocationX() + 20;
 	py0 = p.GetPlayerLocationY() - 15;
 	px1 = p.GetPlayerLocationX() + 20;
-	py1 = p.GetPlayerLocationY() + 25;
+	py1 = p.GetPlayerLocationY() + 30;
 
 	if (p.GetPlayerMoveX() > 0) {
 		for (int i = 0; i < 6; i += 2) {
@@ -83,7 +83,7 @@ int HitBox::PlayerAndStageLeft(Player p, Stage s)
 	px0 = p.GetPlayerLocationX() - 20;
 	py0 = p.GetPlayerLocationY() - 15;
 	px1 = p.GetPlayerLocationX() - 20;
-	py1 = p.GetPlayerLocationY() + 25;
+	py1 = p.GetPlayerLocationY() + 30;
 
 	if (p.GetPlayerMoveX() < 0) {
 		for (int i = 0; i < 6; i += 2) {
