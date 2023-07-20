@@ -1,6 +1,7 @@
 #include "UI.h"
 #include "DxLib.h"
 #include "FPS.h"
+#include "Enemy.h"
 int UI:: m_DrawCount;
 int UI::b;
 UI::UI()
@@ -49,13 +50,13 @@ void UI::DrawUI() const
 	// 現在のスコア
 	DrawGraph(50, 30, score, TRUE);
 	for (int a = 1; a<=6; a++) {
-		DrawGraph((15*a)+50, 25, Num[i], TRUE);
+		DrawGraph((20*a)+50, 25, Num[9], TRUE);
 	}
 	
 	// ハイスコア
 	DrawGraph(220, 30, top, TRUE);
 	for (int a = 1; a <= 6; a++) {
-		DrawGraph((15 * a) + 240, 25, Num[i], TRUE);
+		DrawGraph((20 * a) + 240, 25, Num[i], TRUE);
 	}
 
 	if (b <= 3)			// 4回表示
@@ -76,6 +77,8 @@ void UI::DrawUI() const
 	{
 		DrawGraph(130 + (j * 15), 50, stock, TRUE);
 	}
+
+
 
 
 	//DrawFormatString(80, 30, 0xffffff, "%06d", p_score);

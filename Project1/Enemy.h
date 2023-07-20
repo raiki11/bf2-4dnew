@@ -25,6 +25,8 @@ private:
 	int cycount;
 
 	int img[24];
+	
+	int Epoint;
 	int cnt;
 
 public:

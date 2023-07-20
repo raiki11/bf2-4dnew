@@ -27,8 +27,7 @@ Enemy::Enemy(int set_X,int set_Y)
 	cycount = 0;
 	swy = 0;
 	LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 24, 8, 3, 64, 64, img); // 画像の分割読み込み
-
-}
+};
 
 Enemy::~Enemy()
 {
@@ -71,8 +70,7 @@ void Enemy::EnemyDraw() const
 	else {
 		DrawRotaGraph(ELocationX, ELocationY, 1.0f, 0, img[i], TRUE, Flag);
 
-	}
-
+	DrawFormatString(ELocationX-15 , ELocationY-30, GetColor(255, 0, 0), "%03d", Epoint);
 	//デバッグ用
 	//DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
 	//DrawFormatString(0, 160, 0xffffff, "time::%d", time);

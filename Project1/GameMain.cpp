@@ -2,7 +2,6 @@
 #include"DxLib.h"
 #include"PadInput.h"
 #include "Stage.h"
-#include "Fish.h"
 
 #include "UI.h"
 
@@ -130,12 +129,13 @@ void GameMain::Draw() const
 {
 	if (PauseFlg == TRUE) {
 		DrawFormatString(0, 0, 0xffffff, "Pause");
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 0);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 0);	// ポーズ中に消したい描画↓
 	}
 	else 
 	{ 
 		DrawFormatString(0, 0, 0xffffff, "ゲームメイン"); 
 	}
+	
 	player.PlayerDraw();
 
 	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
