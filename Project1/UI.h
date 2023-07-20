@@ -18,14 +18,15 @@ private:
 	int p_top;
 	int p_phase;
 	 
-
+	//プレイヤー残機取得用
+	int p_life;
 	
 public:
 	static int m_DrawCount;
 	static int b;
 	UI();
 	~UI();
-	void Update();
+	void Update(int p);
 
 	void DrawUI() const;
 	
