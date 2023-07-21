@@ -11,8 +11,7 @@ private:
 	int Num[10];
 	int Flag;
 	int i;
-	float ELocationX;
-	float ELocationY;
+
 
 	
 	// ÉXÉRÉA

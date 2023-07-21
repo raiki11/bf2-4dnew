@@ -1,7 +1,7 @@
 #include "UI.h"
 #include "DxLib.h"
 #include "FPS.h"
-#include "Enemy.h"
+//#include "Enemy.h"
 int UI:: m_DrawCount;
 int UI::b;
 UI::UI()
