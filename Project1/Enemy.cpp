@@ -1,7 +1,11 @@
 #include"DxLib.h"
 #include "Enemy.h"
 #include "Stage.h"
+#include "HitBox.h"
 
+Enemy* hitenemy[6];
+HitBox hit;
+Stage stage;
 
 Enemy::Enemy(int set_X,int set_Y)
 {
@@ -27,13 +31,16 @@ Enemy::Enemy(int set_X,int set_Y)
 	cycount = 0;
 	swy = 0;
 	LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 24, 8, 3, 64, 64, img); // 画像の分割読み込み
+
 };
+
+
 
 Enemy::~Enemy()
 {
 }
 
-void Enemy::EnemyUpdate(Player P)
+void Enemy::EnemyUpdate(Player P,int& j)
 {
 	if (++fpscount >= 60)
 	{
@@ -54,7 +61,7 @@ void Enemy::EnemyUpdate(Player P)
 		EDeadAnim();
 	}
 	//デバッグ用
-	DebagHit(P);
+	//DebagHit(P);
 
 }
 
@@ -267,3 +274,4 @@ void Enemy::DebagHit(Player P) {
 
 	}
 }
+

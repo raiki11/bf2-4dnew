@@ -7,7 +7,7 @@ float Stage::EnemyY[stagenum][6] = { {250,250,250},{230,230,230,230},{320,420,22
 
 
 
-int Stage::Snum = 0;
+int Stage::Snum = 1;
 int Stage::EnemyMax[5]={2,3,2,2,2};
 
 Stage::Stage() {

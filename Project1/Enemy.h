@@ -33,7 +33,7 @@ public:
 	Enemy(int set_X,int set_Y);
 	~Enemy();
 
-	void EnemyUpdate(Player P);
+	void EnemyUpdate(Player P,int& j);
 	void EnemyDraw() const;
 	void EnemyMoveX(Player P);
 	void EnemyMoveY(Player P);
