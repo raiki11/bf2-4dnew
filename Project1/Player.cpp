@@ -5,8 +5,8 @@
 
 Player::Player()
 {
-	playerLocationX = 320;
-	playerLocationY = 140;
+	playerLocationX = 100;
+	playerLocationY = 387;
 	playerMoveX = 0;
 	playerMoveY = 1.0f;
 
@@ -51,8 +51,8 @@ void Player::PlayerUpdate()
 		
 		if (PlayerDeathAnim() == TRUE) {
 			deathFlg = FALSE;
-			playerLocationX = 320;
-			playerLocationY = 140;
+			playerLocationX = 100;
+			playerLocationY = 387;
 			playerMoveX = 0;
 			playerMoveY = 1.0f;
 			remainBalloon = 2;
@@ -401,14 +401,18 @@ void Player::PlayerMoveY()
 			flyButtonFlg = TRUE;
 			//playerImgFly = 0;
 			//playerImgFlyFlg = TRUE;
-			playerMoveY = -2;
+
+			playerMoveY += -2.0f;
+			if (playerMoveY < -2) {
+				playerMoveY = -2;
+			}
 			
 		}
 
 		if (count < 21 && (interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A))) {
 			count += 3;
 
-			playerMoveY += -0.5f;
+			//playerMoveY += -1;
 			if (playerMoveY <= -2) {
 				playerMoveY = -2;
 			}
