@@ -1,6 +1,8 @@
 #include "End.h"
 #include <DxLib.h>
 
+
+
 End::End()
 {
     image = LoadGraph("images/UI/UI_GameOver.png");
@@ -23,5 +25,8 @@ void End::Draw() const
 	player.PlayerDraw();
 	stage.DrawStage();
 	UI.DrawUI();
-	enemy.EnemyDraw();
+
+	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+		enemy[i]->EnemyDraw();
+	}
 }

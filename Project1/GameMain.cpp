@@ -2,14 +2,19 @@
 #include"DxLib.h"
 #include"PadInput.h"
 #include "Stage.h"
-#include "Fish.h"
 
 #include "UI.h"
+
+Enemy* enemy[6];
+
 GameMain::GameMain()
 {
 	PauseFlg = FALSE;
 	a = 0;
-	
+
+	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+		enemy[i] = new Enemy(i, i);
+	}
 }
 
 GameMain::~GameMain()
@@ -27,45 +32,99 @@ AbstractScene* GameMain::Update()
 	//ポーズ中でないとき
 	if (PauseFlg == FALSE) {
 		// PHASE点滅カウント
-		UI.Update();
+		UI.Update(player.GetPlayerLife());
 		// ゲームメイン処理
 		player.PlayerUpdate();
-		enemy.EnemyUpdate(player);
-		if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
+		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+			enemy[i]->EnemyUpdate(player);
+		}
+
+		fish.FishUpdate(player, enemy[0]);
+	}
+
+	
+	if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
+		//if (player.GetTakeOffFlg() == FALSE) {
 			player.SetFlyingFlg(FALSE);
-		}
-		else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
+		/*}
+		else {
 			player.SetFlyingFlg(TRUE);
+		}*/
+	}
+	else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
+		if (player.GetFlyingFlg() == FALSE) {
+			player.SetPlayerImgFpsCnt(0);
 		}
+		player.SetFlyingFlg(TRUE);
+	}
 
-		if (hit.PlayerAndStageTop(player, stage) == TRUE) {
-			player.SetReboundFlgStageY(TRUE);
-		}
-		else if (hit.PlayerAndStageTop(player, stage) == FALSE) {
-			player.SetReboundFlgStageY(FALSE);
-		}
+	if (hit.PlayerAndStageTop(player, stage) == TRUE) {
+		player.SetReboundFlgStageY(TRUE);
+	}
+	else if (hit.PlayerAndStageTop(player, stage) == FALSE) {
+		player.SetReboundFlgStageY(FALSE);
+	}
 
-		if (hit.PlayerAndStageRight(player, stage) == TRUE) {
+	if (hit.PlayerAndStageRight(player, stage) == TRUE) {
+		player.SetReboundFlgStageX(TRUE);
+	}
+	else if (hit.PlayerAndStageRight(player, stage) == FALSE) {
+		player.SetReboundFlgStageX(FALSE);
+	}
+	
+	if (hit.PlayerAndStageLeft(player, stage) == TRUE) {
+		player.SetReboundFlgStageX(TRUE);
+	}
+	else if (hit.PlayerAndStageLeft(player, stage) == FALSE) {
+		if (player.GetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
 			player.SetReboundFlgStageX(TRUE);
 		}
-		else if (hit.PlayerAndStageLeft(player, stage) == FALSE) {
+		else {
 			player.SetReboundFlgStageX(FALSE);
 		}
+	}
 
-		if (hit.PlayerAndStageLeft(player, stage) == TRUE) {
-			player.SetReboundFlgStageX(TRUE);
+	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+		//敵の当たり判定
+		if (hit.EnemyAndStageUnder(enemy[i][i], stage) == TRUE) {
+			enemy[i]->ESetFlyingFlg(TRUE);
 		}
-		else if (hit.PlayerAndStageLeft(player, stage) == FALSE) {
-			if (player.GetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
-				player.SetReboundFlgStageX(TRUE);
+		else if (hit.EnemyAndStageUnder(enemy[i][i], stage) == FALSE) {
+			enemy[i]->ESetFlyingFlg(FALSE);
+
+		}
+
+		if (hit.EnemyAndStageTop(enemy[i][i], stage) == TRUE) {
+			enemy[i]->ESetReboundFlgStageY(TRUE);
+		}
+		else if (hit.EnemyAndStageTop(enemy[i][i], stage) == FALSE) {
+			enemy[i]->ESetReboundFlgStageY(FALSE);
+		}
+
+		if (hit.EnemyAndStageRight(enemy[i][i], stage) == TRUE) {
+			enemy[i]->ESetReboundFlgStageX(TRUE);
+		}
+		else if (hit.EnemyAndStageRight(enemy[i][i], stage) == FALSE) {
+			enemy[i]->ESetReboundFlgStageX(FALSE);
+		}
+
+		if (hit.EnemyAndStageLeft(enemy[i][i], stage) == TRUE) {
+			enemy[i]->ESetReboundFlgStageX(TRUE);
+		}
+		else if (hit.EnemyAndStageLeft(enemy[i][i], stage) == FALSE) {
+			if (enemy[i]->EGetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
+				enemy[i]->ESetReboundFlgStageX(TRUE);
 			}
 			else {
-				player.SetReboundFlgStageX(FALSE);
+				enemy[i]->ESetReboundFlgStageX(FALSE);
 			}
 		}
 	}
+	
 	return this;
 }
+
+
 void GameMain::Draw() const
 {
 	if (PauseFlg == TRUE) {
@@ -78,12 +137,19 @@ void GameMain::Draw() const
 	}
 	
 	player.PlayerDraw();
-	enemy.EnemyDraw();
-	fish.FishDraw(player);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		// ポーズ中に消したい描画↑
+
+	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+
+		//DrawFormatString(200, 300, 0xffffff, "EnemyMax%d", Stage::EnemyMax[Stage::Snum]);
+		enemy[i]->EnemyDraw();
+	}
+
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	stage.DrawStage();
 	UI.DrawUI();
 	hit.DrawHitBox();
 	//enemy.EnemyDraw();
+	fish.FishDraw(player);
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }

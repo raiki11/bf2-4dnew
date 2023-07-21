@@ -14,9 +14,9 @@ private:
     int image;
     Stage stage;
     UI UI;
+    Enemy* enemy[6];
     //ƒQ[ƒ€ƒƒCƒ“‚Åg‚¤•Ï”‚ÌéŒ¾
     Player player;
-    Enemy enemy;
 public:
     int EndCount = 0;
 
