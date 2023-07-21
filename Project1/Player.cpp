@@ -407,7 +407,11 @@ void Player::PlayerMoveY()
 
 		if (count < 21 && (interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A))) {
 			count += 3;
-			playerMoveY = -2;
+
+			playerMoveY += -0.5f;
+			if (playerMoveY <= -2) {
+				playerMoveY = -2;
+			}
 		}
 
 		if (playerMoveY != -2) {
