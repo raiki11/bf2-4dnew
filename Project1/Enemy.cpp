@@ -271,7 +271,6 @@ void Enemy::DebagHit(Player P) {
 
 	if (Ex<=pxwidth && Exwidth>=px &&Ey<=pywidth && Eywidth>=py) {
 		cflg = TRUE;
-
 	}
 }
 
