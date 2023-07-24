@@ -39,11 +39,28 @@ Stage::~Stage() {
 
 
 void Stage::DrawStage()const{
-	Stage1();
-	//Stage2();
-	//Stage3();
-	//Stage4();
-	//Stage5();
+
+	switch (Snum)
+	{
+	case 0:
+		Stage1();
+		break;
+	case 1:
+		Stage2();
+		break;
+	case 2:
+		Stage3();
+		break;
+	case 3:
+		Stage4();
+		break;
+	case 4:
+		Stage5();
+		break;
+	default:
+		break;
+	}
+
 }
 
 void Stage::Stage1()const {
@@ -61,7 +78,7 @@ void Stage::Stage1()const {
 	//DrawBox(480, 419, 640, 480, 0xff0000, FALSE);
 
 	//ŠC•\Ž¦
-	DrawGraph(160, 442, St_Sea, TRUE);
+	DrawGraph(160, 444, St_Sea, TRUE);
 	//DrawBox(160, 419, 480, 478, 0x00ff00, FALSE);
 
 	//‰_•\Ž¦

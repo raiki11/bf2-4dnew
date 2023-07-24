@@ -7,6 +7,8 @@ Enemy* hitenemy[6];
 HitBox hit;
 Stage stage;
 
+int Enemy::DeadFlg = FALSE;
+
 Enemy::Enemy(int set_X,int set_Y)
 {
 	//ELocationX = 320;
@@ -61,14 +63,17 @@ void Enemy::EnemyUpdate(Player P,int& j)
 		EDeadAnim();
 	}
 	//デバッグ用
-	//DebagHit(P);
+	DebagHit(P);
 
 }
 
 void Enemy::EnemyDraw() const
 {
-	/*DrawCircle(enemyLocationX, enemyLocationY, 4, 0x00ff00, TRUE);*/
+	//DrawCircle(ELocationX, ELocationY, 4, 0x00ff00, TRUE);
 	/*DrawGraph(enemyLocationX, enemyLocationY, img[i], TRUE);*/
+
+	//DrawFormatString(0, 400, 0xffffff, "ElY%f", ELocationY);
+	DrawBox(0, 440, 600, 600, 0x00ff00, FALSE);
 
 	if (cflg == TRUE) {
 		DrawRotaGraph(ELocationX, ELocationY + cy, 1.0f, 0, img[changeimg], TRUE, Flag);
@@ -236,7 +241,10 @@ void Enemy::EDeadAnim() {
 			if (cycount > 6) {
 					cy += 3;
 			}
-			if (cy >= 300)swy += 1;
+			if (ELocationY - 30 >=300)swy += 1;
+			break;
+		case 2:
+			DeadFlg = TRUE;
 			break;
 		default:
 			break;
