@@ -6,6 +6,8 @@
 #include "FPS.h"
 #include"Fish.h"
 #include "End.h"
+#include "TitleScene.h"
+
 //BGM—p•Ï”
 int BGM;
 

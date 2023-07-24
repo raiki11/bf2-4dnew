@@ -140,7 +140,7 @@ int HitBox::EnemyAndStageRight(Enemy e, Stage s)
 	ex1 = e.GetEnemyLocationX() + 20;
 	ey1 = e.GetEnemyLocationY() + 25;
 
-	if (e.GetEnemyLocationX() > 0) {
+	if (e.GetEnemyMoveX() > 0) {
 		for (int i = 0; i < 6; i += 2) {
 			if (s.GetStageXY(0, i, 0) <= ex1 && s.GetStageXY(0, i + 1, 0) >= ex0 &&
 				s.GetStageXY(0, i, 1) <= ey1 && s.GetStageXY(0, i + 1, 1) >= ey0) {
@@ -160,7 +160,7 @@ int HitBox::EnemyAndStageLeft(Enemy e, Stage s)
 	ex1 = e.GetEnemyLocationX() - 20;
 	ey1 = e.GetEnemyLocationY() + 25;
 
-	if (e.GetEnemyLocationX() < 0) {
+	if (e.GetEnemyMoveX() < 0) {
 		for (int i = 0; i < 6; i += 2) {
 			if (s.GetStageXY(0, i, 0) <= ex1 && s.GetStageXY(0, i + 1, 0) >= ex0 &&
 				s.GetStageXY(0, i, 1) <= ey1 && s.GetStageXY(0, i + 1, 1) >= ey0) {
