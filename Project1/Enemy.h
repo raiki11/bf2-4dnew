@@ -46,6 +46,8 @@ public:
 
 	float GetEnemyLocationX() { return ELocationX; }
 	float GetEnemyLocationY() { return ELocationY; }
+	float GetEnemyMoveX() { return EMoveX; }
+	float GetEnemyMoveY() { return EMoveY; }
 
 	int EGetReboundFlgStageX() { return reboundFlgStageX; }
 	void ESetReboundFlgStageY(int f)

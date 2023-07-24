@@ -86,32 +86,32 @@ AbstractScene* GameMain::Update()
 
 	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 		//“G‚Ì“–‚½‚è”»’è
-		if (hit.EnemyAndStageUnder(enemy[i][i], stage) == TRUE) {
+		if (hit.EnemyAndStageUnder(*enemy[i], stage) == TRUE) {
 			enemy[i]->ESetFlyingFlg(TRUE);
 		}
-		else if (hit.EnemyAndStageUnder(enemy[i][i], stage) == FALSE) {
+		else if (hit.EnemyAndStageUnder(*enemy[i], stage) == FALSE) {
 			enemy[i]->ESetFlyingFlg(FALSE);
 
 		}
 
-		if (hit.EnemyAndStageTop(enemy[i][i], stage) == TRUE) {
+		if (hit.EnemyAndStageTop(*enemy[i], stage) == TRUE) {
 			enemy[i]->ESetReboundFlgStageY(TRUE);
 		}
-		else if (hit.EnemyAndStageTop(enemy[i][i], stage) == FALSE) {
+		else if (hit.EnemyAndStageTop(*enemy[i], stage) == FALSE) {
 			enemy[i]->ESetReboundFlgStageY(FALSE);
 		}
 
-		if (hit.EnemyAndStageRight(enemy[i][i], stage) == TRUE) {
+		if (hit.EnemyAndStageRight(*enemy[i], stage) == TRUE) {
 			enemy[i]->ESetReboundFlgStageX(TRUE);
 		}
-		else if (hit.EnemyAndStageRight(enemy[i][i], stage) == FALSE) {
+		else if (hit.EnemyAndStageRight(*enemy[i], stage) == FALSE) {
 			enemy[i]->ESetReboundFlgStageX(FALSE);
 		}
 
-		if (hit.EnemyAndStageLeft(enemy[i][i], stage) == TRUE) {
+		if (hit.EnemyAndStageLeft(*enemy[i], stage) == TRUE) {
 			enemy[i]->ESetReboundFlgStageX(TRUE);
 		}
-		else if (hit.EnemyAndStageLeft(enemy[i][i], stage) == FALSE) {
+		else if (hit.EnemyAndStageLeft(*enemy[i], stage) == FALSE) {
 			if (enemy[i]->EGetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
 				enemy[i]->ESetReboundFlgStageX(TRUE);
 			}
