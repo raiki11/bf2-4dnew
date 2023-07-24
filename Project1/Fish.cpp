@@ -22,7 +22,7 @@ Fish::~Fish()
 void Fish::FishUpdate(Player p , Enemy e[])
 {
 	/* プレイヤーがサカナの稼働エリアに入った時 */
-	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY()+32 && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
+	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() + 32 && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
 		if (PFlg == 0) {
 			PFlg = 1;
 		}
@@ -39,7 +39,7 @@ void Fish::FishUpdate(Player p , Enemy e[])
 			}
 		}
 	}
-	else fpscount = 0;
+	else fpscount = 0;  // FPSのカウントをリセットする
 
 	if (FishFlg == 1 && PFlg == 2) {      // フィッシュフラグがサカナを上げるフラグになった時
 		//FishX = p.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
@@ -137,7 +137,7 @@ void Fish::FishUpAnimation()
 	Time;
 	if (i == 10) i = 0;   // サカナが出てないときiをリセットする
 
-	if (i < 2 && ++Time % 20 == 0) {
+	if (i < 2 && ++Time % 15 == 0) {
 		i++;
 	}
 }
@@ -147,7 +147,7 @@ void Fish::FishDownAnimation()
 	
 	++Time;
 
-	if (i < 5 && Time % 20 == 0) {
+	if (i < 5 && Time % 15 == 0) {
 		++i;
 	}
 }
