@@ -137,7 +137,7 @@ AbstractScene* GameMain::Update()
 	}
 	
 	//次のステージの敵生成
-/*	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
+	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
 		if (Stage::Snum >= 4) { Stage::Snum = 0; }
 			Stage::Snum += 1;
 		if (OldSnum != Stage::Snum) {
@@ -145,7 +145,7 @@ AbstractScene* GameMain::Update()
 				enemy[i] = new Enemy(i, i);
 			}
 		}
-	}*/
+	}
 
 
 	

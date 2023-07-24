@@ -70,11 +70,11 @@ void Stage::Stage1()const {
 	//DrawBox(175, 282, 455, 297, 0xff0000, FALSE);
 
 	//左下の地面表示
-	DrawGraph(0, 414, St_Land_Left, TRUE);
+	DrawGraph(0, 416, St_Land_Left, TRUE);
 	//DrawBox(0, 419, 160, 480, 0xff0000, FALSE);
 
 	//右下の地面表示
-	DrawGraph(480, 414, St_Land_Right, TRUE);
+	DrawGraph(480, 416, St_Land_Right, TRUE);
 	//DrawBox(480, 419, 640, 480, 0xff0000, FALSE);
 
 	//海表示
@@ -99,15 +99,15 @@ void Stage::Stage2()const {
 	//DrawBox(460, 152, 582, 167, 0xff0000, FALSE);
 
 	//左下の地面表示
-	DrawGraph(0, 414, St_Land_Left, TRUE);
+	DrawGraph(0, 416, St_Land_Left, TRUE);
 	//DrawBox(0, 419, 160, 480, 0xff0000, FALSE);
 
 	//右下の地面表示
-	DrawGraph(480, 414, St_Land_Right, TRUE);
+	DrawGraph(480, 416, St_Land_Right, TRUE);
 	//DrawBox(480, 419, 640, 480, 0xff0000, FALSE);
 
 	//海表示
-	DrawGraph(160, 442, St_Sea, TRUE);
+	DrawGraph(160, 444, St_Sea, TRUE);
 	//DrawBox(160, 419, 480, 478, 0x00ff00, FALSE);
 
 	//雲左表示
@@ -142,15 +142,15 @@ DrawGraph(280, 365, St_Footing3, TRUE);
 //DrawBox(280, 367, 361, 383, 0xff0000, FALSE);
 
 //左下の地面表示
-DrawGraph(0, 414, St_Land_Left, TRUE);
+DrawGraph(0, 416, St_Land_Left, TRUE);
 //DrawBox(0, 419, 160, 480, 0xff0000, FALSE);
 
 //右下の地面表示
-DrawGraph(480, 414, St_Land_Right, TRUE);
+DrawGraph(480, 416, St_Land_Right, TRUE);
 //DrawBox(480, 419, 640, 480, 0xff0000, FALSE);
 
 //海表示
-DrawGraph(160, 442, St_Sea, TRUE);
+DrawGraph(160, 444, St_Sea, TRUE);
 //DrawBox(160, 419, 480, 478, 0x00ff00, FALSE);
 
 //雲左表示
@@ -183,15 +183,15 @@ void Stage::Stage4()const {
 	//DrawBox(460, 287, 522, 303, 0x00ffff, FALSE);
 
 	//左下の地面表示
-	DrawGraph(0, 414, St_LL, TRUE);
+	DrawGraph(0, 416, St_LL, TRUE);
 	//DrawBox(0, 419, 160, 480, 0xff0000, FALSE);
 
 	//右下の地面表示
-	DrawGraph(480, 414, St_LR, TRUE);
+	DrawGraph(480, 416, St_LR, TRUE);
 	//DrawBox(480, 419, 640, 480, 0xff0000, FALSE);
 
 	//海表示
-	DrawGraph(160, 442, St_Sea, TRUE);
+	DrawGraph(160, 444, St_Sea, TRUE);
 	//DrawBox(160, 419, 480, 478, 0x00ff00, FALSE);
 
 	//雲左表示
@@ -230,15 +230,15 @@ void Stage::Stage5()const {
 	//DrawBox(501, 152, 520, 217, 0x00ff00, FALSE);
 
 	//左下の地面表示
-	DrawGraph(0, 414, St_LL, TRUE);
+	DrawGraph(0, 416, St_LL, TRUE);
 	//DrawBox(0, 419, 160, 480, 0xff0000, FALSE);
 
 	//右下の地面表示
-	DrawGraph(480, 414, St_LR, TRUE);
+	DrawGraph(480, 416, St_LR, TRUE);
 	//DrawBox(480, 419, 640, 480, 0xff0000, FALSE);
 
 	//海表示
-	DrawGraph(160, 442, St_Sea, TRUE);
+	DrawGraph(160, 444, St_Sea, TRUE);
 	//DrawBox(160, 419, 480, 478, 0x00ff00, FALSE);
 
 	//雲左表示

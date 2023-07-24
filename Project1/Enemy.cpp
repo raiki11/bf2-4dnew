@@ -241,7 +241,7 @@ void Enemy::EDeadAnim() {
 			if (cycount > 6) {
 					cy += 3;
 			}
-			if (ELocationY - 30 >=300)swy += 1;
+			if (ELocationY+cy>=450)swy += 1;
 			break;
 		case 2:
 			DeadFlg = TRUE;
