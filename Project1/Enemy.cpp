@@ -169,25 +169,28 @@ void Enemy::EnemyMoveY(Player P)
 			EMoveY = -1 * EMoveY*10;
 	}
 	 if (flyingFlg != FALSE) {
-		 flyingFlg = FALSE;
 			 EMoveY = 0;
 			 
 		 
 		
 	 }
+	 
+	 
+		 if (ELocationY <= P.GetPlayerLocationY() && flyingFlg == FALSE) {
+			 EMoveY += 0.01f;
+		 }
+		 else if (ELocationY >= P.GetPlayerLocationY()) {
+			 EMoveY -= 0.01f;
+		 }
+		 if (EMoveY > 0.5f) {
+			 EMoveY = 0.5f;
+		 }
+		 if (EMoveY < -0.5f) {
+			 EMoveY = -0.5f;
+		 }
+	 
+	
 
-	 if (ELocationY <= P.GetPlayerLocationY()) {
-		 EMoveY += 0.01f;
-	 }
-	 else if (ELocationY >= P.GetPlayerLocationY()) {
-		 EMoveY -= 0.01f;
-	 }
-	 if (EMoveY > 0.5f) {
-		 EMoveY = 0.5f;
-	 }
-	 if (EMoveY < -0.5f) {
-		 EMoveY = -0.5f;
-	 }
 
 	ELocationY += EMoveY;
 
