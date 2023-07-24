@@ -5,12 +5,15 @@ class TitleScene :
 {
 private:
     int titleLogo;
-    int titleSlectImg;
+    int titleSelectImg;
     int titleBalloon[4];
     int titleCredit;
 
     int time;
     int num;
+    int turnNum;
+    
+    int selectNum;
 public:
     TitleScene();
     ~TitleScene();

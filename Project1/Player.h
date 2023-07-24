@@ -43,6 +43,7 @@ private:
 	int playerImgFpsCnt;
 	int playerImgTakeOffNum;
 	int playerImgFlyFlg;
+	int playerNoInputFlg;
 
 	int splashNum;
 public:
@@ -61,6 +62,7 @@ public:
 	int PlayerWalkAnim();
 	int PlayerFlyingAnim();
 	int PlayerDeathAnim();
+	int PlayerNoInputAnim();
 	int PlayerSplashAnim();
 
 	float GetPlayerLocationX() { return playerLocationX; }
@@ -94,5 +96,6 @@ public:
 
 	void SetFallLimit();
 	void SetRemainBalloon();
+	int AnyButtons();
 };
 
