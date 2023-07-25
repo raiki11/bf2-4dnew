@@ -1,7 +1,8 @@
 #include"DxLib.h"
 #include "Enemy.h"
 #include "Stage.h"
-
+#include"FPS.h"
+int Enemy::c;
 
 Enemy::Enemy(int set_X,int set_Y)
 {
@@ -19,7 +20,7 @@ Enemy::Enemy(int set_X,int set_Y)
 	reboundFlgStageY = FALSE;
 	reboundFlgStageX = FALSE;
 	flyingFlg = FALSE;
-
+	Epoint = 500;
 	changeimg = 0;
 	changeCt = 0;
 	cflg = FALSE;
@@ -27,6 +28,13 @@ Enemy::Enemy(int set_X,int set_Y)
 	cycount = 0;
 	swy = 0;
 	LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 24, 8, 3, 64, 64, img); // 画像の分割読み込み
+	Eflg = FALSE;
+	Eflgcnt = 0;
+	Escore1 = LoadGraph("images/Score/GetScore_500.png");
+	/*Escore2 = LoadGraph("images/Score/GetScore_750");
+	Escore3 = LoadGraph("images/Score/GetScore_1000");
+	Escore4 = LoadGraph("images/Score/GetScore_1500");
+	Escore5 = LoadGraph("images/Score/GetScore_2000");*/
 };
 
 Enemy::~Enemy()
@@ -55,7 +63,19 @@ void Enemy::EnemyUpdate(Player P)
 	}
 	//デバッグ用
 	DebagHit(P);
+	Eflgcnt++;
+	/*if (Eflgcnt == 200) {
+		c++;
+	}*/
+	
+		if (Eflgcnt >= 200) {
+			Eflgcnt = 0;
+		}
+		else {
 
+		}
+	
+	
 }
 
 void Enemy::EnemyDraw() const
@@ -70,7 +90,7 @@ void Enemy::EnemyDraw() const
 	else {
 		DrawRotaGraph(ELocationX, ELocationY, 1.0f, 0, img[i], TRUE, Flag);
 
-		DrawFormatString(ELocationX - 15, ELocationY - 30, GetColor(255, 0, 0), "%03d", Epoint);
+	
 		//デバッグ用
 		//DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
 		//DrawFormatString(0, 160, 0xffffff, "time::%d", time);
@@ -88,6 +108,20 @@ void Enemy::EnemyDraw() const
 			DrawFormatString(0, 220, 0xffffff, "X:FALSE");
 		}
 	}
+
+	//if (c <= 1) {
+
+		if (Eflgcnt <= 100) {
+			if (Eflg == TRUE) {
+				DrawGraph(ELocationX - 15, ELocationY - 30, Escore1, TRUE);
+			}
+		}
+	
+	
+	
+	
+	
+	//}
 }
 
 void Enemy::EnemyMoveX(Player P)
@@ -264,6 +298,7 @@ void Enemy::DebagHit(Player P) {
 
 	if (Ex<=pxwidth && Exwidth>=px &&Ey<=pywidth && Eywidth>=py) {
 		cflg = TRUE;
-
+		Eflg = TRUE;
 	}
+
 }

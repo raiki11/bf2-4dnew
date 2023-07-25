@@ -70,7 +70,7 @@ void UI::DrawUI() const
 		}
 	}
 
-	DrawFormatString(400, 300, GetColor(255, 0, 0), "UI_FPS:%d", m_DrawCount);
+	//DrawFormatString(400, 300, GetColor(255, 0, 0), "UI_FPS:%d", m_DrawCount);
 	
 	// ƒ‰ƒCƒt
 	for (int j = 0; j < p_life; j++)

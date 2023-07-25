@@ -28,8 +28,13 @@ private:
 	
 	int Epoint;
 	int cnt;
-
-	bool Eflg;
+	int Escore1;
+	int Escore2;
+	int Escore3;
+	int Escore4;
+	int Escore5;
+	int Eflgcnt;
+	bool onlyOnce;
 
 public:
 	Enemy(int set_X,int set_Y);
@@ -62,5 +67,7 @@ public:
 	{
 		flyingFlg = f;
 	}
+    int  Eflg;
+	static int c;
 };
 
