@@ -67,13 +67,14 @@ public:
 	int cflg;		//死亡アニメーションフラグ
 	static int DeadFlg;		//死亡フラグ
 	static int EdeadCount;//エネミーがやられた数のカウント
-	static int ElastFlg;
+	static int ElastFlg;	//最後の一匹か確認するフラグ
 
 	void EnemyUpdate(Player P,int& j);
 	void EnemyDraw() const;
 	void EnemyMoveX(Player P);
 	void EnemyMoveY(Player P);
 	void EAnimation();
+	int AnimCount;
 
 	void EPA();
 
@@ -106,5 +107,7 @@ public:
 	int EScore();
     int  Eflg;
 	 int c;
+	 bool once;
+	 void ECheckY();
 };
 

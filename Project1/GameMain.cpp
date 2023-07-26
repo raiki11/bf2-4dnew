@@ -15,9 +15,14 @@ GameMain::GameMain()
 	a = 0;
 	count = 0;
 	OldSnum = Stage::Snum;
+	spc = 0;
+	spflg = false;
+
 	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 		enemy[i] = new Enemy(i, i);
 	}
+	LoadDivGraph("images/Stage/Stage_SplashAnimation.png", 3, 3, 1, 64, 32, EspAnim);
+
 }
 
 GameMain::~GameMain()
@@ -48,7 +53,7 @@ AbstractScene* GameMain::Update()
 				}
 				//エネミーを倒したら
 				if (Enemy::EdeadCount == Stage::EnemyMax[Stage::Snum]) {
-					if (++count > 10) {
+					if (++count > 15) {
 						ClearFlg = TRUE;
 						Enemy::EdeadCount += 1;
 						Elast = i;
@@ -195,6 +200,11 @@ AbstractScene* GameMain::Update()
 			}
 		}
 	}
+
+	if (spflg == true) {
+		EsplashAnim();
+	}
+
 	return this;
 }
 
@@ -231,4 +241,21 @@ void GameMain::Draw() const
 	fish.FishDraw(player);
 	thunder.ThunderDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
+
+	//DrawGraph(ELocationX - 30, 400, EspAnim[spc], TRUE);
+
+}
+
+
+void GameMain::EsplashAnim()
+{
+	if (++count > 10) {
+		spc += 1;
+		count = 0;
+	}
+	if (spc >= 4) {
+		spc = 0;
+		count = 0;
+		//spflg = false;
+	}
 }

@@ -31,9 +31,9 @@ Enemy::Enemy(int set_X,int set_Y)
 	eflg = FALSE;
 	aflg = FALSE;
 	count = 0;
-	
-
-
+	once = false;
+	spc = 0;
+	spflg = false;
 
 
 	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
@@ -100,7 +100,6 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	}
 	
 
-
 	/*if (CheckHitKey(KEY_INPUT_A) == TRUE) {
 		cflg = TRUE;
 	}*/
@@ -110,6 +109,7 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	//}
 
 	//デバッグ用
+	if (cflg != 2)ECheckY();
 	DebagHit(P);
 	Eflgcnt++;
 	if (Eflgcnt == 200) {
@@ -199,7 +199,9 @@ void Enemy::EnemyDraw() const
 		}
 		
 	}
+
 	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
+	DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
 }
 
 void Enemy::EnemyMoveX(Player P)
@@ -377,7 +379,7 @@ void Enemy::EDeadAnim() {
 		switch (swy)
 		{
 		case 0:
-
+			
 			cycount++;
 			cy -= 2.8;
 			if (cycount > 9) {
@@ -439,7 +441,11 @@ void Enemy::DebagHit(Player P) {
 
 			if(aflg == TRUE && eflg == TRUE){
 
-				Enemy::EdeadCount += 1;
+				if (once == false)
+				{
+					once = true;
+					Enemy::EdeadCount += 1;
+				}
 				cflg = 2;
 				aflg = FALSE;
 				EScore();
@@ -448,7 +454,6 @@ void Enemy::DebagHit(Player P) {
 		}
 	}
 }
-
 
 int Enemy::EScore()
 {
@@ -498,4 +503,11 @@ int Enemy::EScore()
 		break;
 	}
 	return Score;
+}
+
+void Enemy::ECheckY() {
+	if (ELocationY > 460) {
+		DeadFlg = TRUE;
+		Enemy::EdeadCount += 1;
+	}
 }
