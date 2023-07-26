@@ -3,7 +3,6 @@
 #include "FPS.h"
 #include"Enemy.h"
 #include "Stage.h"
-//#include "Enemy.h"
 int UI:: m_DrawCount;
 int UI::b;
 UI::UI()
@@ -21,6 +20,7 @@ UI::UI()
 	Flag = FALSE;	
 	b = 0;
 	p_life = 0;
+	q = 100000;
 
 }
 
@@ -42,6 +42,12 @@ void UI::Update(int p)
 
 	p_life = p;
 
+	for (int i = 0;  i<6; i++)
+	{
+		Score[i] = Enemy::GetScore() / q;
+		q = q / 10;
+	}
+
 }
 
 
@@ -53,9 +59,8 @@ void UI::DrawUI() const
 {
 	// 現在のスコア
 	DrawGraph(50, 30, score, TRUE);
-	for (int a = 1; a<=6; a++) {
-		DrawGraph((20*a)+50, 25, Num[9], TRUE);
-	}
+	DrawGraph(240, 25, Num[i], TRUE);
+
 	
 	// ハイスコア
 	DrawGraph(220, 30, top, TRUE);

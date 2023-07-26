@@ -59,6 +59,7 @@ private:
 	bool onlyOnce;
 	int n_score;	// 現在のスコア
 	int hi_score;	// ハイスコア
+	
 
 public:
 	Enemy(int set_X,int set_Y);
@@ -101,7 +102,7 @@ public:
 		flyingFlg = f;
 	}
 
-	static int GetScore() { return Score; }
+	static  int GetScore() { return Score; }
 
 	int EScore();
     int  Eflg;
