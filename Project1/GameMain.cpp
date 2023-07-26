@@ -52,8 +52,10 @@ AbstractScene* GameMain::Update()
 		}*/
 	}
 	else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
-		if (player.GetFlyingFlg() == FALSE) {
-			player.SetPlayerImgFpsCnt(0);
+		if (player.GetDeathFlg() == FALSE) {
+			if (player.GetFlyingFlg() == FALSE) {
+				player.SetPlayerImgFpsCnt(0);
+			}
 		}
 		player.SetFlyingFlg(TRUE);
 	}
