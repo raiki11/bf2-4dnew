@@ -31,6 +31,9 @@ private:
 	int eflg;
 	int count;
 	int aflg;
+	int Estate;
+
+	static int Score;
 
 	int changeimg;//エネミー落下画像切り替え用
 	int changeCt;//画像切り替えのカウント
@@ -97,6 +100,10 @@ public:
 	{
 		flyingFlg = f;
 	}
+
+	static int GetScore() { return Score; }
+
+	int EScore();
     int  Eflg;
 	 int c;
 };

@@ -9,6 +9,7 @@ Stage stage;
 
 int Enemy::DeadFlg = FALSE;
 int Enemy::EdeadCount = 0;
+int Enemy::Score = 0;
 
 Enemy::Enemy(int set_X,int set_Y)
 {
@@ -30,6 +31,8 @@ Enemy::Enemy(int set_X,int set_Y)
 	eflg = FALSE;
 	aflg = FALSE;
 	count = 0;
+	
+
 
 
 
@@ -161,7 +164,7 @@ void Enemy::EnemyDraw() const
 		//デバッグ用
 		//DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
 		//DrawFormatString(0, 160, 0xffffff, "time::%d", time);
-		/*DrawFormatString(0, 300, 0xffffff, "i::%f", EMoveY);*/
+		DrawFormatString(0, 300, 0xffffff, "Score::%d", Score);
 		if (reboundFlgStageY == TRUE) {
 			DrawFormatString(0, 205, 0xffffff, "Y:TRUE");
 		}
@@ -175,7 +178,7 @@ void Enemy::EnemyDraw() const
 			DrawFormatString(0, 220, 0xffffff, "X:FALSE");
 		}
 	}
-	//DrawFormatString(300, 0, 0xffffff, "Eflg::%d", Eflg);
+	//DrawFormatString(0, 300, 0xffffff, "Score::%d", Score);
 	//printfDx("%d", Eflg);
 	
 	//switch (switch_on)
@@ -312,6 +315,7 @@ void Enemy::EAnimation()
 
 		if (i < 8) {
 			++i;
+			Estate = 0;
 		}
 		if (i >= 8 ) {
 			if (eflg == TRUE) {
@@ -321,6 +325,7 @@ void Enemy::EAnimation()
 				}
 			}
 			++i;
+			Estate = 1;
 		}
 		if (i == 12) {
 		i = 8;
@@ -338,7 +343,7 @@ void Enemy::EPA()
 	}
 
 
-	//敵やられたときのモーション
+	//パラシュート
 	
 	if (cflg == 1) {
 		if (i >= 8 && i < 13) {
@@ -347,6 +352,7 @@ void Enemy::EPA()
 		if (++i >= 17) {
 			i = 17;
 		}
+		Estate = 2;
 	}
 
 	if (flyingFlg != FALSE) {
@@ -427,11 +433,13 @@ void Enemy::DebagHit(Player P) {
 			if (cflg == 0 && i >= 8 && aflg == TRUE) {
 				cflg = 1;
 				aflg = FALSE;
+				EScore();
 			}
 
 			if(aflg == TRUE && eflg == TRUE){
 				cflg = 2;
 				aflg = FALSE;
+				EScore();
 			}
 			count = 0;
 		}
@@ -439,4 +447,55 @@ void Enemy::DebagHit(Player P) {
 		
 	
 	}
+}
+
+
+int Enemy::EScore()
+{
+	switch (enemy.type)
+	{
+	case 0:
+		//地面に立ってる時
+		if (Estate == 0) {
+			Score += 750;
+		}
+		//風船割る
+		else if (Estate == 1) {
+			Score += 500;
+		}
+		//パラシュート状態の時
+		else if (Estate == 2) {
+			Score += 1000;
+		}
+		break;
+	case 1:
+		//地面に立ってる時
+		if (Estate == 0) {
+			Score += 1000;
+		}
+		//風船割る
+		else if (Estate == 1) {
+			Score += 750;
+		}
+		//パラシュート状態の時
+		else if (Estate == 2) {
+			Score += 1500;
+		}
+		break;
+	case 2:
+		//地面に立ってる時
+		if (Estate == 0) {
+			Score += 1500;
+		}
+		//風船割る
+		else if (Estate == 1) {
+			Score += 1000;
+		}
+		//パラシュート状態の時
+		else if (Estate == 2) {
+			Score += 2000;
+		}
+		break;
+	}
+	return Score;
 }
