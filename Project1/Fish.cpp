@@ -8,7 +8,7 @@
 
 Fish::Fish()
 {
-	LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 11, 6, 2, 64, 64, FishImg);
+	LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 11, 5, 2, 64, 64, FishImg);
 	Time = 0;
 	fpscount = 0;
 	i = 0;
