@@ -3,7 +3,7 @@
 
 Bubble::Bubble() 
 {
-	LoadDivGraph("images/Stage/Stage_ThunderEffectAnimation.png", 4, 4, 1, 32, 32, BubbleImg);
+	LoadDivGraph("images/Stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, BubbleImg);
 }
 
 Bubble::~Bubble() 

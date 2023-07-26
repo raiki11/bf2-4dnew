@@ -54,6 +54,7 @@ AbstractScene* GameMain::Update()
 
 			fish.FishUpdate(player, enemy[0]);
 			thunder.ThunderUpdate();
+			bubble.BabbleUpdate();
 		}
 
 
