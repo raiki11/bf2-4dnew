@@ -28,6 +28,18 @@ Enemy::Enemy(int set_X,int set_Y)
 	flyingFlg = FALSE;
 
 	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
+	switch (enemy.type)
+	{
+	case 0:
+		enemy.MaxSpeed = P_MAX;
+		break;
+	case 1:
+		enemy.MaxSpeed = G_MAX;
+		break;
+	case 2:
+		enemy.MaxSpeed = R_MAX;
+		break;
+	}
 
 	Epoint = 500;
 	changeimg = 0;
@@ -63,7 +75,7 @@ void Enemy::EnemyUpdate(Player P,int& j)
 		EAnimation();
 	}
 
-	if (i >= 8) {
+	if (i >= 8 && i< 13) {
 		EnemyMoveX(P);
 		EnemyMoveY(P);
 	}
@@ -194,23 +206,23 @@ void Enemy::EnemyMoveX(Player P)
 		ELocationX = 640;
 	}
 
-	if (EMoveX > 0.5f) {
-		EMoveX = 0.5f;
+	if (EMoveX > enemy.MaxSpeed) {
+		EMoveX = enemy.MaxSpeed;
 	}
 
 	if (ELocationX <= P.GetPlayerLocationX()) {
-		EMoveX += 0.01f;
+		EMoveX += enemy.MaxSpeed/50;
 		Flag = TRUE;
 
 	}
 	else if (ELocationX >= P.GetPlayerLocationX()) {
-		EMoveX -= 0.01f;
+		EMoveX -= enemy.MaxSpeed/50;
 		Flag = FALSE;
 
 	}
 
-	if (EMoveX < -0.5f) {
-		EMoveX = -0.5f;
+	if (EMoveX < -enemy.MaxSpeed) {
+		EMoveX = -enemy.MaxSpeed;
 	}
 
 
@@ -243,7 +255,9 @@ void Enemy::EnemyMoveY(Player P)
 		ELocationY -= EMoveY;
 
 	}*/
-	
+	if (ELocationY <= 25) {
+		reboundFlgStageY = TRUE;
+	}
 
 	//”½”­
 	 if (reboundFlgStageY == TRUE  ){
@@ -261,16 +275,16 @@ void Enemy::EnemyMoveY(Player P)
 	 
 	 
 		 if (ELocationY <= P.GetPlayerLocationY() && flyingFlg == FALSE) {
-			 EMoveY += 0.01f;
+			 EMoveY += enemy.MaxSpeed/150;
 		 }
 		 else if (ELocationY >= P.GetPlayerLocationY()) {
-			 EMoveY -= 0.01f;
+			 EMoveY -= enemy.MaxSpeed/150;
 		 }
-		 if (EMoveY > 0.5f) {
-			 EMoveY = 0.5f;
+		 if (EMoveY > enemy.MaxSpeed) {
+			 EMoveY = enemy.MaxSpeed;
 		 }
-		 if (EMoveY < -0.5f) {
-			 EMoveY = -0.5f;
+		 if (EMoveY < -enemy.MaxSpeed) {
+			 EMoveY = -enemy.MaxSpeed;
 		 }
 	 
 	

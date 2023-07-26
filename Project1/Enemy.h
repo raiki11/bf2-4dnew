@@ -1,12 +1,17 @@
 #pragma once
 #include"Player.h"
 
+#define P_MAX 0.5f
+#define G_MAX 1.0f
+#define R_MAX 1.5f
+
+
 
 struct ENEMY
 {
 	int type;
 	int score;
-	float Speed;
+	float MaxSpeed;
 };
 class Enemy
 {
@@ -62,6 +67,8 @@ public:
 	void EnemyMoveX(Player P);
 	void EnemyMoveY(Player P);
 	void EAnimation();
+
+
 
 	void EDeadAnim();
 
