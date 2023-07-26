@@ -1,7 +1,18 @@
 #pragma once
 #include"Player.h"
 
+#define P_MAX 0.5f
+#define G_MAX 1.0f
+#define R_MAX 1.5f
 
+
+
+struct ENEMY
+{
+	int type;
+	int score;
+	float MaxSpeed;
+};
 class Enemy
 {
 private:
@@ -23,10 +34,24 @@ private:
 	int swy;		//敵が倒されたときの座標加算切り替え用
 	int cycount;
 
-	int img[24];
+	int P_img[18];
+	int R_img[18];
+	int G_img[18];
+
+	ENEMY enemy;
+
 	
 	int Epoint;
 	int cnt;
+	int Escore1;
+	int Escore2;
+	int Escore3;
+	int Escore4;
+	int Escore5;
+	int Eflgcnt;
+	bool onlyOnce;
+	int n_score;	// 現在のスコア
+	int hi_score;	// ハイスコア
 
 public:
 	Enemy(int set_X,int set_Y);
@@ -43,6 +68,8 @@ public:
 	void EnemyMoveY(Player P);
 	void EAnimation();
 
+
+
 	void EDeadAnim();
 
 	//敵が死ぬアニメーションになるか確認する用
@@ -50,6 +77,8 @@ public:
 
 	float GetEnemyLocationX() { return ELocationX; }
 	float GetEnemyLocationY() { return ELocationY; }
+	float GetEnemyMoveX() { return EMoveX; }
+	float GetEnemyMoveY() { return EMoveY; }
 
 	int EGetReboundFlgStageX() { return reboundFlgStageX; }
 	void ESetReboundFlgStageY(int f)
@@ -64,5 +93,7 @@ public:
 	{
 		flyingFlg = f;
 	}
+    int  Eflg;
+	 int c;
 };
 

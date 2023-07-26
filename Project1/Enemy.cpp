@@ -28,14 +28,39 @@ Enemy::Enemy(int set_X,int set_Y)
 	reboundFlgStageX = FALSE;
 	flyingFlg = FALSE;
 
+	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
+	switch (enemy.type)
+	{
+	case 0:
+		enemy.MaxSpeed = P_MAX;
+		break;
+	case 1:
+		enemy.MaxSpeed = G_MAX;
+		break;
+	case 2:
+		enemy.MaxSpeed = R_MAX;
+		break;
+	}
+
+	Epoint = 500;
 	changeimg = 0;
 	changeCt = 0;
 	cflg = FALSE;
 	cy = 0;
 	cycount = 0;
 	swy = 0;
-	LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 24, 8, 3, 64, 64, img); // 画像の分割読み込み
+	LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, P_img); // 画像の分割読み込み
+	LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, R_img); // 画像の分割読み込み
+	LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, G_img); // 画像の分割読み込み
 
+	Eflg = FALSE;
+	Eflgcnt = 0;
+	Escore1 = LoadGraph("images/Score/GetScore_500.png");
+	/*Escore2 = LoadGraph("images/Score/GetScore_750.png");
+	Escore3 = LoadGraph("images/Score/GetScore_1000.png");
+	Escore4 = LoadGraph("images/Score/GetScore_1500.png");
+	Escore5 = LoadGraph("images/Score/GetScore_2000.png");*/
+	n_score = 0;
 };
 
 
@@ -51,7 +76,7 @@ void Enemy::EnemyUpdate(Player P,int& j)
 		EAnimation();
 	}
 
-	if (i >= 8) {
+	if (i >= 8 && i< 13) {
 		EnemyMoveX(P);
 		EnemyMoveY(P);
 	}
@@ -67,9 +92,18 @@ void Enemy::EnemyUpdate(Player P,int& j)
 
 	//デバッグ用
 	DebagHit(P);
-
-
-
+	Eflgcnt++;
+	if (Eflgcnt == 200) {
+		c++;
+	}
+	
+	if (Eflgcnt >= 200) {
+		Eflgcnt = 0;
+	}
+	if (c > 1) {
+		Eflg = FALSE;
+	}
+	
 }
 
 void Enemy::EnemyDraw() const
@@ -82,12 +116,39 @@ void Enemy::EnemyDraw() const
 
 
 	if (cflg == TRUE) {
-		DrawRotaGraph(ELocationX, ELocationY + cy, 1.0f, 0, img[changeimg], TRUE, Flag);
+		switch (enemy.type)
+		{
+		case 0:
+			DrawRotaGraph(ELocationX, ELocationY + cy, 1.0f, 0, P_img[changeimg], TRUE, Flag);
+			break;
+		case 1:
+			DrawRotaGraph(ELocationX, ELocationY + cy, 1.0f, 0, G_img[changeimg], TRUE, Flag);
+			break;
+		case 2:
+			DrawRotaGraph(ELocationX, ELocationY + cy, 1.0f, 0, R_img[changeimg], TRUE, Flag);
+			break;
+		}
+		
+
 	}
 	else {
-		DrawRotaGraph(ELocationX, ELocationY, 1.0f, 0, img[i], TRUE, Flag);
+		
+		switch (enemy.type)
+		{
+		case 0:
+			DrawRotaGraph(ELocationX, ELocationY, 1.0f, 0, P_img[i], TRUE, Flag);
+			break;
+		case 1:
+			DrawRotaGraph(ELocationX, ELocationY, 1.0f, 0, G_img[i], TRUE, Flag);
+			break;
+		
+		case 2:
+			DrawRotaGraph(ELocationX, ELocationY, 1.0f, 0, R_img[i], TRUE, Flag);
+			break;
+	
+		}
 
-		DrawFormatString(ELocationX - 15, ELocationY - 30, GetColor(255, 0, 0), "%03d", Epoint);
+	
 		//デバッグ用
 		//DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
 		//DrawFormatString(0, 160, 0xffffff, "time::%d", time);
@@ -105,6 +166,25 @@ void Enemy::EnemyDraw() const
 			DrawFormatString(0, 220, 0xffffff, "X:FALSE");
 		}
 	}
+	//DrawFormatString(300, 0, 0xffffff, "Eflg::%d", Eflg);
+	//printfDx("%d", Eflg);
+	
+	//switch (switch_on)
+	//{
+	//case 0:
+	//	break;
+	//}
+	
+	if (c <= 1) {
+
+		if (Eflgcnt <= 100) {
+			if (Eflg == TRUE) {
+				DrawGraph(ELocationX - 15, ELocationY - 30, Escore1, TRUE);
+			}
+		}
+		
+	}
+	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
 }
 
 void Enemy::EnemyMoveX(Player P)
@@ -127,23 +207,23 @@ void Enemy::EnemyMoveX(Player P)
 		ELocationX = 640;
 	}
 
-	if (EMoveX > 0.5f) {
-		EMoveX = 0.5f;
+	if (EMoveX > enemy.MaxSpeed) {
+		EMoveX = enemy.MaxSpeed;
 	}
 
 	if (ELocationX <= P.GetPlayerLocationX()) {
-		EMoveX += 0.01f;
+		EMoveX += enemy.MaxSpeed/50;
 		Flag = TRUE;
 
 	}
 	else if (ELocationX >= P.GetPlayerLocationX()) {
-		EMoveX -= 0.01f;
+		EMoveX -= enemy.MaxSpeed/50;
 		Flag = FALSE;
 
 	}
 
-	if (EMoveX < -0.5f) {
-		EMoveX = -0.5f;
+	if (EMoveX < -enemy.MaxSpeed) {
+		EMoveX = -enemy.MaxSpeed;
 	}
 
 
@@ -176,7 +256,9 @@ void Enemy::EnemyMoveY(Player P)
 		ELocationY -= EMoveY;
 
 	}*/
-	
+	if (ELocationY <= 25) {
+		reboundFlgStageY = TRUE;
+	}
 
 	//反発
 	 if (reboundFlgStageY == TRUE  ){
@@ -186,25 +268,28 @@ void Enemy::EnemyMoveY(Player P)
 			EMoveY = -1 * EMoveY*10;
 	}
 	 if (flyingFlg != FALSE) {
-		 flyingFlg = FALSE;
 			 EMoveY = 0;
 			 
 		 
 		
 	 }
+	 
+	 
+		 if (ELocationY <= P.GetPlayerLocationY() && flyingFlg == FALSE) {
+			 EMoveY += enemy.MaxSpeed/150;
+		 }
+		 else if (ELocationY >= P.GetPlayerLocationY()) {
+			 EMoveY -= enemy.MaxSpeed/150;
+		 }
+		 if (EMoveY > enemy.MaxSpeed) {
+			 EMoveY = enemy.MaxSpeed;
+		 }
+		 if (EMoveY < -enemy.MaxSpeed) {
+			 EMoveY = -enemy.MaxSpeed;
+		 }
+	 
+	
 
-	 if (ELocationY <= P.GetPlayerLocationY()) {
-		 EMoveY += 0.01f;
-	 }
-	 else if (ELocationY >= P.GetPlayerLocationY()) {
-		 EMoveY -= 0.01f;
-	 }
-	 if (EMoveY > 0.5f) {
-		 EMoveY = 0.5f;
-	 }
-	 if (EMoveY < -0.5f) {
-		 EMoveY = -0.5f;
-	 }
 
 	ELocationY += EMoveY;
 
@@ -222,7 +307,7 @@ void Enemy::EAnimation()
 		if (i >= 8 ) {
 			++i;
 		}
-		if (i == 13) {
+		if (i == 12) {
 		i = 8;
 		}
 	
@@ -283,13 +368,11 @@ void Enemy::DebagHit(Player P) {
 	float py = P.GetPlayerLocationY();
 	float pywidth = py + 64;
 
-	if (cflg == FALSE) {
-		if (Ex <= pxwidth && Exwidth >= px && Ey <= pywidth && Eywidth >= py) {
-			cflg = TRUE;
-			EdeadCount += 1;
-			ElastFlg = TRUE;
-		}
+
+	if (Ex<=pxwidth && Exwidth>=px &&Ey<=pywidth && Eywidth>=py) {
+		cflg = TRUE;
+		Eflg = TRUE;
+		EdeadCount += 1;
 	}
 
 }
-

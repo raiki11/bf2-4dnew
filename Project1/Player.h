@@ -43,8 +43,11 @@ private:
 	int playerImgFpsCnt;
 	int playerImgTakeOffNum;
 	int playerImgFlyFlg;
+	int playerNoInputFlg;
+	int playerThunderFlg;
 
 	int splashNum;
+	int St_Sea;
 public:
 	Player();
 	~Player();
@@ -61,6 +64,8 @@ public:
 	int PlayerWalkAnim();
 	int PlayerFlyingAnim();
 	int PlayerDeathAnim();
+	int PlayerThunderDeathAnim();
+	int PlayerNoInputAnim();
 	int PlayerSplashAnim();
 
 	float GetPlayerLocationX() { return playerLocationX; }
@@ -72,6 +77,7 @@ public:
 	int GetReboundFrameCntX() { return reboundFrameCntX; }
 	float GetPlayerMoveX() { return playerMoveX; }
 	int GetPlayerLife() { return playerLife; }
+	int GetDeathFlg() { return deathFlg; }
 
 	void SetFlyingFlg(int f)
 	{
@@ -94,5 +100,6 @@ public:
 
 	void SetFallLimit();
 	void SetRemainBalloon();
+	int AnyButtons();
 };
 
