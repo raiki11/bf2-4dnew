@@ -7,6 +7,7 @@
 #include "HitBox.h"
 #include "Fish.h"
 #include "UI.h"
+#include"Thunder.h"
 // シーンマネージャークラス
 // 各シーンの切り替えを管理する
 
@@ -25,9 +26,10 @@ private:
     //Enemy enemy3;
     HitBox hit;
     Fish fish;
+    Thunder thunder;
     bool PauseFlg;            // ポーズ
     
-   
+    int OldSnum;//ステージ数比較用
 
     int a;
     int reboundFlg;

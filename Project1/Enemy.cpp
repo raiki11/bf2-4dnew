@@ -1,8 +1,14 @@
 #include"DxLib.h"
 #include "Enemy.h"
 #include "Stage.h"
-#include"FPS.h"
+#include "HitBox.h"
 
+Enemy* hitenemy[6];
+HitBox hit;
+Stage stage;
+
+int Enemy::DeadFlg = FALSE;
+int Enemy::EdeadCount = 0;
 
 Enemy::Enemy(int set_X,int set_Y)
 {
@@ -22,6 +28,18 @@ Enemy::Enemy(int set_X,int set_Y)
 	flyingFlg = FALSE;
 
 	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
+	switch (enemy.type)
+	{
+	case 0:
+		enemy.MaxSpeed = P_MAX;
+		break;
+	case 1:
+		enemy.MaxSpeed = G_MAX;
+		break;
+	case 2:
+		enemy.MaxSpeed = R_MAX;
+		break;
+	}
 
 	Epoint = 500;
 	changeimg = 0;
@@ -34,7 +52,6 @@ Enemy::Enemy(int set_X,int set_Y)
 	LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, R_img); // 画像の分割読み込み
 	LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, G_img); // 画像の分割読み込み
 
-	//LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 24, 8, 3, 64, 64, img); // 画像の分割読み込み
 	Eflg = FALSE;
 	Eflgcnt = 0;
 	Escore1 = LoadGraph("images/Score/GetScore_500.png");
@@ -45,18 +62,20 @@ Enemy::Enemy(int set_X,int set_Y)
 	n_score = 0;
 };
 
+
+
 Enemy::~Enemy()
 {
 }
 
-void Enemy::EnemyUpdate(Player P)
+void Enemy::EnemyUpdate(Player P,int& j)
 {
 	if (++fpscount >= 60)
 	{
 		EAnimation();
 	}
 
-	if (i >= 8) {
+	if (i >= 8 && i< 13) {
 		EnemyMoveX(P);
 		EnemyMoveY(P);
 	}
@@ -67,6 +86,7 @@ void Enemy::EnemyUpdate(Player P)
 	}
 
 	if (cflg == TRUE) {
+
 		EDeadAnim();
 	}
 	//デバッグ用
@@ -87,8 +107,12 @@ void Enemy::EnemyUpdate(Player P)
 
 void Enemy::EnemyDraw() const
 {
-	/*DrawCircle(enemyLocationX, enemyLocationY, 4, 0x00ff00, TRUE);*/
+	//DrawCircle(ELocationX, ELocationY, 4, 0x00ff00, TRUE);
 	/*DrawGraph(enemyLocationX, enemyLocationY, img[i], TRUE);*/
+
+	//DrawFormatString(0, 400, 0xffffff, "ElY%f", ELocationY);
+	DrawBox(0, 440, 600, 600, 0x00ff00, FALSE);
+
 
 	if (cflg == TRUE) {
 		switch (enemy.type)
@@ -181,23 +205,23 @@ void Enemy::EnemyMoveX(Player P)
 		ELocationX = 640;
 	}
 
-	if (EMoveX > 0.5f) {
-		EMoveX = 0.5f;
+	if (EMoveX > enemy.MaxSpeed) {
+		EMoveX = enemy.MaxSpeed;
 	}
 
 	if (ELocationX <= P.GetPlayerLocationX()) {
-		EMoveX += 0.01f;
+		EMoveX += enemy.MaxSpeed/50;
 		Flag = TRUE;
 
 	}
 	else if (ELocationX >= P.GetPlayerLocationX()) {
-		EMoveX -= 0.01f;
+		EMoveX -= enemy.MaxSpeed/50;
 		Flag = FALSE;
 
 	}
 
-	if (EMoveX < -0.5f) {
-		EMoveX = -0.5f;
+	if (EMoveX < -enemy.MaxSpeed) {
+		EMoveX = -enemy.MaxSpeed;
 	}
 
 
@@ -230,7 +254,9 @@ void Enemy::EnemyMoveY(Player P)
 		ELocationY -= EMoveY;
 
 	}*/
-	
+	if (ELocationY <= 25) {
+		reboundFlgStageY = TRUE;
+	}
 
 	//反発
 	 if (reboundFlgStageY == TRUE  ){
@@ -248,16 +274,16 @@ void Enemy::EnemyMoveY(Player P)
 	 
 	 
 		 if (ELocationY <= P.GetPlayerLocationY() && flyingFlg == FALSE) {
-			 EMoveY += 0.01f;
+			 EMoveY += enemy.MaxSpeed/150;
 		 }
 		 else if (ELocationY >= P.GetPlayerLocationY()) {
-			 EMoveY -= 0.01f;
+			 EMoveY -= enemy.MaxSpeed/150;
 		 }
-		 if (EMoveY > 0.5f) {
-			 EMoveY = 0.5f;
+		 if (EMoveY > enemy.MaxSpeed) {
+			 EMoveY = enemy.MaxSpeed;
 		 }
-		 if (EMoveY < -0.5f) {
-			 EMoveY = -0.5f;
+		 if (EMoveY < -enemy.MaxSpeed) {
+			 EMoveY = -enemy.MaxSpeed;
 		 }
 	 
 	
@@ -287,10 +313,12 @@ void Enemy::EAnimation()
 
 void Enemy::EDeadAnim() {
 
+	
 
 		switch (swy)
 		{
 		case 0:
+
 			cycount++;
 			cy -= 2.8;
 			if (cycount > 9) {
@@ -303,7 +331,12 @@ void Enemy::EDeadAnim() {
 			if (cycount > 6) {
 					cy += 3;
 			}
-			if (cy >= 300)swy += 1;
+			if (ELocationY+cy>=450)swy += 1;
+			break;
+		case 2:
+			Enemy::EdeadCount += 1;
+			DeadFlg = TRUE;
+			swy += 1;
 			break;
 		default:
 			break;
