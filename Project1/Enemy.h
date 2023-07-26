@@ -35,6 +35,8 @@ private:
 	int Escore5;
 	int Eflgcnt;
 	bool onlyOnce;
+	int n_score;	// 現在のスコア
+	int hi_score;	// ハイスコア
 
 public:
 	Enemy(int set_X,int set_Y);
@@ -68,6 +70,6 @@ public:
 		flyingFlg = f;
 	}
     int  Eflg;
-	static int c;
+	 int c;
 };
 

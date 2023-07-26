@@ -2,7 +2,7 @@
 #include "Enemy.h"
 #include "Stage.h"
 #include"FPS.h"
-int Enemy::c;
+
 
 Enemy::Enemy(int set_X,int set_Y)
 {
@@ -31,10 +31,11 @@ Enemy::Enemy(int set_X,int set_Y)
 	Eflg = FALSE;
 	Eflgcnt = 0;
 	Escore1 = LoadGraph("images/Score/GetScore_500.png");
-	/*Escore2 = LoadGraph("images/Score/GetScore_750");
-	Escore3 = LoadGraph("images/Score/GetScore_1000");
-	Escore4 = LoadGraph("images/Score/GetScore_1500");
-	Escore5 = LoadGraph("images/Score/GetScore_2000");*/
+	/*Escore2 = LoadGraph("images/Score/GetScore_750.png");
+	Escore3 = LoadGraph("images/Score/GetScore_1000.png");
+	Escore4 = LoadGraph("images/Score/GetScore_1500.png");
+	Escore5 = LoadGraph("images/Score/GetScore_2000.png");*/
+	n_score = 0;
 };
 
 Enemy::~Enemy()
@@ -64,17 +65,16 @@ void Enemy::EnemyUpdate(Player P)
 	//デバッグ用
 	DebagHit(P);
 	Eflgcnt++;
-	/*if (Eflgcnt == 200) {
+	if (Eflgcnt == 200) {
 		c++;
-	}*/
+	}
 	
-		if (Eflgcnt >= 200) {
-			Eflgcnt = 0;
-		}
-		else {
-
-		}
-	
+	if (Eflgcnt >= 200) {
+		Eflgcnt = 0;
+	}
+	if (c > 1) {
+		Eflg = FALSE;
+	}
 	
 }
 
@@ -108,20 +108,25 @@ void Enemy::EnemyDraw() const
 			DrawFormatString(0, 220, 0xffffff, "X:FALSE");
 		}
 	}
-
-	//if (c <= 1) {
+	//DrawFormatString(300, 0, 0xffffff, "Eflg::%d", Eflg);
+	//printfDx("%d", Eflg);
+	
+	//switch (switch_on)
+	//{
+	//case 0:
+	//	break;
+	//}
+	
+	if (c <= 1) {
 
 		if (Eflgcnt <= 100) {
 			if (Eflg == TRUE) {
 				DrawGraph(ELocationX - 15, ELocationY - 30, Escore1, TRUE);
 			}
 		}
-	
-	
-	
-	
-	
-	//}
+		
+	}
+	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
 }
 
 void Enemy::EnemyMoveX(Player P)

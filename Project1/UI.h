@@ -18,6 +18,7 @@ private:
 	int p_score;
 	int p_top;
 	int p_phase;
+	
 	 
 	//プレイヤー残機取得用
 	int p_life;
