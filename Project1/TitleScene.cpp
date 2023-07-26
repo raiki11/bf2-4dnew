@@ -59,6 +59,19 @@ AbstractScene* TitleScene::Update()
 		
 	}
 
+	if (PAD_INPUT::OnButton(XINPUT_BUTTON_DPAD_UP) || PAD_INPUT::GetLStick().y >= 32000) {
+		selectNum--;
+		if (selectNum < 0) {
+			selectNum = 2;
+		}
+	}
+	if (PAD_INPUT::OnButton(XINPUT_BUTTON_DPAD_DOWN) || PAD_INPUT::GetLStick().y <= -32000) {
+		selectNum++;
+		if (selectNum > 2) {
+			selectNum = 0;
+		}
+	}
+
 	if (selectNum == 0 && PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
 		return new GameMain();
 	}
@@ -71,7 +84,7 @@ void TitleScene::Draw() const
 {
 	DrawGraph(50, 20, titleLogo, TRUE);
 	DrawGraph(170, 280, titleSelectImg, TRUE);
-	DrawRotaGraph(150, 292 + (selectNum * 50), 1.0f, 0, titleBalloon[num], TRUE);
+	DrawRotaGraph(150, 292 + (selectNum * 36), 1.0f, 0, titleBalloon[num], TRUE);
 	DrawGraph(170, 430, titleCredit, TRUE);
 
 }
