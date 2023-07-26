@@ -43,6 +43,8 @@ Player::Player()
 	St_Sea = LoadGraph("images/Stage/Stage_Sea01.png");
 
 	splashNum = 99;
+
+	playerDeathState = -1;
 }
 
 Player::~Player()
@@ -52,18 +54,38 @@ Player::~Player()
 void Player::PlayerUpdate()
 {
 	if (deathFlg == TRUE) {
-		
-		if (PlayerThunderDeathAnim() == TRUE) {
-			deathFlg = FALSE;
-			playerImgNum = 0;
-			playerLocationX = 100;
-			playerLocationY = 387;
-			playerMoveX = 0;
-			playerMoveY = 0.0f;
-			remainBalloon = 2;
-			splashNum = 99;
-			playerLife--;
-			playerNoInputFlg = TRUE;
+		switch (playerDeathState)
+		{
+		case 0:
+			if (PlayerDeathAnim() == TRUE) {
+				deathFlg = FALSE;
+				playerImgNum = 0;
+				playerLocationX = 100;
+				playerLocationY = 387;
+				playerMoveX = 0;
+				playerMoveY = 0.0f;
+				remainBalloon = 2;
+				splashNum = 99;
+				playerLife--;
+				playerNoInputFlg = TRUE;
+				playerDeathState = -1;
+			}
+			break;
+		case 1:
+			if (PlayerThunderDeathAnim() == TRUE) {
+				deathFlg = FALSE;
+				playerImgNum = 0;
+				playerLocationX = 100;
+				playerLocationY = 387;
+				playerMoveX = 0;
+				playerMoveY = 0.0f;
+				remainBalloon = 2;
+				splashNum = 99;
+				playerLife--;
+				playerNoInputFlg = TRUE;
+				playerDeathState = -1;
+			}
+			break;
 		}
 	}
 	else {
@@ -116,6 +138,7 @@ void Player::PlayerUpdate()
 		SetFallLimit();
 
 		if (remainBalloon == 0 || playerLocationY > 470) {
+			playerDeathState = 0;
 			deathFlg = TRUE;
 		}
 	}

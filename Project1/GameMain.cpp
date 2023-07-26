@@ -141,6 +141,13 @@ AbstractScene* GameMain::Update()
 			}
 		}
 
+
+		//プレイヤーと雷
+		if (hit.PlayerAndThunder(player, thunder) == TRUE) {
+			player.SetPlayerDeathFlg(TRUE);
+			player.SetPlayerDeathFState(1);
+		}
+
 		//次のステージの敵生成
 		//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
 		//	if (Stage::Snum >= 4) { Stage::Snum = 0; }

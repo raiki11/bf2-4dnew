@@ -4,13 +4,14 @@
 float Stage::EnemyX[stagenum][6] = { {320,420,220},{320,420,220,440},{320,420,220,440},{320,420,220,440},{320,420,220,440} };
 float Stage::EnemyY[stagenum][6] = { {250,250,250},{230,230,230,230},{320,420,220,440},{320,420,220,440},{320,420,220,440} };
 int Stage::EnemyType[stagenum][6] = { {0,1,2},{1,0,1,0},{1,0,1,0},{0,1,0,1},{1,1,1,1} };
-
 //ステージごとのエネミー数
 
 
 int Stage::Snum = 0;
 //ステージごとのエネミー数
 int Stage::EnemyMax[5]={2,4,4,4,5};
+
+int Stage::MaxCoord[stagenum] = { 6,10,18,14,16 };
 
 Stage::Stage() {
 	St_Footing = LoadGraph("images/Stage/Stage_Footing01.png");

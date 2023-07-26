@@ -140,6 +140,7 @@ public:
 	static int EnemyType[stagenum][6];
 	static int Snum;	//今のステージ
 	static int EnemyMax[5];//ステージごとに現れるエネミー数
+	static int MaxCoord[stagenum];  //ステージの座標の数
 
 	int GetStageXY(int snum, int m, int xy)
 	{
