@@ -59,8 +59,9 @@ void Thunder::ThunderUpdate()
 void Thunder::ThunderDraw() const
 {
 	DrawRotaGraph(ThunderX, ThunderY, 1.0f, 0, ThunderImg[2], TRUE, FALSE);
-	DrawFormatString(400, 130, 0xffffff, "ThunderLocationX::%d", ThunderX);
-	DrawFormatString(400, 230, 0xffffff, "ThunderLocationY::%d", ThunderY);
+	/* デバック用 */
+	/*DrawFormatString(400, 130, 0xffffff, "ThunderLocationX::%d", ThunderX);
+	DrawFormatString(400, 230, 0xffffff, "ThunderLocationY::%d", ThunderY);*/
 }
 
 void Thunder::ChangeAngle()

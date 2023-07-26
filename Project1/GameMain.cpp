@@ -153,5 +153,6 @@ void GameMain::Draw() const
 	//enemy.EnemyDraw();
 	fish.FishDraw(player);
 	thunder.ThunderDraw();
+	bubble.BabbleDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }
