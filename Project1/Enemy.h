@@ -39,6 +39,15 @@ private:
 	
 	int Epoint;
 	int cnt;
+	int Escore1;
+	int Escore2;
+	int Escore3;
+	int Escore4;
+	int Escore5;
+	int Eflgcnt;
+	bool onlyOnce;
+	int n_score;	// 現在のスコア
+	int hi_score;	// ハイスコア
 
 public:
 	Enemy(int set_X,int set_Y);
@@ -73,5 +82,7 @@ public:
 	{
 		flyingFlg = f;
 	}
+    int  Eflg;
+	 int c;
 };
 
