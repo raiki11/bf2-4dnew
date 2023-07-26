@@ -36,4 +36,10 @@ public:
 	int MoveX;
 	// —‹‚ª“®‚­YÀ•W‚Ì—Ê
 	int MoveY;  
+	// —‹‚Ì“–‚½‚è”»’èê—p‚ÌÀ•W
+	int tx1 = ThunderX - 32;
+	int tx2 = ThunderX + 32;
+	int ty1 = ThunderY - 32;
+	int ty1 = ThunderY + 32;
+
 };
