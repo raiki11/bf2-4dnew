@@ -2,6 +2,12 @@
 #include"Player.h"
 
 
+struct ENEMY
+{
+	int type;
+	int score;
+	float Speed;
+};
 class Enemy
 {
 private:
@@ -24,7 +30,12 @@ private:
 	int swy;		//“G‚ª“|‚³‚ê‚½‚Æ‚«‚ÌÀ•W‰ÁZØ‚è‘Ö‚¦—p
 	int cycount;
 
-	int img[24];
+	int P_img[18];
+	int R_img[18];
+	int G_img[18];
+
+	ENEMY enemy;
+
 	
 	int Epoint;
 	int cnt;
