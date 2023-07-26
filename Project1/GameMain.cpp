@@ -23,7 +23,7 @@ GameMain::~GameMain()
 
 AbstractScene* GameMain::Update()
 {
-<<<<<<< HEAD
+
 	//ポーズフラグ切り替え処理
 	if (PAD_INPUT::OnButton(XINPUT_BUTTON_START))
 	{

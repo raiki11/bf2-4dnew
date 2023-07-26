@@ -34,7 +34,6 @@ Enemy::Enemy(int set_X,int set_Y)
 	LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, R_img); // ‰æ‘œ‚Ì•ªŠ„“Ç‚İ‚İ
 	LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, G_img); // ‰æ‘œ‚Ì•ªŠ„“Ç‚İ‚İ
 
-	LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 24, 8, 3, 64, 64, img); // ‰æ‘œ‚Ì•ªŠ„“Ç‚İ‚İ
 	Eflg = FALSE;
 	Eflgcnt = 0;
 	Escore1 = LoadGraph("images/Score/GetScore_500.png");
