@@ -152,8 +152,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="End.cpp" />
-<<<<<<< HEAD
-<<<<<<< HEAD
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Fish.cpp" />
     <ClCompile Include="FPS.cpp" />
@@ -173,8 +171,6 @@
     <ClInclude Include="AbstractScene.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="End.h" />
-<<<<<<< HEAD
-<<<<<<< HEAD
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Fish.h" />
     <ClInclude Include="FPS.h" />
