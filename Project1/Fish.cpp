@@ -22,7 +22,7 @@ Fish::~Fish()
 void Fish::FishUpdate(Player p , Enemy e[])
 {
 	/* プレイヤーがサカナの稼働エリアに入った時 */
-	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() + 32 && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
+	if (FishAreaX0 <= p.GetPlayerLocationX() && p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() + 32 && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
 		if (PFlg == 0) {
 			PFlg = 1;
 		}
