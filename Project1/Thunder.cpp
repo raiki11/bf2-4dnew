@@ -18,7 +18,7 @@ void Thunder::ThunderUpdate()
 	if (ThunderFlg == 2) {
 		ThunderFlg = 0;  // 雷の状態を移動中に設定する
 		// スピードとアングルによる移動量計算
-		ThunderSpeed = 1;
+		ThunderSpeed = 2;
 		ThunderAngle = 0.625f;
 
 		ChangeAngle();
