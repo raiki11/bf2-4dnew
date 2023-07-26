@@ -29,7 +29,7 @@ private:
     Thunder thunder;
     bool PauseFlg;            // ポーズ
     
-   
+    int OldSnum;//ステージ数比較用
 
     int a;
     int reboundFlg;

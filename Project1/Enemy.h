@@ -1,12 +1,17 @@
 #pragma once
 #include"Player.h"
 
+#define P_MAX 0.5f
+#define G_MAX 1.0f
+#define R_MAX 1.5f
+
+
 
 struct ENEMY
 {
 	int type;
 	int score;
-	float Speed;
+	float MaxSpeed;
 };
 class Enemy
 {
@@ -25,7 +30,6 @@ private:
 
 	int changeimg;//エネミー落下画像切り替え用
 	int changeCt;//画像切り替えのカウント
-	int cflg;		//敵が倒された時の仮フラグ
 	float cy;		//敵が倒されたときのY座標加算用
 	int swy;		//敵が倒されたときの座標加算切り替え用
 	int cycount;
@@ -39,16 +43,32 @@ private:
 	
 	int Epoint;
 	int cnt;
+	int Escore1;
+	int Escore2;
+	int Escore3;
+	int Escore4;
+	int Escore5;
+	int Eflgcnt;
+	bool onlyOnce;
+	int n_score;	// 現在のスコア
+	int hi_score;	// ハイスコア
 
 public:
 	Enemy(int set_X,int set_Y);
 	~Enemy();
 
-	void EnemyUpdate(Player P);
+	int cflg;		//死亡アニメーションフラグ
+	static int DeadFlg;		//死亡フラグ
+	static int EdeadCount;//エネミーがやられた数のカウント
+
+
+	void EnemyUpdate(Player P,int& j);
 	void EnemyDraw() const;
 	void EnemyMoveX(Player P);
 	void EnemyMoveY(Player P);
 	void EAnimation();
+
+
 
 	void EDeadAnim();
 
@@ -73,5 +93,7 @@ public:
 	{
 		flyingFlg = f;
 	}
+    int  Eflg;
+	 int c;
 };
 

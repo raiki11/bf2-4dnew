@@ -38,6 +38,9 @@ Player::Player()
 	reboundFlgStageY = FALSE;
 	reboundFlgStageX = FALSE;
 	reboundFrameCntX = 0;
+	playerThunderFlg = FALSE;
+
+	St_Sea = LoadGraph("images/Stage/Stage_Sea01.png");
 
 	splashNum = 99;
 }
@@ -50,7 +53,7 @@ void Player::PlayerUpdate()
 {
 	if (deathFlg == TRUE) {
 		
-		if (PlayerDeathAnim() == TRUE) {
+		if (PlayerThunderDeathAnim() == TRUE) {
 			deathFlg = FALSE;
 			playerImgNum = 0;
 			playerLocationX = 100;
@@ -112,7 +115,7 @@ void Player::PlayerUpdate()
 		SetRemainBalloon();
 		SetFallLimit();
 
-		if (remainBalloon == 0 || playerLocationY > 500) {
+		if (remainBalloon == 0 || playerLocationY > 470) {
 			deathFlg = TRUE;
 		}
 	}
@@ -122,13 +125,17 @@ void Player::PlayerDraw() const
 {
 	DrawRotaGraph(playerLocationX, playerLocationY, 1.0f, 0, playerImg[playerImgNum], TRUE, playerImgReturnFlg);
 	DrawRotaGraph(playerLocationX, 430, 1.0f, 0, splashImg[splashNum], TRUE, FALSE);
+
 	DrawCircle(playerLocationX, playerLocationY, 4, 0xff0000, TRUE);
+
+	//DrawGraph(160, 442, St_Sea, TRUE);
+
 	DrawFormatString(0, 40, 0xffffff, "count::%d", count);
 	DrawFormatString(0, 55, 0xffffff, "flyButtonFlg::%d", flyButtonFlg);
 	DrawFormatString(0, 70, 0xffffff, "moveFpsCountY::%d", moveFpsCountY);
 	DrawFormatString(0, 85, 0xffffff, "playerMoveX::%f", playerMoveX);
 	/*DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", playerLocationY);*/
-	DrawFormatString(0, 100, 0xffffff, "rebound::%d", rebound);
+	DrawFormatString(0, 100, 0xffffff, "imgfpscnt::%d", playerImgFpsCnt);
 	DrawFormatString(0, 115, 0xffffff, "playerMoveY::%f", playerMoveY);
 	DrawFormatString(0, 130, 0xffffff, "playerLocatoinY::%f", playerLocationY);
 	DrawFormatString(0, 145, 0xffffff, "flyingflg::%d", flyingFlg);
@@ -760,7 +767,7 @@ int Player::PlayerFlyingAnim()
 
 int Player::PlayerDeathAnim()
 {
-	if (playerImgNum < 27 || playerImgNum > 29) {
+	if (playerImgNum < 27 || playerImgNum > 30) {
 		playerImgNum = 27;
 		playerMoveY = -2;
 		playerImgFpsCnt = 0;
@@ -788,6 +795,32 @@ int Player::PlayerDeathAnim()
 		}
 	}
 
+	return 0;
+}
+
+int Player::PlayerThunderDeathAnim()
+{
+	if (playerThunderFlg == FALSE) {
+		playerImgFpsCnt = 0;
+		playerImgNum = 27;
+		playerThunderFlg = TRUE;
+	}
+	if (playerImgFpsCnt < 60) {
+		if (playerImgFpsCnt++ % 3 == 0) {
+			if (playerImgNum == 27) {
+				playerImgNum = 30;
+			}
+			else if (playerImgNum == 30) {
+				playerImgNum = 27;
+			}
+		}
+	}
+	else {
+		if (PlayerDeathAnim() == TRUE) {
+			playerThunderFlg = FALSE;
+			return TRUE;
+		}
+	}
 	return 0;
 }
 
