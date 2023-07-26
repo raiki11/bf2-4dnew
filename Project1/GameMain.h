@@ -27,6 +27,11 @@ private:
     Fish fish;
     bool PauseFlg;            // ポーズ
     
+    bool ClearFlg;            //ステージclearフラグ
+    int Elast;                //最後のエネミーの番号受け取り用
+    bool once;                //一回だけ
+    int count;
+
     int OldSnum;//ステージ数比較用
 
     int a;
@@ -46,4 +51,6 @@ public:
     //描画に関することを実装
     void Draw() const override;
 
+    //エネミーチェック
+    void CheckEnemy(void);
 };

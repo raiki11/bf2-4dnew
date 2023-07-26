@@ -8,7 +8,8 @@ HitBox hit;
 Stage stage;
 
 int Enemy::DeadFlg = FALSE;
-int Enemy::EdeadCount = 0;
+int Enemy::EdeadCount = -1;
+int Enemy::ElastFlg = FALSE;
 
 Enemy::Enemy(int set_X,int set_Y)
 {
@@ -61,9 +62,9 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	}
 
 	if (cflg == TRUE) {
-
 		EDeadAnim();
 	}
+
 	//デバッグ用
 	DebagHit(P);
 
@@ -250,9 +251,7 @@ void Enemy::EDeadAnim() {
 			if (ELocationY+cy>=450)swy += 1;
 			break;
 		case 2:
-			Enemy::EdeadCount += 1;
 			DeadFlg = TRUE;
-			swy += 1;
 			break;
 		default:
 			break;
@@ -287,7 +286,8 @@ void Enemy::DebagHit(Player P) {
 	if (cflg == FALSE) {
 		if (Ex <= pxwidth && Exwidth >= px && Ey <= pywidth && Eywidth >= py) {
 			cflg = TRUE;
-			printfDx("%d", cflg);
+			EdeadCount += 1;
+			ElastFlg = TRUE;
 		}
 	}
 

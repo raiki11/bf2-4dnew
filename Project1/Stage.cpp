@@ -128,12 +128,12 @@ DrawGraph(318, 182, St_FootingT, TRUE);
 //DrawBox(318, 184, 379, 199,0xff0000, FALSE);//横
 //DrawBox(339, 199, 357, 247, 0x00ff00, FALSE);//縦
 
-////左上T浮島表示
+////右上T浮島表示
 DrawGraph(500, 99, St_FootingT, TRUE);
 //DrawBox(500, 101, 561, 116, 0xff0000, FALSE);//横
 //DrawBox(521, 116, 539, 164, 0x00ff00, FALSE);//縦
 
-//右上小さい浮島表示
+//上小さい浮島表示
 DrawGraph(200, 99, St_FootingM, TRUE);
 //DrawBox(200, 101, 242, 117, 0xff0000, FALSE);
 
@@ -141,7 +141,7 @@ DrawGraph(200, 99, St_FootingM, TRUE);
 DrawGraph(280, 365, St_Footing3, TRUE);
 //DrawBox(280, 367, 361, 383, 0xff0000, FALSE);
 
-//左下の地面表示
+//右下の地面表示
 DrawGraph(0, 416, St_Land_Left, TRUE);
 //DrawBox(0, 419, 160, 480, 0xff0000, FALSE);
 
