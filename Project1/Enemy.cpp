@@ -8,9 +8,9 @@ HitBox hit;
 Stage stage;
 
 int Enemy::DeadFlg = FALSE;
-int Enemy::EdeadCount = 0;
+int Enemy::EdeadCount = -1;
+int Enemy::ElastFlg = FALSE;
 int Enemy::Score = 0;
-
 Enemy::Enemy(int set_X,int set_Y)
 {
 	//ELocationX = 320;
@@ -105,7 +105,10 @@ void Enemy::EnemyUpdate(Player P,int& j)
 		cflg = TRUE;
 	}*/
 
-	
+	//if (cflg == TRUE) {
+	//	EDeadAnim();
+	//}
+
 	//デバッグ用
 	DebagHit(P);
 	Eflgcnt++;
@@ -390,9 +393,7 @@ void Enemy::EDeadAnim() {
 			if (ELocationY+cy>=450)swy += 1;
 			break;
 		case 2:
-			Enemy::EdeadCount += 1;
 			DeadFlg = TRUE;
-			swy += 1;
 			break;
 		default:
 			break;
@@ -427,8 +428,8 @@ void Enemy::DebagHit(Player P) {
 	
 	count++;
 	if (Ex<=pxwidth && Exwidth>=px &&Ey<=pywidth && Eywidth>=py) {
-
 		if (count >= 60) {
+
 			aflg = TRUE;
 			if (cflg == 0 && i >= 8 && aflg == TRUE) {
 				cflg = 1;
@@ -437,15 +438,14 @@ void Enemy::DebagHit(Player P) {
 			}
 
 			if(aflg == TRUE && eflg == TRUE){
+
+				Enemy::EdeadCount += 1;
 				cflg = 2;
 				aflg = FALSE;
 				EScore();
 			}
 			count = 0;
 		}
-
-		
-	
 	}
 }
 
