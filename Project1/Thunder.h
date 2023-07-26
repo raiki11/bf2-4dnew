@@ -40,6 +40,6 @@ public:
 	int tx1 = ThunderX - 32;
 	int tx2 = ThunderX + 32;
 	int ty1 = ThunderY - 32;
-	int ty1 = ThunderY + 32;
+	int ty2 = ThunderY + 32;
 
 };
