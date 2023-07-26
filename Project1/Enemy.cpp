@@ -8,6 +8,7 @@ HitBox hit;
 Stage stage;
 
 int Enemy::DeadFlg = FALSE;
+int Enemy::EdeadCount = 0;
 
 Enemy::Enemy(int set_X,int set_Y)
 {
@@ -60,10 +61,13 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	}
 
 	if (cflg == TRUE) {
+
 		EDeadAnim();
 	}
 	//デバッグ用
 	DebagHit(P);
+
+
 
 }
 
@@ -75,9 +79,9 @@ void Enemy::EnemyDraw() const
 	//DrawFormatString(0, 400, 0xffffff, "ElY%f", ELocationY);
 	DrawBox(0, 440, 600, 600, 0x00ff00, FALSE);
 
+
 	if (cflg == TRUE) {
 		DrawRotaGraph(ELocationX, ELocationY + cy, 1.0f, 0, img[changeimg], TRUE, Flag);
-
 	}
 	else {
 		DrawRotaGraph(ELocationX, ELocationY, 1.0f, 0, img[i], TRUE, Flag);
@@ -225,10 +229,12 @@ void Enemy::EAnimation()
 
 void Enemy::EDeadAnim() {
 
+	
 
 		switch (swy)
 		{
 		case 0:
+
 			cycount++;
 			cy -= 2.8;
 			if (cycount > 9) {
@@ -244,7 +250,9 @@ void Enemy::EDeadAnim() {
 			if (ELocationY+cy>=450)swy += 1;
 			break;
 		case 2:
+			Enemy::EdeadCount += 1;
 			DeadFlg = TRUE;
+			swy += 1;
 			break;
 		default:
 			break;
@@ -276,9 +284,12 @@ void Enemy::DebagHit(Player P) {
 	float py = P.GetPlayerLocationY();
 	float pywidth = py + 64;
 
-
-	if (Ex<=pxwidth && Exwidth>=px &&Ey<=pywidth && Eywidth>=py) {
-		cflg = TRUE;
+	if (cflg == FALSE) {
+		if (Ex <= pxwidth && Exwidth >= px && Ey <= pywidth && Eywidth >= py) {
+			cflg = TRUE;
+			printfDx("%d", cflg);
+		}
 	}
+
 }
 

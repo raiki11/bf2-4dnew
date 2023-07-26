@@ -34,6 +34,8 @@ public:
 
 	int cflg;		//死亡アニメーションフラグ
 	static int DeadFlg;		//死亡フラグ
+	static int EdeadCount;//エネミーがやられた数のカウント
+
 
 	void EnemyUpdate(Player P,int& j);
 	void EnemyDraw() const;

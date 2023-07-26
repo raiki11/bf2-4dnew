@@ -44,12 +44,16 @@ AbstractScene* GameMain::Update()
 			if (enemy[i] != nullptr) {
 				enemy[i]->EnemyUpdate(player, i);
 			}
+			//エネミーを倒したら
 			if (Enemy::DeadFlg == TRUE) {
 				enemy[i] = nullptr;
 				Enemy::DeadFlg = FALSE;
+				Enemy::EdeadCount += 1;
 			}
-			//enemy[i]->EHitBox(i);
-		}
+			//cflg=TRUE&&nullptrじゃない奴がラス１だったら
+		
+
+		
 
 		fish.FishUpdate(player, enemy[0]);
 	}
@@ -137,17 +141,27 @@ AbstractScene* GameMain::Update()
 	}
 	
 	//次のステージの敵生成
-	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
-		if (Stage::Snum >= 4) { Stage::Snum = 0; }
+	//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
+	//	if (Stage::Snum >= 4) { Stage::Snum = 0; }
+	//		Stage::Snum += 1;
+	//	if (OldSnum != Stage::Snum) {
+	//		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+	//			enemy[i] = new Enemy(i, i);
+	//		}
+	//	}
+	//}
+
+		//次のステージの敵生成
+	if (Enemy::EdeadCount > Stage::EnemyMax[Stage::Snum]) {
 			Stage::Snum += 1;
-		if (OldSnum != Stage::Snum) {
-			for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
-				enemy[i] = new Enemy(i, i);
-			}
-		}
+			Enemy::EdeadCount = 0;
+				if (OldSnum != Stage::Snum){
+					for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++)
+					{
+						enemy[i] = new Enemy(i, i);
+					}
+				}
 	}
-
-
 	
 
 	return this;
