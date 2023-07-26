@@ -165,9 +165,9 @@ AbstractScene* GameMain::Update()
 			}
 		}
 
-
-		return this;
 	}
+
+	return this;
 }
 
 
