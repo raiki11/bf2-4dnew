@@ -6,6 +6,8 @@
 Thunder::Thunder() 
 {
 	LoadDivGraph("images/Stage/Stage_ThunderEffectAnimation.png", 3, 3, 1, 32, 32, ThunderImg);
+	MoveX = 0.0f;
+	MoveY = 0.0f;
 }
 
 Thunder::~Thunder()

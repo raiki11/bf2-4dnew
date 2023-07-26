@@ -172,3 +172,77 @@ int HitBox::EnemyAndStageLeft(Enemy e, Stage s)
 
 	return FALSE;
 }
+
+int HitBox::ThunderAndStageUnder(Thunder th, Stage s) 
+{
+	tx0 = th.GetThunderLocationX() - 32;
+	ty0 = th.GetThunderLocationY() + 32;
+	tx1 = th.GetThunderLocationX() + 32;
+	ty1 = th.GetThunderLocationY() + 32;
+
+	for (int i = 0; i < 6; i += 2) {
+		if (s.GetStageXY(0, i, 0) <= tx1 && s.GetStageXY(0, i + 1, 0) >= tx0 &&
+			s.GetStageXY(0, i, 1) <= ty1 && s.GetStageXY(0, i + 1, 1) >= ty0) {
+
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+int HitBox::ThunderAndStageTop(Thunder th, Stage s)
+{
+	tx0 = th.GetThunderLocationX() - 32;
+	ty0 = th.GetThunderLocationY() - 32;
+	tx1 = th.GetThunderLocationX() + 32;
+	ty1 = th.GetThunderLocationY() - 32;
+
+	for (int i = 0; i < 6; i += 2) {
+		if (s.GetStageXY(0, i, 0) <= tx1 && s.GetStageXY(0, i + 1, 0) >= tx0 &&
+			s.GetStageXY(0, i, 1) <= ty1 && s.GetStageXY(0, i + 1, 1) >= ty0) {
+
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+int HitBox::ThunderAndStageRight(Thunder th, Stage s)
+{
+	tx0 = th.GetThunderLocationX() + 32;
+	ty0 = th.GetThunderLocationY() - 32;
+	tx1 = th.GetThunderLocationX() + 32;
+	ty1 = th.GetThunderLocationY() + 32;
+
+	if (th.GetThunderMoveLocationX() > 0) {
+		for (int i = 0; i < 6; i += 2) {
+			if (s.GetStageXY(0, i, 0) <= ex1 && s.GetStageXY(0, i + 1, 0) >= ex0 &&
+				s.GetStageXY(0, i, 1) <= ey1 && s.GetStageXY(0, i + 1, 1) >= ey0) {
+
+				return TRUE;
+			}
+		}
+	}
+	return FALSE;
+}
+
+int HitBox::ThunderAndStageLeft(Thunder th, Stage s)
+{
+	tx0 = th.GetThunderLocationX() - 32;
+	ty0 = th.GetThunderLocationY() - 32;
+	tx1 = th.GetThunderLocationX() - 32;
+	ty1 = th.GetThunderLocationY() + 32;
+
+	if (th.GetThunderMoveLocationX() < 0) {
+		for (int i = 0; i < 6; i += 2) {
+			if (s.GetStageXY(0, i, 0) <= ex1 && s.GetStageXY(0, i + 1, 0) >= ex0 &&
+				s.GetStageXY(0, i, 1) <= ey1 && s.GetStageXY(0, i + 1, 1) >= ey0) {
+
+				return TRUE;
+			}
+		}
+	}
+
+	return FALSE;
+}

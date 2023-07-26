@@ -36,6 +36,11 @@ AbstractScene* GameMain::Update()
 		UI.Update(player.GetPlayerLife());
 		// ゲームメイン処理
 		player.PlayerUpdate();
+
+		fish.FishUpdate(player, enemy[0]);
+		thunder.ThunderUpdate();
+		bubble.BabbleUpdate();
+
 		//エネミーアップデート
 		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 			if (enemy[i] != nullptr) {
@@ -52,9 +57,9 @@ AbstractScene* GameMain::Update()
 
 
 
-			fish.FishUpdate(player, enemy[0]);
+			/*fish.FishUpdate(player, enemy[0]);
 			thunder.ThunderUpdate();
-			bubble.BabbleUpdate();
+			bubble.BabbleUpdate();*/
 		}
 
 
@@ -140,6 +145,23 @@ AbstractScene* GameMain::Update()
 					}
 				}
 			}
+		}
+
+		/* ステージと雷の当たり判定 */
+		if (hit.ThunderAndStageUnder(thunder, stage) == TRUE) {
+			thunder.ChangeAngle();
+		}
+
+		if (hit.ThunderAndStageTop(thunder, stage) == TRUE) {
+			thunder.ChangeAngle();
+		}
+
+		if (hit.ThunderAndStageRight(thunder, stage) == TRUE) {
+			thunder.ChangeAngle();
+		}
+
+		if (hit.ThunderAndStageLeft(thunder, stage) == TRUE) {
+			thunder.ChangeAngle();
 		}
 
 		//次のステージの敵生成

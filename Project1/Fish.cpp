@@ -137,7 +137,7 @@ void Fish::FishUpAnimation()
 	Time;
 	if (i == 10) i = 0;   // サカナが出てないときiをリセットする
 
-	if (i < 2 && ++Time % 15 == 0) {
+	if (i < 2 && ++Time % 30 == 0) {
 		i++;
 	}
 }
@@ -147,7 +147,7 @@ void Fish::FishDownAnimation()
 	
 	++Time;
 
-	if (i < 5 && Time % 15 == 0) {
+	if (i < 5 && Time % 30 == 0) {
 		++i;
 	}
 }
