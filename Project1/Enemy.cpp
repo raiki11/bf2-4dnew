@@ -32,8 +32,6 @@ Enemy::Enemy(int set_X,int set_Y)
 	aflg = FALSE;
 	count = 0;
 	once = false;
-	spc = 0;
-	spflg = false;
 
 
 	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
