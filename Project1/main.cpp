@@ -6,6 +6,8 @@
 #include "FPS.h"
 #include"Fish.h"
 #include "End.h"
+#include "TitleScene.h"
+
 //BGM用変数
 int BGM;
 
@@ -33,7 +35,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	try // シーンを選ぶとそこからスタートする（最終的にはTitleを入れる）
 	{
-		sceneMng = new SceneManager((AbstractScene*)new GameMain());
+		sceneMng = new SceneManager((AbstractScene*)new TitleScene());
 
 	}
 	catch (const char* err)

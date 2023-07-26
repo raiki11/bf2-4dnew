@@ -5,10 +5,10 @@
 
 Player::Player()
 {
-	playerLocationX = 320;
-	playerLocationY = 140;
+	playerLocationX = 100;
+	playerLocationY = 388;
 	playerMoveX = 0;
-	playerMoveY = 1.0f;
+	playerMoveY = 0.0f;
 
 	fallLimit = 1.0f;
 
@@ -25,6 +25,7 @@ Player::Player()
 	takeOffFlg = FALSE;
 	flapFlg = FALSE;
 	flapInterval = 3;
+	playerNoInputFlg = TRUE;
 
 	LoadDivGraph("images/Player/Player_Animation.png", 32, 8, 4, 64, 64, playerImg);
 	LoadDivGraph("images/Stage/Stage_SplashAnimation.png", 3, 3, 1, 64, 32, splashImg);
@@ -51,21 +52,26 @@ void Player::PlayerUpdate()
 		
 		if (PlayerDeathAnim() == TRUE) {
 			deathFlg = FALSE;
-			playerLocationX = 320;
-			playerLocationY = 140;
+			playerImgNum = 0;
+			playerLocationX = 100;
+			playerLocationY = 387;
 			playerMoveX = 0;
-			playerMoveY = 1.0f;
+			playerMoveY = 0.0f;
 			remainBalloon = 2;
 			splashNum = 99;
 			playerLife--;
+			playerNoInputFlg = TRUE;
 		}
 	}
 	else {
-		//îÚÇÒÇ≈ÇÈéûÇÃèàóù
+
+		//PlayerNoInputAnim();
+		//ï‡Ç¢ÇƒÇ¢ÇÈÇ∆Ç´ÇÃèàóù
 		if (flyingFlg == FALSE) {
 			PlayerMoveX();
+			playerMoveY = 0;
 		}
-		//ï‡Ç¢ÇƒÇ¢ÇÈÇ∆Ç´ÇÃèàóù
+		//îÚÇÒÇ≈ÇÈéûÇÃèàóù
 		else if (flyingFlg == TRUE) {
 			PlayerMoveX();
 			PlayerMoveY();
@@ -96,6 +102,12 @@ void Player::PlayerUpdate()
 
 		/***à⁄ìÆêßå¿Å@Ç±Ç±Ç‹Ç≈***/
 
+		if (playerMoveY == 0 && playerMoveX == 0 && playerNoInputFlg == TRUE) {
+			PlayerNoInputAnim();
+		}
+		else if(AnyButtons() == TRUE) {
+			playerNoInputFlg = FALSE;
+		}
 
 		SetRemainBalloon();
 		SetFallLimit();
@@ -114,7 +126,7 @@ void Player::PlayerDraw() const
 	DrawFormatString(0, 40, 0xffffff, "count::%d", count);
 	DrawFormatString(0, 55, 0xffffff, "flyButtonFlg::%d", flyButtonFlg);
 	DrawFormatString(0, 70, 0xffffff, "moveFpsCountY::%d", moveFpsCountY);
-	DrawFormatString(0, 85, 0xffffff, "playerMoveY::%f", playerMoveY);
+	DrawFormatString(0, 85, 0xffffff, "playerMoveX::%f", playerMoveX);
 	/*DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", playerLocationY);*/
 	DrawFormatString(0, 100, 0xffffff, "rebound::%d", rebound);
 	DrawFormatString(0, 115, 0xffffff, "playerMoveY::%f", playerMoveY);
@@ -401,13 +413,26 @@ void Player::PlayerMoveY()
 			flyButtonFlg = TRUE;
 			//playerImgFly = 0;
 			//playerImgFlyFlg = TRUE;
-			playerMoveY = -2;
+			if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
+				playerMoveY += -0.5f;
+			}
+			else {
+				playerMoveY += -2.0f;
+			}
+			
+			if (playerMoveY < -2) {
+				playerMoveY = -2;
+			}
 			
 		}
 
 		if (count < 21 && (interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A))) {
 			count += 3;
-			playerMoveY = -2;
+
+			//playerMoveY += -1;
+			/*if (playerMoveY <= -2) {
+				playerMoveY = -2;
+			}*/
 		}
 
 		if (playerMoveY != -2) {
@@ -527,34 +552,44 @@ int Player::PlayerTakeOffAnim()
 {
 	if (playerImgFlyFlg == TRUE) {
 		if (playerImgFpsCnt % 3 == 0) {
+			/*if (playerMoveY > 0) {
+				playerMoveY = 0;
+			}*/
+			/*else {
+				playerMoveY += -0.5;
+			}
+
+			if (playerMoveY <= -1.0f) {
+				playerMoveY = -1.0f;
+			}*/
 			if (remainBalloon == 2) {
 				switch (playerImgTakeOffNum)
 				{
 				case 0:
-					if (playerImgNum == 16) {
-						playerImgNum = 17;
-					}
-					else {
-						playerImgNum = 18;
-					}
-					playerImgTakeOffNum = 1;
-					break;
-				case 1:
 					if (playerImgNum == 17) {
 						playerImgNum = 18;
 					}
 					else {
-						playerImgNum = 17;
+						playerImgNum = 19;
+					}
+					playerImgTakeOffNum = 1;
+					break;
+				case 1:
+					if (playerImgNum == 18) {
+						playerImgNum = 19;
+					}
+					else {
+						playerImgNum = 18;
 					}
 					playerImgTakeOffNum = 2;
 					break;
 				case 2:
-					if (playerImgNum == 18) {
-						playerImgNum = 19;
+					if (playerImgNum == 19) {
+						playerImgNum = 20;
 						playerImgTakeOffNum = 3;
 						break;
 					}
-					playerImgNum = 16;
+					playerImgNum = 17;
 					playerImgTakeOffNum = 0;
 					break;
 				case 3:
@@ -571,30 +606,30 @@ int Player::PlayerTakeOffAnim()
 				switch (playerImgTakeOffNum)
 				{
 				case 0:
-					if (playerImgNum == 24) {
-						playerImgNum = 25;
+					if (playerImgNum == 22) {
+						playerImgNum = 23;
 					}
 					else {
-						playerImgNum = 26;
+						playerImgNum = 24;
 					}
 					playerImgTakeOffNum = 1;
 					break;
 				case 1:
-					if (playerImgNum == 25) {
-						playerImgNum = 26;
+					if (playerImgNum == 23) {
+						playerImgNum = 24;
 					}
 					else {
-						playerImgNum = 25;
+						playerImgNum = 23;
 					}
 					playerImgTakeOffNum = 2;
 					break;
 				case 2:
-					if (playerImgNum == 26) {
-						playerImgNum = 27;
+					if (playerImgNum == 24) {
+						playerImgNum = 25;
 						playerImgTakeOffNum = 3;
 						break;
 					}
-					playerImgNum = 24;
+					playerImgNum = 22;
 					playerImgTakeOffNum = 0;
 					break;
 				case 3:
@@ -607,6 +642,7 @@ int Player::PlayerTakeOffAnim()
 					break;
 				}
 			}
+			
 		}
 		playerLocationY += playerMoveY;
 		return FALSE;
@@ -633,32 +669,32 @@ int Player::PlayerFlyAnim()
 		if (remainBalloon == 2) {
 			switch (playerImgNum)
 			{
-			case 17:
-				playerImgNum = 16;
-				break;
-			case 16:
+			case 18:
 				playerImgNum = 17;
+				break;
+			case 17:
+				playerImgNum = 18;
 				playerImgFpsCnt = 0;
 				return TRUE;
 				break;
 			default:
-				playerImgNum = 17;
+				playerImgNum = 18;
 				break;
 			}
 		}
 		else if (remainBalloon == 1) {
 			switch (playerImgNum)
 			{
-			case 25:
-				playerImgNum = 24;
-				break;
 			case 24:
-				playerImgNum = 25;
+				playerImgNum = 23;
+				break;
+			case 23:
+				playerImgNum = 24;
 				playerImgFpsCnt = 0;
 				return TRUE;
 				break;
 			default:
-				playerImgNum = 25;
+				playerImgNum = 24;
 				break;
 			}
 		}
@@ -697,8 +733,8 @@ int Player::PlayerWalkAnim()
 			}
 		}
 		else if (remainBalloon == 1) {
-			if (++playerImgNum > 14 || playerImgNum < 12) {
-				playerImgNum = 12;
+			if (++playerImgNum > 15 || playerImgNum < 13) {
+				playerImgNum = 13;
 			}
 		}
 	}
@@ -709,13 +745,13 @@ int Player::PlayerFlyingAnim()
 {
 	if (playerImgFpsCnt % 30 == 0) {
 		if (remainBalloon == 2) {
-			if (++playerImgNum > 20 || playerImgNum < 18) {
-				playerImgNum = 18;
+			if (++playerImgNum > 21 || playerImgNum < 19) {
+				playerImgNum = 19;
 			}
 		}
 		else if (remainBalloon == 1) {
-			if (++playerImgNum > 28 || playerImgNum < 26) {
-				playerImgNum = 26;
+			if (++playerImgNum > 24 || playerImgNum < 26) {
+				playerImgNum = 24;
 			}
 		}
 	}
@@ -724,15 +760,15 @@ int Player::PlayerFlyingAnim()
 
 int Player::PlayerDeathAnim()
 {
-	if (playerImgNum < 21 || playerImgNum > 23) {
-		playerImgNum = 21;
+	if (playerImgNum < 27 || playerImgNum > 29) {
+		playerImgNum = 27;
 		playerMoveY = -2;
 		playerImgFpsCnt = 0;
 	}
 
 	if (playerImgFpsCnt++ % 5 == 0) {
-		if (++playerImgNum > 23 || playerImgNum < 21) {
-			playerImgNum = 21;
+		if (++playerImgNum > 29 || playerImgNum < 27) {
+			playerImgNum = 27;
 		}
 	}
 
@@ -750,6 +786,41 @@ int Player::PlayerDeathAnim()
 		if (PlayerSplashAnim() == TRUE) {
 			return TRUE;
 		}
+	}
+
+	return 0;
+}
+
+int Player::PlayerNoInputAnim()
+{
+	if (remainBalloon == 2) {
+		if (playerImgNum != 1 && playerImgNum != 3) {
+			playerImgNum = 1;
+		}
+	}
+	else if (remainBalloon == 1) {
+		if (playerImgNum != 5 && playerImgNum != 7) {
+			playerImgNum = 5;
+		}
+	}
+	if (playerImgFpsCnt % 3 == 0) {
+		if (remainBalloon == 2) {
+			if (playerImgNum == 1) {
+				playerImgNum = 3;
+			}
+			else if (playerImgNum == 3) {
+				playerImgNum = 1;
+			}
+		}
+		else if (remainBalloon == 1) {
+			if (playerImgNum == 5) {
+				playerImgNum = 7;
+			}
+			else if (playerImgNum == 7) {
+				playerImgNum = 5;
+			}
+		}
+
 	}
 
 	return 0;
@@ -775,7 +846,7 @@ void Player::SetFallLimit()
 		fallLimit = 1;
 	}
 	else if (remainBalloon == 1) {
-		fallLimit = 2;
+		fallLimit = 1.5f;
 	}
 }
 
@@ -792,4 +863,15 @@ void Player::SetRemainBalloon()
 	if (CheckHitKey(KEY_INPUT_0) == TRUE) {
 		remainBalloon = 0;
 	}
+}
+
+int Player::AnyButtons()
+{
+	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnPressed(XINPUT_BUTTON_B) || 
+		PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || PAD_INPUT::GetLStick().x >= 32000 || 
+		PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_LEFT) || PAD_INPUT::GetLStick().x <= -32000)
+	{
+		return 1;
+	}
+	return 0;
 }

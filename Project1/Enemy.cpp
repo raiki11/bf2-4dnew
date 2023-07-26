@@ -20,13 +20,18 @@ Enemy::Enemy(int set_X,int set_Y)
 	reboundFlgStageX = FALSE;
 	flyingFlg = FALSE;
 
+	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
+
 	changeimg = 0;
 	changeCt = 0;
 	cflg = FALSE;
 	cy = 0;
 	cycount = 0;
 	swy = 0;
-	LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 24, 8, 3, 64, 64, img); // 画像の分割読み込み
+	LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, P_img); // 画像の分割読み込み
+	LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, R_img); // 画像の分割読み込み
+	LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, G_img); // 画像の分割読み込み
+
 };
 
 Enemy::~Enemy()
@@ -64,11 +69,37 @@ void Enemy::EnemyDraw() const
 	/*DrawGraph(enemyLocationX, enemyLocationY, img[i], TRUE);*/
 
 	if (cflg == TRUE) {
-		DrawRotaGraph(ELocationX, ELocationY + cy, 1.0f, 0, img[changeimg], TRUE, Flag);
+		switch (enemy.type)
+		{
+		case 0:
+			DrawRotaGraph(ELocationX, ELocationY + cy, 1.0f, 0, P_img[changeimg], TRUE, Flag);
+			break;
+		case 1:
+			DrawRotaGraph(ELocationX, ELocationY + cy, 1.0f, 0, G_img[changeimg], TRUE, Flag);
+			break;
+		case 2:
+			DrawRotaGraph(ELocationX, ELocationY + cy, 1.0f, 0, R_img[changeimg], TRUE, Flag);
+			break;
+		}
+		
 
 	}
 	else {
-		DrawRotaGraph(ELocationX, ELocationY, 1.0f, 0, img[i], TRUE, Flag);
+		
+		switch (enemy.type)
+		{
+		case 0:
+			DrawRotaGraph(ELocationX, ELocationY, 1.0f, 0, P_img[i], TRUE, Flag);
+			break;
+		case 1:
+			DrawRotaGraph(ELocationX, ELocationY, 1.0f, 0, G_img[i], TRUE, Flag);
+			break;
+		
+		case 2:
+			DrawRotaGraph(ELocationX, ELocationY, 1.0f, 0, R_img[i], TRUE, Flag);
+			break;
+	
+		}
 
 		DrawFormatString(ELocationX - 15, ELocationY - 30, GetColor(255, 0, 0), "%03d", Epoint);
 		//デバッグ用
@@ -169,25 +200,28 @@ void Enemy::EnemyMoveY(Player P)
 			EMoveY = -1 * EMoveY*10;
 	}
 	 if (flyingFlg != FALSE) {
-		 flyingFlg = FALSE;
 			 EMoveY = 0;
 			 
 		 
 		
 	 }
+	 
+	 
+		 if (ELocationY <= P.GetPlayerLocationY() && flyingFlg == FALSE) {
+			 EMoveY += 0.01f;
+		 }
+		 else if (ELocationY >= P.GetPlayerLocationY()) {
+			 EMoveY -= 0.01f;
+		 }
+		 if (EMoveY > 0.5f) {
+			 EMoveY = 0.5f;
+		 }
+		 if (EMoveY < -0.5f) {
+			 EMoveY = -0.5f;
+		 }
+	 
+	
 
-	 if (ELocationY <= P.GetPlayerLocationY()) {
-		 EMoveY += 0.01f;
-	 }
-	 else if (ELocationY >= P.GetPlayerLocationY()) {
-		 EMoveY -= 0.01f;
-	 }
-	 if (EMoveY > 0.5f) {
-		 EMoveY = 0.5f;
-	 }
-	 if (EMoveY < -0.5f) {
-		 EMoveY = -0.5f;
-	 }
 
 	ELocationY += EMoveY;
 
@@ -205,7 +239,7 @@ void Enemy::EAnimation()
 		if (i >= 8 ) {
 			++i;
 		}
-		if (i == 13) {
+		if (i == 12) {
 		i = 8;
 		}
 	
