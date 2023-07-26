@@ -41,6 +41,7 @@ AbstractScene* GameMain::Update()
 		}
 
 		fish.FishUpdate(player, enemy[0]);
+		thunder.ThunderUpdate();
 	}
 
 	
@@ -154,5 +155,6 @@ void GameMain::Draw() const
 	hit.DrawHitBox();
 	//enemy.EnemyDraw();
 	fish.FishDraw(player);
+	thunder.ThunderDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 }
