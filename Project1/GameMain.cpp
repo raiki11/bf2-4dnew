@@ -154,6 +154,24 @@ AbstractScene* GameMain::Update()
 		}
 	}
 
+
+		//プレイヤーと雷
+		if (hit.PlayerAndThunder(player, thunder) == TRUE) {
+			player.SetPlayerDeathFlg(TRUE);
+			player.SetPlayerDeathFState(1);
+		}
+
+		//次のステージの敵生成
+		//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
+		//	if (Stage::Snum >= 4) { Stage::Snum = 0; }
+		//		Stage::Snum += 1;
+		//	if (OldSnum != Stage::Snum) {
+		//		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+		//			enemy[i] = new Enemy(i, i);
+		//		}
+		//	}
+		//}
+
 	if (ClearFlg == TRUE) {
 		//countで少しまってから
 		if (++count > 100) {
@@ -162,6 +180,8 @@ AbstractScene* GameMain::Update()
 			enemy[Elast] = nullptr;
 			Enemy::EdeadCount = -1;
 			Stage::Snum += 1;
+			player.InitPlayer();  //プレイヤーの初期化
+
 			//ステージを最後までクリアしたらタイトルに戻る
 			if (Stage::Snum > 4) {
 				Stage::Snum = 0;

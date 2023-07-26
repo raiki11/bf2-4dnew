@@ -14,6 +14,8 @@ int Stage::Snum = 0;
 //ステージごとのエネミー数
 int Stage::EnemyMax[5]={2,4,4,4,5};
 
+int Stage::MaxCoord[stagenum] = { 6,10,18,14,16 };
+
 Stage::Stage() {
 	St_Footing = LoadGraph("images/Stage/Stage_Footing01.png");
 	St_Footing2 = LoadGraph("images/Stage/Stage_Footing02.png");
