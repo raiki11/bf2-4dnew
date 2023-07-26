@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include "FPS.h"
 #include"Enemy.h"
+#include "Stage.h"
 //#include "Enemy.h"
 int UI:: m_DrawCount;
 int UI::b;
@@ -67,9 +68,11 @@ void UI::DrawUI() const
 		// ステージ数
 		if (m_DrawCount <= 60) {
 			DrawGraph(220, 60, phase, TRUE);
-			for (int a = 1; a <= 2; a++) {
-				DrawGraph((15 * a) + 320, 50, Num[i], TRUE);
-			}
+			DrawGraph(335, 50, Num[0], TRUE);
+			DrawGraph( 350, 50, Num[Stage::Snum + 1], TRUE);
+			/*for (int a = 1; a <= 2; a++) {
+				DrawGraph((15 * a) + 320, 50, Num[Stage::Snum+1], TRUE);
+			}*/
 		}
 	}
 

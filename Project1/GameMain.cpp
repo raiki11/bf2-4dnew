@@ -155,6 +155,7 @@ AbstractScene* GameMain::Update()
 			//次のステージの敵生成
 		if (Enemy::EdeadCount > Stage::EnemyMax[Stage::Snum]) {
 			Stage::Snum += 1;
+			UI::b = 0;
 			Enemy::EdeadCount = 0;
 			if (OldSnum != Stage::Snum) {
 				for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++)
