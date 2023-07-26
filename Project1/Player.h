@@ -37,7 +37,7 @@ private:
 	int flapInterval;
 
 	int playerImg[32];
-	int splashImg[3];
+	int splashImg[4];
 	int playerImgNum;
 	int playerImgReturnFlg;
 	int playerImgFpsCnt;
