@@ -1,8 +1,14 @@
 #include"DxLib.h"
 #include "Enemy.h"
 #include "Stage.h"
-#include"FPS.h"
+#include "HitBox.h"
 
+Enemy* hitenemy[6];
+HitBox hit;
+Stage stage;
+
+int Enemy::DeadFlg = FALSE;
+int Enemy::EdeadCount = 0;
 
 Enemy::Enemy(int set_X,int set_Y)
 {
@@ -44,11 +50,13 @@ Enemy::Enemy(int set_X,int set_Y)
 	n_score = 0;
 };
 
+
+
 Enemy::~Enemy()
 {
 }
 
-void Enemy::EnemyUpdate(Player P)
+void Enemy::EnemyUpdate(Player P,int& j)
 {
 	if (++fpscount >= 60)
 	{
@@ -66,6 +74,7 @@ void Enemy::EnemyUpdate(Player P)
 	}
 
 	if (cflg == TRUE) {
+
 		EDeadAnim();
 	}
 	//デバッグ用
@@ -86,8 +95,12 @@ void Enemy::EnemyUpdate(Player P)
 
 void Enemy::EnemyDraw() const
 {
-	/*DrawCircle(enemyLocationX, enemyLocationY, 4, 0x00ff00, TRUE);*/
+	//DrawCircle(ELocationX, ELocationY, 4, 0x00ff00, TRUE);
 	/*DrawGraph(enemyLocationX, enemyLocationY, img[i], TRUE);*/
+
+	//DrawFormatString(0, 400, 0xffffff, "ElY%f", ELocationY);
+	DrawBox(0, 440, 600, 600, 0x00ff00, FALSE);
+
 
 	if (cflg == TRUE) {
 		switch (enemy.type)
@@ -287,10 +300,12 @@ void Enemy::EAnimation()
 
 void Enemy::EDeadAnim() {
 
+	
 
 		switch (swy)
 		{
 		case 0:
+
 			cycount++;
 			cy -= 2.8;
 			if (cycount > 9) {
@@ -303,7 +318,12 @@ void Enemy::EDeadAnim() {
 			if (cycount > 6) {
 					cy += 3;
 			}
-			if (cy >= 300)swy += 1;
+			if (ELocationY+cy>=450)swy += 1;
+			break;
+		case 2:
+			Enemy::EdeadCount += 1;
+			DeadFlg = TRUE;
+			swy += 1;
 			break;
 		default:
 			break;
