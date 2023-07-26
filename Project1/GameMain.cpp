@@ -231,4 +231,5 @@ void GameMain::Draw() const
 	//fish.FishDraw(player);
 	thunder.ThunderDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
+	//DrawBox(200, 99, 242, 117, 0xff0000, TRUE);
 }
