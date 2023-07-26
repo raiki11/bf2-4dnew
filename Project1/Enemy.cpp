@@ -428,8 +428,8 @@ void Enemy::DebagHit(Player P) {
 	
 	count++;
 	if (Ex<=pxwidth && Exwidth>=px &&Ey<=pywidth && Eywidth>=py) {
-		Enemy::EdeadCount += 1;
 		if (count >= 60) {
+
 			aflg = TRUE;
 			if (cflg == 0 && i >= 8 && aflg == TRUE) {
 				cflg = 1;
@@ -438,15 +438,14 @@ void Enemy::DebagHit(Player P) {
 			}
 
 			if(aflg == TRUE && eflg == TRUE){
+
+				Enemy::EdeadCount += 1;
 				cflg = 2;
 				aflg = FALSE;
 				EScore();
 			}
 			count = 0;
 		}
-
-		
-	
 	}
 }
 
