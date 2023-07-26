@@ -154,6 +154,7 @@ AbstractScene* GameMain::Update()
 
 			//次のステージの敵生成
 		if (Enemy::EdeadCount > Stage::EnemyMax[Stage::Snum]) {
+			player.InitPlayer();  //プレイヤーの初期化
 			Stage::Snum += 1;
 			Enemy::EdeadCount = 0;
 			if (OldSnum != Stage::Snum) {

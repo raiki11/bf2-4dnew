@@ -908,3 +908,18 @@ int Player::AnyButtons()
 	}
 	return 0;
 }
+
+void Player::InitPlayer()
+{
+	playerImgNum = 0;
+	playerLocationX = 100;
+	playerLocationY = 387;
+	playerMoveX = 0;
+	playerMoveY = 0.0f;
+
+	flyingFlg = 1;
+	takeOffFlg = FALSE;
+	flapFlg = FALSE;
+	flapInterval = 3;
+	playerNoInputFlg = TRUE;
+}

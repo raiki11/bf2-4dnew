@@ -101,5 +101,6 @@ public:
 	void SetFallLimit();
 	void SetRemainBalloon();
 	int AnyButtons();
+	void InitPlayer();
 };
 
