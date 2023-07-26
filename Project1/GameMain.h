@@ -8,6 +8,7 @@
 #include "Fish.h"
 #include "UI.h"
 #include"Thunder.h"
+#include "TitleScene.h"
 // シーンマネージャークラス
 // 各シーンの切り替えを管理する
 
@@ -31,7 +32,6 @@ private:
     
     bool ClearFlg;            //ステージclearフラグ
     int Elast;                //最後のエネミーの番号受け取り用
-    bool once;                //一回だけ
     int count;
 
     int OldSnum;//ステージ数比較用
@@ -53,6 +53,4 @@ public:
     //描画に関することを実装
     void Draw() const override;
 
-    //エネミーチェック
-    void CheckEnemy(void);
 };

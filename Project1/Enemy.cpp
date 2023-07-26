@@ -368,11 +368,13 @@ void Enemy::DebagHit(Player P) {
 	float py = P.GetPlayerLocationY();
 	float pywidth = py + 64;
 
-
-	if (Ex<=pxwidth && Exwidth>=px &&Ey<=pywidth && Eywidth>=py) {
-		cflg = TRUE;
-		Eflg = TRUE;
-		EdeadCount += 1;
+	if (cflg == FALSE) {
+		if (Ex <= pxwidth && Exwidth >= px && Ey <= pywidth && Eywidth >= py) {
+			cflg = TRUE;
+			Eflg = TRUE;
+			Enemy::EdeadCount += 1;
+		}
 	}
+
 
 }
