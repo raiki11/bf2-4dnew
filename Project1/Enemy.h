@@ -27,6 +27,10 @@ private:
 	int reboundFlgStageY;
 	int reboundFlgStageX;
 	int flyingFlg;
+	float PSpeed;
+	int eflg;
+	int count;
+	int aflg;
 
 	int changeimg;//エネミー落下画像切り替え用
 	int changeCt;//画像切り替えのカウント
@@ -68,7 +72,7 @@ public:
 	void EnemyMoveY(Player P);
 	void EAnimation();
 
-
+	void EPA();
 
 	void EDeadAnim();
 

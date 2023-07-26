@@ -22,10 +22,16 @@ Enemy::Enemy(int set_X,int set_Y)
 	fpscount = 0;
 	i = 0;
 	cnt = 0;
+	PSpeed = 0;
 	Flag = FALSE;
 	reboundFlgStageY = FALSE;
 	reboundFlgStageX = FALSE;
 	flyingFlg = FALSE;
+	eflg = FALSE;
+	aflg = FALSE;
+	count = 0;
+
+
 
 	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
 	switch (enemy.type)
@@ -44,7 +50,7 @@ Enemy::Enemy(int set_X,int set_Y)
 	Epoint = 500;
 	changeimg = 0;
 	changeCt = 0;
-	cflg = FALSE;
+	cflg = 0;
 	cy = 0;
 	cycount = 0;
 	swy = 0;
@@ -73,22 +79,30 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	if (++fpscount >= 60)
 	{
 		EAnimation();
+		
 	}
 
-	if (i >= 8 && i< 13) {
-		EnemyMoveX(P);
-		EnemyMoveY(P);
+	if (cflg == 1) {
+		EPA();
 	}
-
-
-	if (CheckHitKey(KEY_INPUT_A) == TRUE) {
-		cflg = TRUE;
-	}
-
-	if (cflg == TRUE) {
-
+	if (cflg == 2) {
 		EDeadAnim();
 	}
+
+	if (cflg == 0) {
+		if (i >= 8 && i < 13) {
+			EnemyMoveX(P);
+			EnemyMoveY(P);
+		}
+	}
+	
+
+
+	/*if (CheckHitKey(KEY_INPUT_A) == TRUE) {
+		cflg = TRUE;
+	}*/
+
+	
 	//デバッグ用
 	DebagHit(P);
 	Eflgcnt++;
@@ -110,11 +124,7 @@ void Enemy::EnemyDraw() const
 	//DrawCircle(ELocationX, ELocationY, 4, 0x00ff00, TRUE);
 	/*DrawGraph(enemyLocationX, enemyLocationY, img[i], TRUE);*/
 
-	//DrawFormatString(0, 400, 0xffffff, "ElY%f", ELocationY);
-	DrawBox(0, 440, 600, 600, 0x00ff00, FALSE);
-
-
-	if (cflg == TRUE) {
+	if (cflg == 2) {
 		switch (enemy.type)
 		{
 		case 0:
@@ -151,7 +161,7 @@ void Enemy::EnemyDraw() const
 		//デバッグ用
 		//DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
 		//DrawFormatString(0, 160, 0xffffff, "time::%d", time);
-		//DrawFormatString(0, 175, 0xffffff, "i::%d", i);
+		/*DrawFormatString(0, 300, 0xffffff, "i::%f", EMoveY);*/
 		if (reboundFlgStageY == TRUE) {
 			DrawFormatString(0, 205, 0xffffff, "Y:TRUE");
 		}
@@ -304,12 +314,51 @@ void Enemy::EAnimation()
 			++i;
 		}
 		if (i >= 8 ) {
+			if (eflg == TRUE) {
+				if (enemy.type != 2) {
+					enemy.type = enemy.type + 1;
+					eflg = FALSE;
+				}
+			}
 			++i;
 		}
 		if (i == 12) {
 		i = 8;
 		}
 	
+}
+
+void Enemy::EPA()
+{
+
+	EMoveY =PSpeed;
+	PSpeed += 0.01f;
+	if (EMoveY >= 1.0f) {
+		EMoveY = 1.0f;
+	}
+
+
+	//敵やられたときのモーション
+	
+	if (cflg == 1) {
+		if (i >= 8 && i < 13) {
+			i = 13;
+		}
+		if (++i >= 17) {
+			i = 17;
+		}
+	}
+
+	if (flyingFlg != FALSE) {
+		EMoveY = 0;
+		i = 0;
+		cflg = 0;
+		eflg = TRUE;
+	}
+	
+	
+	
+	ELocationY += EMoveY;
 }
 
 void Enemy::EDeadAnim() {
@@ -369,10 +418,25 @@ void Enemy::DebagHit(Player P) {
 	float py = P.GetPlayerLocationY();
 	float pywidth = py + 64;
 
-
+	
+	count++;
 	if (Ex<=pxwidth && Exwidth>=px &&Ey<=pywidth && Eywidth>=py) {
-		cflg = TRUE;
-		Eflg = TRUE;
-	}
 
+		if (count >= 60) {
+			aflg = TRUE;
+			if (cflg == 0 && i >= 8 && aflg == TRUE) {
+				cflg = 1;
+				aflg = FALSE;
+			}
+
+			if(aflg == TRUE && eflg == TRUE){
+				cflg = 2;
+				aflg = FALSE;
+			}
+			count = 0;
+		}
+
+		
+	
+	}
 }
