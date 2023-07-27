@@ -80,6 +80,7 @@ public:
 	float GetPlayerMoveX() { return playerMoveX; }
 	int GetPlayerLife() { return playerLife; }
 	int GetDeathFlg() { return deathFlg; }
+	int GetRemainBalloon() { return remainBalloon; }
 
 	void SetFlyingFlg(int f)
 	{
@@ -108,6 +109,11 @@ public:
 	void SetPlayerDeathFState(int s)
 	{
 		playerDeathState = s;
+	}
+
+	void SubtractRemainBalloon()
+	{
+		remainBalloon--;
 	}
 
 	void SetFallLimit();

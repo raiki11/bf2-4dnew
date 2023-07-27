@@ -415,17 +415,18 @@ void Enemy::EDeadAnim() {
 }
 
 void Enemy::DebagHit(Player P) {
-	float Ex = ELocationX;
-	float Exwidth = ELocationX + 64;
-	float Ey = ELocationY;
-	float Eywidth = ELocationY + 64;
+	float Ex = ELocationX - 15;
+	float Exwidth = ELocationX  + 15;
+	float Ey = ELocationY - 30;
+	float Eywidth = ELocationY;
 
-	float px = P.GetPlayerLocationX();
-	float pxwidth = px + 64;
+	float px = P.GetPlayerLocationX() - 10;
+	float pxwidth = px + 25;
 	float py = P.GetPlayerLocationY();
-	float pywidth = py + 64;
+	float pywidth = py + 32;
 
-	
+	/*DrawBox(Ex, Ey, Eywidth, Exwidth, 0xff0000, FALSE);
+	ScreenFlip();*/
 	count++;
 	if (Ex<=pxwidth && Exwidth>=px &&Ey<=pywidth && Eywidth>=py) {
 		if (count >= 60) {

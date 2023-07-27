@@ -12,6 +12,9 @@ private:
 	int tx0, tx1, ty0, ty1;
 
 	int underPx0, underPy0, underPx1, underPy1;	//プレイヤーの接地判定
+
+	int old, now;
+	int old1, now1;
 public:
 	HitBox();
 	~HitBox();
@@ -31,5 +34,9 @@ public:
 	int EnemyAndStageLeft(Enemy e, Stage s);
 
 	int PlayerAndThunder(Player p, Thunder t);
+
+	int PlayerAndEnemy(Player p,Enemy e);
+	int PlayerBalloonAndEnemy(Player p,Enemy e);
+	int PlayerAndEnemyBalloon(Player p,Enemy e);
 };
 
