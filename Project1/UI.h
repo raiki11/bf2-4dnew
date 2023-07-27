@@ -9,9 +9,11 @@ private:
 	int phase;
 	int stock;
 	int Num[10];
+	int a;			// Num‚Ì•Ï”
 	int Flag;
-	int i;
-
+	int i;			//	Score‚Ì•Ï”
+	int Score[6];
+	
 
 	
 	// ƒXƒRƒA

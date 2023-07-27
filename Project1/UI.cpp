@@ -21,7 +21,10 @@ UI::UI()
 	b = 0;
 	p_life = 0;
 	q = 100000;
-
+	a = 0;
+	for (int i = 0; i > 6; i++) {
+		Score[i] = 0;
+	}
 }
 
 UI::~UI()
@@ -42,9 +45,10 @@ void UI::Update(int p)
 
 	p_life = p;
 
-	for (int i = 0;  i<6; i++)
+	for (int i = 0;  i>5; i++)
 	{
 		Score[i] = Enemy::GetScore() / q;
+		i = a;
 		q = q / 10;
 	}
 
@@ -59,12 +63,12 @@ void UI::DrawUI() const
 {
 	// 現在のスコア
 	DrawGraph(50, 30, score, TRUE);
-	DrawGraph(240, 25, Num[i], TRUE);
+	DrawGraph(240, 25, Num[a], TRUE);
 
 	
 	// ハイスコア
 	DrawGraph(220, 30, top, TRUE);
-	for (int a = 1; a <= 6; a++) {
+	for (int a = 1; a <= 5; a++) {
 		DrawGraph((20 * a) + 240, 25, Num[i], TRUE);
 	}
 

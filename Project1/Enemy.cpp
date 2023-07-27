@@ -64,10 +64,10 @@ Enemy::Enemy(int set_X,int set_Y)
 	Eflg = FALSE;
 	Eflgcnt = 0;
 	Escore1 = LoadGraph("images/Score/GetScore_500.png");
-	/*Escore2 = LoadGraph("images/Score/GetScore_750.png");
+	Escore2 = LoadGraph("images/Score/GetScore_750.png");
 	Escore3 = LoadGraph("images/Score/GetScore_1000.png");
 	Escore4 = LoadGraph("images/Score/GetScore_1500.png");
-	Escore5 = LoadGraph("images/Score/GetScore_2000.png");*/
+	Escore5 = LoadGraph("images/Score/GetScore_2000.png");
 	n_score = 0;
 };
 
