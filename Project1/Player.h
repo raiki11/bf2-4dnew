@@ -37,7 +37,7 @@ private:
 	int flapInterval;
 
 	int playerImg[32];
-	int splashImg[3];
+	int splashImg[4];
 	int playerImgNum;
 	int playerImgReturnFlg;
 	int playerImgFpsCnt;
@@ -48,6 +48,8 @@ private:
 
 	int splashNum;
 	int St_Sea;
+
+	int playerDeathState; //‰½‚Å€‚ñ‚¾‚© 0,•—‘D‚ª‚È‚­‚È‚Á‚½@1,—‹
 public:
 	Player();
 	~Player();
@@ -97,9 +99,20 @@ public:
 	{
 		playerImgFpsCnt = n;
 	}
+	
+	void SetPlayerDeathFlg(int f)
+	{
+		deathFlg = f;
+	}
+
+	void SetPlayerDeathFState(int s)
+	{
+		playerDeathState = s;
+	}
 
 	void SetFallLimit();
 	void SetRemainBalloon();
 	int AnyButtons();
+	void InitPlayer();
 };
 

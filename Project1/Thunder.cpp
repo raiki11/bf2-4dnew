@@ -54,6 +54,14 @@ void Thunder::ThunderUpdate()
 	if (ThunderY > 480 + 32) { // 雷が画面下に落ちた時
 		ThunderFlg = 2; // 雷をスタート状態にする
 	}
+
+
+	//デバッグ
+	//// 雷のX座標
+	//ThunderX = 200;
+	//// 雷のY座標
+	//ThunderY = 350;
+
 }
 
 void Thunder::ThunderDraw() const

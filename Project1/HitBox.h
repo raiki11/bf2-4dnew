@@ -2,12 +2,15 @@
 #include "Player.h"
 #include "Stage.h"
 #include"Enemy.h"
+#include "Thunder.h"
 
 class HitBox
 {
 private:
 	int px0, px1, py0, py1;
 	int ex0, ex1, ey0, ey1;
+	int tx0, tx1, ty0, ty1;
+
 	int underPx0, underPy0, underPx1, underPy1;	//プレイヤーの接地判定
 public:
 	HitBox();
@@ -26,5 +29,7 @@ public:
 	int EnemyAndStageTop(Enemy e, Stage s);
 	int EnemyAndStageRight(Enemy e, Stage s);
 	int EnemyAndStageLeft(Enemy e, Stage s);
+
+	int PlayerAndThunder(Player p, Thunder t);
 };
 

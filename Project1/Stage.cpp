@@ -1,16 +1,20 @@
 #include "Stage.h"
 #include "DxLib.h"
 
-float Stage::EnemyX[stagenum][6] = { {320,420,220},{320,420,220,440},{320,420,220,440},{320,420,220,440},{320,420,220,440} };
-float Stage::EnemyY[stagenum][6] = { {250,250,250},{230,230,230,230},{320,420,220,440},{320,420,220,440},{320,420,220,440} };
+float Stage::EnemyX[stagenum][6] = { {235,320,405},{155,235,320,405,515},{190,220,320,345,530},{150,270,350,390,485},{110,230,250,270,410,510} };
+float Stage::EnemyY[stagenum][6] = { {250,250,250},{134,250,250,250,120},{239,69,335,153,69},{234,270,150,335,255},	 {170,300,50,135,305,119} };
+
+//float Stage::EnemyX[stagenum][6] = { {320,420,220},{320,420,220,440},{320,420,220,440},{320,420,220,440},{320,420,220,440} };
+//float Stage::EnemyY[stagenum][6] = { {250,250,250},{230,230,230,230},{320,420,220,440},{320,420,220,440},{320,420,220,440} };
 int Stage::EnemyType[stagenum][6] = { {0,1,2},{1,0,1,0},{1,0,1,0},{0,1,0,1},{1,1,1,1} };
 
-//ステージごとのエネミー数
 
 
 int Stage::Snum = 0;
 //ステージごとのエネミー数
 int Stage::EnemyMax[5]={2,4,4,4,5};
+
+int Stage::MaxCoord[stagenum] = { 6,10,20,14,16 };
 
 Stage::Stage() {
 	St_Footing = LoadGraph("images/Stage/Stage_Footing01.png");
@@ -130,12 +134,12 @@ DrawGraph(318, 182, St_FootingT, TRUE);
 //DrawBox(318, 184, 379, 199,0xff0000, FALSE);//横
 //DrawBox(339, 199, 357, 247, 0x00ff00, FALSE);//縦
 
-////左上T浮島表示
+////右上T浮島表示
 DrawGraph(500, 99, St_FootingT, TRUE);
 //DrawBox(500, 101, 561, 116, 0xff0000, FALSE);//横
 //DrawBox(521, 116, 539, 164, 0x00ff00, FALSE);//縦
 
-//右上小さい浮島表示
+//上小さい浮島表示
 DrawGraph(200, 99, St_FootingM, TRUE);
 //DrawBox(200, 101, 242, 117, 0xff0000, FALSE);
 
@@ -143,7 +147,7 @@ DrawGraph(200, 99, St_FootingM, TRUE);
 DrawGraph(280, 365, St_Footing3, TRUE);
 //DrawBox(280, 367, 361, 383, 0xff0000, FALSE);
 
-//左下の地面表示
+//右下の地面表示
 DrawGraph(0, 416, St_Land_Left, TRUE);
 //DrawBox(0, 419, 160, 480, 0xff0000, FALSE);
 

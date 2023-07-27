@@ -27,11 +27,13 @@ private:
 	int reboundFlgStageY;
 	int reboundFlgStageX;
 	int flyingFlg;
-	float PSpeed;
+	float PSpeedY;
+	float PSpeedX;
 	int eflg;
 	int count;
 	int aflg;
 	int Estate;
+	int f;      //左右に揺れるやつ
 
 	static int Score;
 
@@ -68,7 +70,7 @@ public:
 	int cflg;		//死亡アニメーションフラグ
 	static int DeadFlg;		//死亡フラグ
 	static int EdeadCount;//エネミーがやられた数のカウント
-
+	static int ElastFlg;
 
 	void EnemyUpdate(Player P,int& j);
 	void EnemyDraw() const;
