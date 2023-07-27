@@ -41,6 +41,8 @@ void UI::Update(int p)
 
 	p_life = p;
 
+	
+
 }
 
 

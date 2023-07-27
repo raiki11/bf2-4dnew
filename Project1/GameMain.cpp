@@ -232,10 +232,11 @@ void GameMain::Draw() const
 	UI.DrawUI();
 	hit.DrawHitBox();
 	//enemy.EnemyDraw();
-	fish.FishDraw(player);
+	//fish.FishDraw(player);
 	thunder.ThunderDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 
 
+	//DrawBox(200, 99, 242, 117, 0xff0000, TRUE);
 }
 

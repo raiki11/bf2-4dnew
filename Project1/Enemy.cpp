@@ -23,7 +23,8 @@ Enemy::Enemy(int set_X,int set_Y)
 	fpscount = 0;
 	i = 0;
 	cnt = 0;
-	PSpeed = 0;
+	PSpeedY = 0;
+	PSpeedX = 0;
 	Flag = FALSE;
 	reboundFlgStageY = FALSE;
 	reboundFlgStageX = FALSE;
@@ -35,6 +36,8 @@ Enemy::Enemy(int set_X,int set_Y)
 	spc = 0;
 	spflg = false;
 
+	f = FALSE;
+	
 
 	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
 	switch (enemy.type)
@@ -89,6 +92,7 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	if (cflg == 1) {
 		EPA();
 	}
+
 	if (cflg == 2) {
 		EDeadAnim();
 	}
@@ -328,6 +332,7 @@ void Enemy::EAnimation()
 			++i;
 			Estate = 0;
 		}
+
 		if (i >= 8 ) {
 			if (eflg == TRUE) {
 				if (enemy.type != 2) {
@@ -338,6 +343,7 @@ void Enemy::EAnimation()
 			++i;
 			Estate = 1;
 		}
+
 		if (i == 12) {
 		i = 8;
 		}
@@ -346,13 +352,30 @@ void Enemy::EAnimation()
 
 void Enemy::EPA()
 {
+	EMoveX = PSpeedX;
+	EMoveY =PSpeedY;
 
-	EMoveY =PSpeed;
-	PSpeed += 0.01f;
-	if (EMoveY >= 1.0f) {
-		EMoveY = 1.0f;
+
+	PSpeedY += 0.01f;
+	if (EMoveY >= 0.5f) {
+		EMoveY = 0.5f;
 	}
 
+	if (f == FALSE) {
+		PSpeedX += 0.02f;
+	}
+	else if (f == TRUE) {
+		PSpeedX -= 0.02f;
+	}
+
+	if (EMoveX >= 0.5f) {
+		EMoveX = 0;
+		f = TRUE;
+	}
+	if (EMoveX < -0.5f) {
+		EMoveX = 0;
+		f = FALSE;
+	}
 
 	//パラシュート
 	
@@ -366,15 +389,18 @@ void Enemy::EPA()
 		Estate = 2;
 	}
 
+
+
 	if (flyingFlg != FALSE) {
 		EMoveY = 0;
+		EMoveX = 0;
 		i = 0;
 		cflg = 0;
 		eflg = TRUE;
 	}
 	
 	
-	
+	ELocationX += EMoveX;
 	ELocationY += EMoveY;
 }
 
@@ -446,7 +472,7 @@ void Enemy::DebagHit(Player P) {
 				EScore();
 			}
 
-			if(aflg == TRUE && eflg == TRUE){
+			if(aflg == TRUE /*&& eflg == TRUE*/){
 
 				if (once == false)
 				{
