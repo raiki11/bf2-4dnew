@@ -64,8 +64,9 @@ Enemy::Enemy(int set_X,int set_Y)
 	LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, R_img); // 画像の分割読み込み
 	LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, G_img); // 画像の分割読み込み
 	LoadDivGraph("images/Stage/Stage_SplashAnimation.png", 3, 3, 1, 64, 32, EspAnim);
-
+	
 	Eflg = FALSE;
+	point = 0;
 	Eflgcnt = 0;
 	Escore1 = LoadGraph("images/Score/GetScore_500.png");
 	Escore2 = LoadGraph("images/Score/GetScore_750.png");
@@ -122,6 +123,8 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	}
 	if (cflg != 2)ECheckY();
 	//DebagHit(P);*/
+
+	// point表示の時間と回数
 	Eflgcnt++;
 	if (Eflgcnt == 200) {
 		c++;
@@ -201,6 +204,7 @@ void Enemy::EnemyDraw() const
 	//	break;
 	//}
 	
+	// 敵を倒した時のポイント表示
 	if (c <= 1) {
 
 		if (Eflgcnt <= 100) {
@@ -214,7 +218,7 @@ void Enemy::EnemyDraw() const
 	if(spflg == true)DrawGraph(ELocationX - 30, 415, EspAnim[spc], TRUE);
 
 
-	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
+	//DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
 	DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
 }
 
@@ -531,6 +535,7 @@ int Enemy::EScore()
 		//パラシュート状態の時
 		else if (Estate == 2) {
 			Score += 1500;
+
 		}
 		break;
 	case 2:
