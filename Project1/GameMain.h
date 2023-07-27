@@ -8,6 +8,7 @@
 #include "Fish.h"
 #include "UI.h"
 #include"Thunder.h"
+#include "TitleScene.h"
 // シーンマネージャークラス
 // 各シーンの切り替えを管理する
 
@@ -29,6 +30,10 @@ private:
     Thunder thunder;
     bool PauseFlg;            // ポーズ
     
+    bool ClearFlg;            //ステージclearフラグ
+    int Elast;                //最後のエネミーの番号受け取り用
+    int count;
+
     int OldSnum;//ステージ数比較用
 
     int a;

@@ -42,4 +42,10 @@ public:
 	int ty1 = ThunderY - 32;
 	int ty2 = ThunderY + 32;
 
+
+
+
+	//À•W‚ğŠl“¾A’Ç‹LÒ –k‘º
+	int GetThunderX() { return ThunderX; }
+	int GetThunderY() { return ThunderY; }
 };
