@@ -202,7 +202,7 @@ void Enemy::EnemyDraw() const
 		}
 		
 	}
-	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
+	/*DrawFormatString(500, 0, 0xffffff, "%06d", n_score);*/
 }
 
 void Enemy::EnemyMoveX(Player P)
