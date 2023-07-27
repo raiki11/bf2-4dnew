@@ -214,8 +214,8 @@ void Enemy::EnemyDraw() const
 	if(spflg == true)DrawGraph(ELocationX - 30, 415, EspAnim[spc], TRUE);
 
 
-	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
-	DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
+	/*DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
+	DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);*/
 }
 
 void Enemy::EnemyMoveX(Player P)

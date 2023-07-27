@@ -213,9 +213,7 @@ AbstractScene* GameMain::Update()
 	//		}
 	//	}
 	//}
-			player.SetPlayerDeathFlg(TRUE);
-			player.SetPlayerDeathFState(1);
-		}
+		
 
 		/* ‹›‚ÆƒvƒŒƒCƒ„[‚Ì“–‚½‚è”»’è */
 

@@ -241,9 +241,11 @@ int HitBox::ThunderAndStageLeft(Thunder th, Stage s)
 				s.GetStageXY(0, i, 1) <= ey1 && s.GetStageXY(0, i + 1, 1) >= ey0) {
 
 				return TRUE;
+
 			}
 		}
 	}
+}
 
 //	return FALSE;
 //}
