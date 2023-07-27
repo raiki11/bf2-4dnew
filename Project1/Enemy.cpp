@@ -32,11 +32,12 @@ Enemy::Enemy(int set_X,int set_Y)
 	eflg = FALSE;
 	aflg = FALSE;
 	count = 0;
+	once = false;
+	spc = 0;
+	spflg = false;
+
 	f = FALSE;
 	
-
-
-
 
 	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
 	switch (enemy.type)
@@ -62,6 +63,7 @@ Enemy::Enemy(int set_X,int set_Y)
 	LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, P_img); // 画像の分割読み込み
 	LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, R_img); // 画像の分割読み込み
 	LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, G_img); // 画像の分割読み込み
+	LoadDivGraph("images/Stage/Stage_SplashAnimation.png", 3, 3, 1, 64, 32, EspAnim);
 
 	Eflg = FALSE;
 	Eflgcnt = 0;
@@ -89,6 +91,7 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	if (cflg == 1) {
 		EPA();
 	}
+
 	if (cflg == 2) {
 		EDeadAnim();
 	}
@@ -101,7 +104,6 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	}
 	
 
-
 	/*if (CheckHitKey(KEY_INPUT_A) == TRUE) {
 		cflg = TRUE;
 	}*/
@@ -110,8 +112,16 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	//	EDeadAnim();
 	//}
 
+	if (spflg == true) {
+		EsplashAnim();
+	}
+
 	//デバッグ用
-	DebagHit(P);
+	if (P.GetPlayerImgNum() < 27) {
+		DebagHit(P);
+	}
+	if (cflg != 2)ECheckY();
+	//DebagHit(P);*/
 	Eflgcnt++;
 	if (Eflgcnt == 200) {
 		c++;
@@ -200,6 +210,12 @@ void Enemy::EnemyDraw() const
 		}
 		
 	}
+
+	if(spflg == true)DrawGraph(ELocationX - 30, 415, EspAnim[spc], TRUE);
+
+
+	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
+	DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
 }
 
 void Enemy::EnemyMoveX(Player P)
@@ -255,8 +271,6 @@ void Enemy::EnemyMoveX(Player P)
 
 	}
 }
-
-
 
 void Enemy::EnemyMoveY(Player P)
 {
@@ -320,6 +334,7 @@ void Enemy::EAnimation()
 			++i;
 			Estate = 0;
 		}
+
 		if (i >= 8 ) {
 			if (eflg == TRUE) {
 				if (enemy.type != 2) {
@@ -330,6 +345,7 @@ void Enemy::EAnimation()
 			++i;
 			Estate = 1;
 		}
+
 		if (i == 12) {
 		i = 8;
 		}
@@ -340,9 +356,11 @@ void Enemy::EPA()
 {
 	EMoveX = PSpeedX;
 	EMoveY =PSpeedY;
+
+
 	PSpeedY += 0.01f;
-	if (EMoveY >= 1.0f) {
-		EMoveY = 1.0f;
+	if (EMoveY >= 0.5f) {
+		EMoveY = 0.5f;
 	}
 
 	if (f == FALSE) {
@@ -395,7 +413,7 @@ void Enemy::EDeadAnim() {
 		switch (swy)
 		{
 		case 0:
-
+			
 			cycount++;
 			cy -= 2.8;
 			if (cycount > 9) {
@@ -411,7 +429,8 @@ void Enemy::EDeadAnim() {
 			if (ELocationY+cy>=450)swy += 1;
 			break;
 		case 2:
-			DeadFlg = TRUE;
+			spflg = true;
+			//DeadFlg = TRUE;
 			break;
 		default:
 			break;
@@ -433,19 +452,29 @@ void Enemy::EDeadAnim() {
 }
 
 void Enemy::DebagHit(Player P) {
-	float Ex = ELocationX;
-	float Exwidth = ELocationX + 64;
-	float Ey = ELocationY;
-	float Eywidth = ELocationY + 64;
+	float Ex = ELocationX - 15;
+	float Exwidth = ELocationX  + 15;
+	float Ey = ELocationY - 30;
+	float Eywidth = ELocationY + 30;
 
-	float px = P.GetPlayerLocationX();
-	float pxwidth = px + 64;
+	float px = P.GetPlayerLocationX() - 10;
+	float pxwidth = px + 25;
 	float py = P.GetPlayerLocationY();
-	float pywidth = py + 64;
+	float pywidth = py + 32;
 
-	
+	bool a;
+	/*DrawFormatString(500, 20, 0xffffff, "%06f", py);
+	DrawFormatString(500, 30, 0xffffff, "%06f", Eywidth);
+	ScreenFlip();*/
 	count++;
-	if (Ex<=pxwidth && Exwidth>=px &&Ey<=pywidth && Eywidth>=py) {
+	if (Ex <= pxwidth && Exwidth >= px && Ey <= pywidth && Eywidth >= py) {
+		a = true;
+	}
+	else {
+		a = false;
+	}
+	if (a) {
+		
 		if (count >= 60) {
 
 			aflg = TRUE;
@@ -455,9 +484,14 @@ void Enemy::DebagHit(Player P) {
 				EScore();
 			}
 
-			if(aflg == TRUE && eflg == TRUE){
+			if(aflg == TRUE ){
 
-				Enemy::EdeadCount += 1;
+				if (once == false)
+				{
+					once = true;
+
+					Enemy::EdeadCount += 1;
+				}
 				cflg = 2;
 				aflg = FALSE;
 				EScore();
@@ -466,7 +500,6 @@ void Enemy::DebagHit(Player P) {
 		}
 	}
 }
-
 
 int Enemy::EScore()
 {
@@ -516,4 +549,30 @@ int Enemy::EScore()
 		break;
 	}
 	return Score;
+}
+
+void Enemy::ECheckY() {
+	if (ELocationY > 460) {
+		spflg = true;
+		//DeadFlg = TRUE;
+		if (once == false)
+		{
+			once = true;
+			Enemy::EdeadCount += 1;
+		}
+	}
+}
+
+void Enemy::EsplashAnim()
+{
+	if (++count > 10) {
+		spc += 1;
+		count = 0;
+	}
+	if (spc >= 4) {
+		spc = 0;
+		count = 0;
+		spflg = false;
+		DeadFlg = TRUE;
+	}
 }
