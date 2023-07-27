@@ -90,6 +90,7 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	if (cflg == 1) {
 		EPA();
 	}
+
 	if (cflg == 2) {
 		EDeadAnim();
 	}
@@ -322,6 +323,7 @@ void Enemy::EAnimation()
 			++i;
 			Estate = 0;
 		}
+
 		if (i >= 8 ) {
 			if (eflg == TRUE) {
 				if (enemy.type != 2) {
@@ -332,6 +334,7 @@ void Enemy::EAnimation()
 			++i;
 			Estate = 1;
 		}
+
 		if (i == 12) {
 		i = 8;
 		}
@@ -342,9 +345,11 @@ void Enemy::EPA()
 {
 	EMoveX = PSpeedX;
 	EMoveY =PSpeedY;
+
+
 	PSpeedY += 0.01f;
-	if (EMoveY >= 1.0f) {
-		EMoveY = 1.0f;
+	if (EMoveY >= 0.5f) {
+		EMoveY = 0.5f;
 	}
 
 	if (f == FALSE) {
@@ -457,7 +462,7 @@ void Enemy::DebagHit(Player P) {
 				EScore();
 			}
 
-			if(aflg == TRUE && eflg == TRUE){
+			if(aflg == TRUE /*&& eflg == TRUE*/){
 
 				Enemy::EdeadCount += 1;
 				cflg = 2;
