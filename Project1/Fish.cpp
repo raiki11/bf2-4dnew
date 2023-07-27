@@ -13,6 +13,8 @@ Fish::Fish()
 	fpscount = 0;
 	i = 0;
 	FishFlg = 0;
+	PFlg = 0;
+	EFlg = 0;
 }
 
 Fish::~Fish()
@@ -46,7 +48,7 @@ void Fish::FishUpdate(Player p , Enemy e[])
 		//FishX = p.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
 		/* アニメーション処理 */
 		FishUpAnimation();
-		/*if (p.GetPlayerLocationX() == FishX && p.GetPlayerLocationY() == FishY) {
+		/*if (hb.FishAndPlayer(f, p) == TRUE) {
 			FishPlayerHitAnimation(p);
 			
 		}*/
@@ -116,11 +118,11 @@ void Fish:: FishDraw(Player p) const
 	DrawRotaGraph(FishX, FishY, 1.0f, 0, FishImg[i], TRUE, FishOrientation);
 
 	/* デバック用 */
-	DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", p.GetPlayerLocationY());
-	DrawFormatString(0, 230, 0xffffff, "fishLocationY::%d", FishY);
-	DrawFormatString(0, 260, 0xffffff, "FishOrientation::%d", FishOrientation);
-	DrawFormatString(0, 290, 0xffffff, "flg::%d", fpscount);
-	DrawFormatString(0, 350, 0xffffff, "Pflg::%d", PFlg);
+	DrawFormatString(400, 200, 0xffffff, "playerLocationX::%f", p.GetPlayerLocationX());
+	DrawFormatString(400, 230, 0xffffff, "fishLocationX::%f", FishX);
+	DrawFormatString(400, 260, 0xffffff, "FishOrientation::%d", FishOrientation);
+	DrawFormatString(400, 290, 0xffffff, "flg::%d", fpscount);
+	DrawFormatString(400, 350, 0xffffff, "Pflg::%d", PFlg);
 }
 
 int Fish::FishProbability() 
@@ -141,7 +143,7 @@ void Fish::FishUpAnimation()
 	Time;
 	if (i == 10) i = 0;   // サカナが出てないときiをリセットする
 
-	if (i < 2 && ++Time % 30 == 0) {
+	if (i < 2 && ++Time % 30 == 0) { // 要調整
 		i++;
 	}
 }
@@ -151,14 +153,16 @@ void Fish::FishDownAnimation()
 	
 	++Time;
 
-	if (i < 5 && Time % 30 == 0) {
+	if (i < 5 && Time % 30 == 0) { // 要調整
 		++i;
 	}
 }
 
 void Fish::FishPlayerHitAnimation(Player p)
 {
-	i = 3;
+	++Time;
+	if(Time<=60)
+	i = 6;
 }
 
 void Fish::FishEnemyHitAnimation(Enemy enemy[]) {

@@ -65,9 +65,9 @@ AbstractScene* GameMain::Update()
 
 			}
 
-			/*fish.FishUpdate(player, enemy[0]);
+			fish.FishUpdate(player, enemy[0]);
 			thunder.ThunderUpdate();
-			bubble.BabbleUpdate();*/
+			bubble.BabbleUpdate();
 		}
 
 
@@ -163,6 +163,16 @@ AbstractScene* GameMain::Update()
 		}
 
 		/* ãõÇ∆ÉvÉåÉCÉÑÅ[ÇÃìñÇΩÇËîªíË */
+
+		if (fish.FishProbability() == TRUE && fish.PFlg == 1) {
+			if (hit.FishAndPlayer(fish, player) == TRUE) {
+				fish.FishPlayerHitAnimation(player);
+				/*player.SetPlayerDeathFlg(TRUE);
+				player.SetPlayerDeathFState(1);*/
+				fish.FishDownAnimation();
+			}
+		}
+
 		/*if (hit.FishAndPlayer(fish, player) == TRUE) {
 			fish.FishPlayerHitAnimation(player);
 			fish.FishDownAnimation();
@@ -235,7 +245,7 @@ void GameMain::Draw() const
 	UI.DrawUI();
 	hit.DrawHitBox();
 	//enemy.EnemyDraw();
-	//fish.FishDraw(player);
+	fish.FishDraw(player);
 	thunder.ThunderDraw();
 	bubble.BabbleDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);

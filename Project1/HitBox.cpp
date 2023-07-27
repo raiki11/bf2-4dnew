@@ -176,10 +176,10 @@ int HitBox::EnemyAndStageLeft(Enemy e, Stage s)
 
 int HitBox::ThunderAndStageUnder(Thunder th, Stage s) 
 {
-	tx0 = th.GetThunderLocationX() - 32;
-	ty0 = th.GetThunderLocationY() + 32;
-	tx1 = th.GetThunderLocationX() + 32;
-	ty1 = th.GetThunderLocationY() + 32;
+	tx0 = th.GetThunderX() - 32;
+	ty0 = th.GetThunderY() + 32;
+	tx1 = th.GetThunderX() + 32;
+	ty1 = th.GetThunderY() + 32;
 
 	for (int i = 0; i < 6; i += 2) {
 		if (s.GetStageXY(0, i, 0) <= tx1 && s.GetStageXY(0, i + 1, 0) >= tx0 &&
@@ -193,10 +193,10 @@ int HitBox::ThunderAndStageUnder(Thunder th, Stage s)
 
 int HitBox::ThunderAndStageTop(Thunder th, Stage s)
 {
-	tx0 = th.GetThunderLocationX() - 32;
-	ty0 = th.GetThunderLocationY() - 32;
-	tx1 = th.GetThunderLocationX() + 32;
-	ty1 = th.GetThunderLocationY() - 32;
+	tx0 = th.GetThunderX() - 32;
+	ty0 = th.GetThunderY() - 32;
+	tx1 = th.GetThunderX() + 32;
+	ty1 = th.GetThunderY() - 32;
 
 	for (int i = 0; i < 6; i += 2) {
 		if (s.GetStageXY(0, i, 0) <= tx1 && s.GetStageXY(0, i + 1, 0) >= tx0 &&
@@ -211,10 +211,10 @@ int HitBox::ThunderAndStageTop(Thunder th, Stage s)
 
 int HitBox::ThunderAndStageRight(Thunder th, Stage s)
 {
-	tx0 = th.GetThunderLocationX() + 32;
-	ty0 = th.GetThunderLocationY() - 32;
-	tx1 = th.GetThunderLocationX() + 32;
-	ty1 = th.GetThunderLocationY() + 32;
+	tx0 = th.GetThunderX() + 32;
+	ty0 = th.GetThunderY() - 32;
+	tx1 = th.GetThunderX() + 32;
+	ty1 = th.GetThunderY() + 32;
 
 	if (th.GetThunderMoveLocationX() > 0) {
 		for (int i = 0; i < 6; i += 2) {
@@ -230,10 +230,10 @@ int HitBox::ThunderAndStageRight(Thunder th, Stage s)
 
 int HitBox::ThunderAndStageLeft(Thunder th, Stage s)
 {
-	tx0 = th.GetThunderLocationX() - 32;
-	ty0 = th.GetThunderLocationY() - 32;
-	tx1 = th.GetThunderLocationX() - 32;
-	ty1 = th.GetThunderLocationY() + 32;
+	tx0 = th.GetThunderX() - 32;
+	ty0 = th.GetThunderY() - 32;
+	tx1 = th.GetThunderX() - 32;
+	ty1 = th.GetThunderY() + 32;
 
 	if (th.GetThunderMoveLocationX() < 0) {
 		for (int i = 0; i < 6; i += 2) {
@@ -272,15 +272,15 @@ int HitBox::PlayerAndThunder(Player p, Thunder t)
 
 int HitBox::FishAndPlayer(Fish f, Player p)
 {
-	fx0 = f.FishLocationX() - 32;
-	fy0 = f.FishLocationY() - 32;
-	fx1 = f.FishLocationX() + 32;
-	fy1 = f.FishLocationY() + 32;
+	fx0 = f.FishLocationX() - 20;
+	fy0 = f.FishLocationY() - 20;
+	fx1 = f.FishLocationX() + 20;
+	fy1 = f.FishLocationY() + 20;
 
-	px0 = p.GetPlayerLocationX() - 32;
-	py0 = p.GetPlayerLocationY() - 32;
-	px1 = p.GetPlayerLocationX() + 32;
-	py1 = p.GetPlayerLocationY() + 32;
+	px0 = p.GetPlayerLocationX() - 20;
+	py0 = p.GetPlayerLocationY() - 20;
+	px1 = p.GetPlayerLocationX() + 20;
+	py1 = p.GetPlayerLocationY() + 20;
 
 	if (fx0 <= px1 && fx1 >= px0 &&
 		fy0 <= py1 && fy1 >= py0) {
