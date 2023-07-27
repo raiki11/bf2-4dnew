@@ -69,6 +69,7 @@ void Player::PlayerUpdate()
 				playerLife--;
 				playerNoInputFlg = TRUE;
 				playerDeathState = -1;
+				playerImgReturnFlg = TRUE;
 			}
 			break;
 		case 1:
@@ -84,6 +85,7 @@ void Player::PlayerUpdate()
 				playerLife--;
 				playerNoInputFlg = TRUE;
 				playerDeathState = -1;
+				playerImgReturnFlg = TRUE;
 			}
 			break;
 		case 2:
@@ -99,6 +101,7 @@ void Player::PlayerUpdate()
 				playerLife--;
 				playerNoInputFlg = TRUE;
 				playerDeathState = -1;
+				playerImgReturnFlg = TRUE;
 			}
 			break;
 		}
@@ -173,7 +176,7 @@ void Player::PlayerDraw() const
 	//DrawGraph(160, 442, St_Sea, TRUE);
 
 	DrawFormatString(0, 40, 0xffffff, "count::%d", count);
-	DrawFormatString(0, 55, 0xffffff, "splashsnum::%d", splashNum);
+	DrawFormatString(0, 55, 0xffffff, "remainBalloon::%d", remainBalloon);
 	DrawFormatString(0, 70, 0xffffff, "moveFpsCountY::%d", moveFpsCountY);
 	DrawFormatString(0, 85, 0xffffff, "playerMoveX::%f", playerMoveX);
 	/*DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", playerLocationY);*/
@@ -964,4 +967,5 @@ void Player::InitPlayer()
 	flapFlg = FALSE;
 	flapInterval = 3;
 	playerNoInputFlg = TRUE;
+	playerImgReturnFlg = TRUE;
 }

@@ -96,6 +96,8 @@ public:
 	float GetEnemyMoveY() { return EMoveY; }
 
 	int EGetReboundFlgStageX() { return reboundFlgStageX; }
+
+	int GetI() { return i; }
 	void ESetReboundFlgStageY(int f)
 	{
 		reboundFlgStageY = f;
