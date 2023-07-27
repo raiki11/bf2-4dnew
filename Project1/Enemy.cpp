@@ -32,6 +32,8 @@ Enemy::Enemy(int set_X,int set_Y)
 	aflg = FALSE;
 	count = 0;
 	once = false;
+	spc = 0;
+	spflg = false;
 
 
 	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
@@ -58,6 +60,7 @@ Enemy::Enemy(int set_X,int set_Y)
 	LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, P_img); // 画像の分割読み込み
 	LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, R_img); // 画像の分割読み込み
 	LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, G_img); // 画像の分割読み込み
+	LoadDivGraph("images/Stage/Stage_SplashAnimation.png", 3, 3, 1, 64, 32, EspAnim);
 
 	Eflg = FALSE;
 	Eflgcnt = 0;
@@ -105,6 +108,10 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	//if (cflg == TRUE) {
 	//	EDeadAnim();
 	//}
+
+	if (spflg == true) {
+		EsplashAnim();
+	}
 
 	//デバッグ用
 	if (cflg != 2)ECheckY();
@@ -198,6 +205,9 @@ void Enemy::EnemyDraw() const
 		
 	}
 
+	if(spflg == true)DrawGraph(ELocationX - 30, 400, EspAnim[spc], TRUE);
+
+
 	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
 	DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
 }
@@ -255,8 +265,6 @@ void Enemy::EnemyMoveX(Player P)
 
 	}
 }
-
-
 
 void Enemy::EnemyMoveY(Player P)
 {
@@ -393,7 +401,8 @@ void Enemy::EDeadAnim() {
 			if (ELocationY+cy>=450)swy += 1;
 			break;
 		case 2:
-			DeadFlg = TRUE;
+			spflg = true;
+			//DeadFlg = TRUE;
 			break;
 		default:
 			break;
@@ -442,6 +451,7 @@ void Enemy::DebagHit(Player P) {
 				if (once == false)
 				{
 					once = true;
+
 					Enemy::EdeadCount += 1;
 				}
 				cflg = 2;
@@ -505,7 +515,26 @@ int Enemy::EScore()
 
 void Enemy::ECheckY() {
 	if (ELocationY > 460) {
+		spflg = true;
+		//DeadFlg = TRUE;
+		if (once == false)
+		{
+			once = true;
+			Enemy::EdeadCount += 1;
+		}
+	}
+}
+
+void Enemy::EsplashAnim()
+{
+	if (++count > 10) {
+		spc += 1;
+		count = 0;
+	}
+	if (spc >= 4) {
+		spc = 0;
+		count = 0;
+		spflg = false;
 		DeadFlg = TRUE;
-		Enemy::EdeadCount += 1;
 	}
 }

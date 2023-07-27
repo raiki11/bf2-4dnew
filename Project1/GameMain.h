@@ -52,10 +52,6 @@ public:
 
     //•`‰æ‚ÉŠÖ‚·‚é‚±‚Æ‚ðŽÀ‘•
     void Draw() const override;
-    void EsplashAnim();
-    int EspAnim[4];
-    int spc;
-    bool spflg;
 
 
 };

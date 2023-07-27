@@ -79,6 +79,11 @@ public:
 	void EPA();
 
 	void EDeadAnim();
+	void EsplashAnim();
+	int EspAnim[4];
+	int spc;
+	bool spflg;
+
 
 	//敵が死ぬアニメーションになるか確認する用
 	void DebagHit(Player P);
