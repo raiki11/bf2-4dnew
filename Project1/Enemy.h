@@ -35,7 +35,6 @@ private:
 	int Estate;
 	int f;      //左右に揺れるやつ
 
-	static int Score;
 
 	int changeimg;//エネミー落下画像切り替え用
 	int changeCt;//画像切り替えのカウント
@@ -59,13 +58,14 @@ private:
 	int Escore5;
 	int Eflgcnt;
 	bool onlyOnce;
-	int n_score;	// 現在のスコア
-	int hi_score;	// ハイスコア
+	
 	
 
 public:
 	Enemy(int set_X,int set_Y);
 	~Enemy();
+
+	static int Score;
 
 	int cflg;		//死亡アニメーションフラグ
 	static int DeadFlg;		//死亡フラグ

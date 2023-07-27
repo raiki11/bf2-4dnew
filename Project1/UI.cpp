@@ -20,11 +20,10 @@ UI::UI()
 	Flag = FALSE;	
 	b = 0;
 	p_life = 0;
+	n = 0;
 	q = 100000;
-	a = 0;
-	for (int i = 0; i > 6; i++) {
-		Score[i] = 0;
-	}
+	getsco = 0;	// 現在のスコア
+	old_score = 0;	// ハイスコア
 }
 
 UI::~UI()
@@ -45,14 +44,23 @@ void UI::Update(int p)
 
 	p_life = p;
 
-	for (int i = 0;  i>5; i++)
+	if (getsco >= 999999)
 	{
-		Score[i] = Enemy::GetScore() / q;
-		i = a;
-		q = q / 10;
+		getsco = 999999;
 	}
+	else {
+		getsco = Enemy::Score;
 
+	}
+	if (getsco >= old_score)
+	{
+		old_score = getsco;
+	}
+	/*else {
+
+	}*/
 }
+
 
 
 
@@ -62,15 +70,36 @@ void UI::Update(int p)
 void UI::DrawUI() const
 {
 	// 現在のスコア
-	DrawGraph(50, 30, score, TRUE);
-	DrawGraph(240, 25, Num[a], TRUE);
+	DrawGraph(60, 30, score, TRUE);
+	DrawGraph(80, 25, Num[(getsco % 1000000)/100000], TRUE);
+	DrawGraph(100, 25, Num[(getsco % 100000)/10000], TRUE);
+	DrawGraph(120, 25, Num[(getsco % 10000) / 1000], TRUE);
+	DrawGraph(140, 25, Num[(getsco % 1000)/ 100], TRUE);
+	DrawGraph(160, 25, Num[(getsco % 100) / 10], TRUE);
+	DrawGraph(180, 25, Num[(getsco % 10)], TRUE);
 
+	/*DrawFormatString(400, 400, 0xffffff, "%d", Score[0]);
+	DrawFormatString(400, 410, 0xffffff, "%d", Score[1]);
+	DrawFormatString(400, 420, 0xffffff, "%d", Score[2]);
+	DrawFormatString(400, 430, 0xffffff, "%d", Score[3]);
+	DrawFormatString(400, 440, 0xffffff, "%d", Score[4]);*/
+	//DrawFormatString(400, 400, 0xffffff, "getsco%d", getsco);
+	//DrawFormatString(400, 380, 0xffffff, "getsco%d", (getsco - (getsco % q)) / q);
 	
 	// ハイスコア
-	DrawGraph(220, 30, top, TRUE);
-	for (int a = 1; a <= 5; a++) {
-		DrawGraph((20 * a) + 240, 25, Num[i], TRUE);
-	}
+	
+		DrawGraph(220, 30, top, TRUE);
+		
+		DrawGraph(260, 25, Num[(old_score % 1000000) / 100000], TRUE);
+		DrawGraph(280, 25, Num[(old_score % 100000) / 10000], TRUE);
+		DrawGraph(300, 25, Num[(old_score % 10000) / 1000], TRUE);
+		DrawGraph(320, 25, Num[(old_score % 1000) / 100], TRUE);
+		DrawGraph(340, 25, Num[(old_score % 100) / 10], TRUE);
+		DrawGraph(360, 25, Num[(old_score % 10)], TRUE);
+	
+	
+
+	
 
 	if (b <= 3)			// 4回表示
 	{

@@ -9,12 +9,12 @@ private:
 	int phase;
 	int stock;
 	int Num[10];
-	int a;			// Numの変数
+	int n;			// Numの変数
 	int Flag;
 	int i;			//	Scoreの変数
 	int Score[6];
-	
-
+	int getsco;		// 現在のスコア
+	int old_score;	// ハイスコア
 	
 	// スコア
 	int p_score;
