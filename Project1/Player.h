@@ -81,6 +81,8 @@ public:
 	int GetPlayerLife() { return playerLife; }
 	int GetDeathFlg() { return deathFlg; }
 	int GetRemainBalloon() { return remainBalloon; }
+	int GetPlayerImgNum() { return playerImgNum; }
+	int GetNoInputFlg() { return playerNoInputFlg; }
 
 	void SetFlyingFlg(int f)
 	{
@@ -116,6 +118,10 @@ public:
 		remainBalloon--;
 	}
 
+	void SetPlayerMoveY()
+	{
+		playerMoveY *= -1;
+	}
 	void SetFallLimit();
 	void SetRemainBalloon();
 	int AnyButtons();

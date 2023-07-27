@@ -112,7 +112,9 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	//}
 
 	//デバッグ用
-	DebagHit(P);
+	if (P.GetPlayerImgNum() < 27) {
+		DebagHit(P);
+	}
 	Eflgcnt++;
 	if (Eflgcnt == 200) {
 		c++;
@@ -202,6 +204,8 @@ void Enemy::EnemyDraw() const
 		
 	}
 	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
+	/*DrawFormatString(500, 20, 0xffffff, "%06f", ELocationX);
+	DrawFormatString(500, 30, 0xffffff, "%06f", ELocationY);*/
 }
 
 void Enemy::EnemyMoveX(Player P)
@@ -438,17 +442,26 @@ void Enemy::DebagHit(Player P) {
 	float Ex = ELocationX - 15;
 	float Exwidth = ELocationX  + 15;
 	float Ey = ELocationY - 30;
-	float Eywidth = ELocationY;
+	float Eywidth = ELocationY + 30;
 
 	float px = P.GetPlayerLocationX() - 10;
 	float pxwidth = px + 25;
 	float py = P.GetPlayerLocationY();
 	float pywidth = py + 32;
 
-	/*DrawBox(Ex, Ey, Eywidth, Exwidth, 0xff0000, FALSE);
+	bool a;
+	/*DrawFormatString(500, 20, 0xffffff, "%06f", py);
+	DrawFormatString(500, 30, 0xffffff, "%06f", Eywidth);
 	ScreenFlip();*/
 	count++;
-	if (Ex<=pxwidth && Exwidth>=px &&Ey<=pywidth && Eywidth>=py) {
+	if (Ex <= pxwidth && Exwidth >= px && Ey <= pywidth && Eywidth >= py) {
+		a = true;
+	}
+	else {
+		a = false;
+	}
+	if (a) {
+		
 		if (count >= 60) {
 
 			aflg = TRUE;
@@ -458,7 +471,7 @@ void Enemy::DebagHit(Player P) {
 				EScore();
 			}
 
-			if(aflg == TRUE && eflg == TRUE){
+			if(aflg == TRUE ){
 
 				Enemy::EdeadCount += 1;
 				cflg = 2;
