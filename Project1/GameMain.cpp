@@ -55,7 +55,7 @@ AbstractScene* GameMain::Update()
 						Enemy::DeadFlg = FALSE;
 						//enemy[i] = nullptr;
 					}
-	
+
 				}
 				if (Enemy::DeadFlg == TRUE) {
 					enemy[i] = nullptr;
@@ -152,25 +152,64 @@ AbstractScene* GameMain::Update()
 				}
 			}
 		}
-	}
+
+
+		//プレイヤーと敵
+		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+			if (enemy[i] != nullptr) {
+				if (player.GetPlayerImgNum() >= 0 && player.GetPlayerImgNum() <= 26) {
+					if (enemy[i]->GetI() >= 8 && enemy[i]->GetI() <= 12) {
+						if (hit.PlayerAndEnemy(player, *enemy[i]) == TRUE) {
+							player.SetReboundFlgStageX(TRUE);
+							enemy[i]->ESetReboundFlgStageX(TRUE);
+						}
+
+						if (player.GetRemainBalloon() > 0) {
+							if (hit.PlayerBalloonAndEnemy(player, *enemy[i]) == TRUE) {
+								if (player.GetNoInputFlg() == FALSE) {
+									player.SubtractRemainBalloon();
+								}
+								player.SetReboundFlgStageX(TRUE);
+								player.SetReboundFlgStageY(TRUE);
+								player.SetPlayerImgFpsCnt(0);
+								enemy[i]->ESetReboundFlgStageX(TRUE);
+								enemy[i]->ESetReboundFlgStageY(TRUE);
+							}
+						}
+
+					}
+					if (enemy[i]->GetI() >= 8 && enemy[i]->GetI() <= 17) {
+
+						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE) {
+							//player.SubtractRemainBalloon();
+							player.SetReboundFlgStageX(TRUE);
+							//player.SetReboundFlgStageY(TRUE);
+							player.SetPlayerMoveY();
+						}
+					}
+				}
+			}
+		}
 
 
 		//プレイヤーと雷
 		if (hit.PlayerAndThunder(player, thunder) == TRUE) {
-			player.SetPlayerDeathFlg(TRUE);
-			player.SetPlayerDeathFState(1);
+			if (player.GetDeathFlg() == FALSE) {
+				player.SetPlayerDeathFlg(TRUE);
+				player.SetPlayerDeathFState(1);
+			}
 		}
-
-		//次のステージの敵生成
-		//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
-		//	if (Stage::Snum >= 4) { Stage::Snum = 0; }
-		//		Stage::Snum += 1;
-		//	if (OldSnum != Stage::Snum) {
-		//		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
-		//			enemy[i] = new Enemy(i, i);
-		//		}
-		//	}
-		//}
+	}
+	//次のステージの敵生成
+	//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
+	//	if (Stage::Snum >= 4) { Stage::Snum = 0; }
+	//		Stage::Snum += 1;
+	//	if (OldSnum != Stage::Snum) {
+	//		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+	//			enemy[i] = new Enemy(i, i);
+	//		}
+	//	}
+	//}
 
 	if (ClearFlg == TRUE) {
 		//countで少しまってから

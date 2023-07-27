@@ -16,7 +16,7 @@ void HitBox::UpdetaHitBox(Player p, Stage s)
 
 void HitBox::DrawHitBox() const
 {
-	DrawBox(underPx0, underPy0, underPx1, underPy1, 0xff0000, TRUE);
+	DrawBox(underPx0, underPy0, underPx1, underPy1, 0xff0000, FALSE);
 	/*DrawFormatString(200, 0, 0xffffff, "x0:%d", px0);
 	DrawFormatString(200, 20, 0xffffff, "y0:%d", py0);
 	DrawFormatString(200, 40, 0xffffff, "x1:%d", px1);
@@ -192,5 +192,90 @@ int HitBox::PlayerAndThunder(Player p, Thunder t)
 	}
 
 
+	return 0;
+}
+
+int HitBox::PlayerAndEnemy(Player p, Enemy e)
+{
+	px0 = p.GetPlayerLocationX() - 10;
+	py0 = p.GetPlayerLocationY() - 5;
+	px1 = p.GetPlayerLocationX() + 15;
+	py1 = p.GetPlayerLocationY() + 32;
+
+	ex0 = e.GetEnemyLocationX() - 10;
+	ey0 = e.GetEnemyLocationY() - 5;
+	ex1 = e.GetEnemyLocationX() + 15;
+	ey1 = e.GetEnemyLocationY() + 32;
+
+	if (ex0 <= px1 && ex1 >= px0 &&
+		ey0 <= py1 && ey1 >= py0) {
+
+		return TRUE;
+	}
+
+	return 0;
+}
+
+int HitBox::PlayerBalloonAndEnemy(Player p, Enemy e)
+{
+	px0 = p.GetPlayerLocationX() - 22;
+	py0 = p.GetPlayerLocationY() - 20;
+	px1 = p.GetPlayerLocationX() + 22;
+	py1 = p.GetPlayerLocationY() + 5;
+
+	ex0 = e.GetEnemyLocationX() - 10;
+	ey0 = e.GetEnemyLocationY();
+	ex1 = e.GetEnemyLocationX() + 15;
+	ey1 = e.GetEnemyLocationY() + 32;
+
+
+	underPx0 = px0;
+	underPy0 = py0;
+	underPx1 = px1;
+	underPy1 = py1;
+
+	old = now;
+
+	if (ex0 <= px1 && ex1 >= px0 &&
+		ey0 <= py1 && ey1 >= py0) {
+
+		now = TRUE;
+
+		//if (old == FALSE) {
+			return TRUE;
+		//}
+	}
+	else {
+		now = FALSE;
+	}
+	return 0;
+}
+
+int HitBox::PlayerAndEnemyBalloon(Player p, Enemy e)
+{
+	px0 = p.GetPlayerLocationX() - 10;
+	py0 = p.GetPlayerLocationY();
+	px1 = p.GetPlayerLocationX() + 15;
+	py1 = p.GetPlayerLocationY() + 32;
+
+	ex0 = e.GetEnemyLocationX() - 10;
+	ey0 = e.GetEnemyLocationY() - 20;
+	ex1 = e.GetEnemyLocationX() + 10;
+	ey1 = e.GetEnemyLocationY() + 5;
+
+	old1 = now1;
+
+	if (ex0 <= px1 && ex1 >= px0 &&
+		ey0 <= py1 && ey1 >= py0) {
+
+		now1 = TRUE;
+
+		//if (old1 == FALSE) {
+			return TRUE;
+		//}
+	}
+	else {
+		now1 = FALSE;
+	}
 	return 0;
 }
