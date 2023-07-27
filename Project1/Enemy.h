@@ -30,6 +30,7 @@ private:
 	float PSpeedY;
 	float PSpeedX;
 	int eflg;
+	int point;		// ポイント表示の変数
 	int count;
 	int aflg;
 	int Estate;
@@ -51,6 +52,7 @@ private:
 	
 	int Epoint;
 	int cnt;
+
 	int Escore1;
 	int Escore2;
 	int Escore3;
