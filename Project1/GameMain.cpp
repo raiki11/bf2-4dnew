@@ -164,6 +164,12 @@ AbstractScene* GameMain::Update()
 			thunder.ChangeAngle();
 		}
 
+		/* 魚とプレイヤーの当たり判定 */
+		/*if (hit.FishAndPlayer(fish, player) == TRUE) {
+			fish.FishPlayerHitAnimation(player);
+			fish.FishDownAnimation();
+		}*/
+
 		//次のステージの敵生成
 		//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
 		//	if (Stage::Snum >= 4) { Stage::Snum = 0; }

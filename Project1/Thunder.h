@@ -5,9 +5,9 @@ private:
 	// 雷の画像
 	int ThunderImg[3];
 	// 雷のX座標
-	float ThunderX = 300;
+	float ThunderX;
 	// 雷のY座標
-	float ThunderY = 400;
+	float ThunderY;
 	// 雷のフラグ
 	int ThunderFlg = 2; // 雷の状態（0: 移動中 1: バー接触 2: 待機状態）
 	// スピードフラグ

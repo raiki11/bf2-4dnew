@@ -8,6 +8,9 @@ private:
 	int Time;
 	int fpscount;
 	int i;
+	float FishX = 320;  // サカナのX座標
+	float FishY = 420;  // サカナのY座標
+	int FishFlg;  // 0:プレイヤーかエネミーが入ってない 1: サカナが上に上がる 2: サカナが下に下がる
 public:
 
 	// コンストラクタ
@@ -27,15 +30,18 @@ public:
 
 	void FishUpAnimation(); // サカナの上がるアニメーション
 	void FishDownAnimation(); // サカナの下がるアニメーション
-	void FishHitAnimation(); // サカナに当たった時のアニメーション
+	void FishPlayerHitAnimation(Player p); // サカナに当たった時のアニメーション
+	void FishEnemyHitAnimation(Enemy e[]); // サカナに当たった時のアニメーション
+
+	float FishLocationX() { return FishX; }
+	float FishLocationY() { return FishY; }
 
 	int sakana;       // 確率結果を入れる変数
 	int FishImg[10];   // 画像を入れる配列 
 
-	int FishX = 320;  // サカナのX座標
-	int FishY = 420;  // サカナのY座標
-	int FishFlg = 0;  // 0:プレイヤーかエネミーが入ってない 1: サカナが上に上がる 2: サカナが下に下がる
-	int PFlg = 0;      // プレイヤーがサカナエリアに入っているかどうかのフラグ 0: サカナエリアに入ってない 1: サカナエリアに入った 2: サカナのアニメーション開始
+	// プレイヤーがサカナエリアに入っているかどうかのフラグ 
+	// 0: サカナエリアに入ってない 1: サカナエリアに入った 2: サカナの上がるアニメーション 3: サカナが下がるアニメーション 4: サカナエリアに居続けてる状態
+	int PFlg = 0;      
 	int EFlg = 0;      // 敵がサカナエリアに入っているかどうかのフラグ 0: サカナエリアに入ってない 1: サカナエリアに入った 2: サカナのアニメーション開始
 	bool FishOrientation;  // サカナの向きを決める
 	int sakanaOrientation;  // サカナの向きを決める乱数

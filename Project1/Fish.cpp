@@ -12,6 +12,7 @@ Fish::Fish()
 	Time = 0;
 	fpscount = 0;
 	i = 0;
+	FishFlg = 0;
 }
 
 Fish::~Fish()
@@ -46,7 +47,7 @@ void Fish::FishUpdate(Player p , Enemy e[])
 		/* アニメーション処理 */
 		FishUpAnimation();
 		/*if (p.GetPlayerLocationX() == FishX && p.GetPlayerLocationY() == FishY) {
-			FishHitAnimation();
+			FishPlayerHitAnimation(p);
 			
 		}*/
 		if (i == 2) {
@@ -60,13 +61,15 @@ void Fish::FishUpdate(Player p , Enemy e[])
 		FishDownAnimation();
 		if (i == 5) {
 			i = 10;
-			PFlg = 0;
+			PFlg = 4;
 			FishFlg = 0;     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
 			/*fpscount = 0;*/
 		}
+		
 	}
-
-	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() && FishFlg == 0 && i == 10) {
+	
+	/* プレイヤーがサカナエリアに居続ける時の処理 */
+	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() && FishFlg == 0 && i == 10 && PFlg==4) {
 		fpscount = 180;
 	}
 	
@@ -117,6 +120,7 @@ void Fish:: FishDraw(Player p) const
 	DrawFormatString(0, 230, 0xffffff, "fishLocationY::%d", FishY);
 	DrawFormatString(0, 260, 0xffffff, "FishOrientation::%d", FishOrientation);
 	DrawFormatString(0, 290, 0xffffff, "flg::%d", fpscount);
+	DrawFormatString(0, 350, 0xffffff, "Pflg::%d", PFlg);
 }
 
 int Fish::FishProbability() 
@@ -152,8 +156,12 @@ void Fish::FishDownAnimation()
 	}
 }
 
-void Fish::FishHitAnimation()
+void Fish::FishPlayerHitAnimation(Player p)
 {
+	i = 3;
+}
+
+void Fish::FishEnemyHitAnimation(Enemy enemy[]) {
 	//switch(/* 何が当たったかをここに書く */)
 	//	case 0:   // プレイヤーが当たった場合
 	//		i = 7;

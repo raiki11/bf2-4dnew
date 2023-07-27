@@ -21,6 +21,7 @@ void HitBox::DrawHitBox() const
 	DrawFormatString(200, 20, 0xffffff, "y0:%d", py0);
 	DrawFormatString(200, 40, 0xffffff, "x1:%d", px1);
 	DrawFormatString(200, 60, 0xffffff, "y1:%d", py1);*/
+
 }
 
 int HitBox::PlayerAndStageUnder(Player p, Stage s)
@@ -245,4 +246,23 @@ int HitBox::ThunderAndStageLeft(Thunder th, Stage s)
 	}
 
 	return FALSE;
+}
+
+int HitBox::FishAndPlayer(Fish f, Player p)
+{
+	fx0 = f.FishLocationX() - 32;
+	fy0 = f.FishLocationY() - 32;
+	fx1 = f.FishLocationX() + 32;
+	fy1 = f.FishLocationY() + 32;
+
+	px0 = p.GetPlayerLocationX() - 32;
+	py0 = p.GetPlayerLocationY() - 32;
+	px1 = p.GetPlayerLocationX() + 32;
+	py1 = p.GetPlayerLocationY() + 32;
+
+	if (fx0 <= px1 && fx1 >= px0 &&
+		fy0 <= py1 && fy1 >= py0) {
+		return TRUE;
+	}
+	else return FALSE;
 }
