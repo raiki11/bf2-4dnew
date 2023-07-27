@@ -14,6 +14,9 @@ private:
 	int fx0, fx1, fy0, fy1;
 	
 	int underPx0, underPy0, underPx1, underPy1;	//プレイヤーの接地判定
+
+	int old, now;
+	int old1, now1;
 public:
 	HitBox();
 	~HitBox();
@@ -34,11 +37,17 @@ public:
 
 	int PlayerAndThunder(Player p, Thunder t);
 
+
 	int ThunderAndStageUnder(Thunder th, Stage s);
 	int ThunderAndStageTop(Thunder th, Stage s);
 	int ThunderAndStageRight(Thunder th, Stage s);
 	int ThunderAndStageLeft(Thunder th, Stage s);
 
 	int FishAndPlayer(Fish f, Player p);
+
+	int PlayerAndEnemy(Player p,Enemy e);
+	int PlayerBalloonAndEnemy(Player p,Enemy e);
+	int PlayerAndEnemyBalloon(Player p,Enemy e);
+
 };
 

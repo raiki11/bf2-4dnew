@@ -35,7 +35,6 @@ private:
 	int Estate;
 	int f;      //左右に揺れるやつ
 
-	static int Score;
 
 	int changeimg;//エネミー落下画像切り替え用
 	int changeCt;//画像切り替えのカウント
@@ -59,27 +58,35 @@ private:
 	int Escore5;
 	int Eflgcnt;
 	bool onlyOnce;
-	int n_score;	// 現在のスコア
-	int hi_score;	// ハイスコア
+	
+	
 
 public:
 	Enemy(int set_X,int set_Y);
 	~Enemy();
 
+	static int Score;
+
 	int cflg;		//死亡アニメーションフラグ
 	static int DeadFlg;		//死亡フラグ
 	static int EdeadCount;//エネミーがやられた数のカウント
-	static int ElastFlg;
+	static int ElastFlg;	//最後の一匹か確認するフラグ
 
 	void EnemyUpdate(Player P,int& j);
 	void EnemyDraw() const;
 	void EnemyMoveX(Player P);
 	void EnemyMoveY(Player P);
 	void EAnimation();
+	int AnimCount;
 
 	void EPA();
 
 	void EDeadAnim();
+	void EsplashAnim();
+	int EspAnim[4];
+	int spc;
+	bool spflg;
+
 
 	//敵が死ぬアニメーションになるか確認する用
 	void DebagHit(Player P);
@@ -90,6 +97,8 @@ public:
 	float GetEnemyMoveY() { return EMoveY; }
 
 	int EGetReboundFlgStageX() { return reboundFlgStageX; }
+
+	int GetI() { return i; }
 	void ESetReboundFlgStageY(int f)
 	{
 		reboundFlgStageY = f;
@@ -103,10 +112,12 @@ public:
 		flyingFlg = f;
 	}
 
-	static int GetScore() { return Score; }
+	static  int GetScore() { return Score; }
 
 	int EScore();
     int  Eflg;
 	 int c;
+	 bool once;
+	 void ECheckY();
 };
 
