@@ -121,8 +121,8 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	if (P.GetPlayerImgNum() < 27) {
 		DebagHit(P);
 	}
-	/*if (cflg != 2)ECheckY();
-	DebagHit(P);*/
+	if (cflg != 2)ECheckY();
+	//DebagHit(P);*/
 	Eflgcnt++;
 	if (Eflgcnt == 200) {
 		c++;
@@ -212,7 +212,7 @@ void Enemy::EnemyDraw() const
 		
 	}
 
-	if(spflg == true)DrawGraph(ELocationX - 30, 400, EspAnim[spc], TRUE);
+	if(spflg == true)DrawGraph(ELocationX - 30, 415, EspAnim[spc], TRUE);
 
 
 	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
