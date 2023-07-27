@@ -23,7 +23,8 @@ Enemy::Enemy(int set_X,int set_Y)
 	fpscount = 0;
 	i = 0;
 	cnt = 0;
-	PSpeed = 0;
+	PSpeedY = 0;
+	PSpeedX = 0;
 	Flag = FALSE;
 	reboundFlgStageY = FALSE;
 	reboundFlgStageX = FALSE;
@@ -31,6 +32,7 @@ Enemy::Enemy(int set_X,int set_Y)
 	eflg = FALSE;
 	aflg = FALSE;
 	count = 0;
+	f = FALSE;
 	
 
 
@@ -338,13 +340,28 @@ void Enemy::EAnimation()
 
 void Enemy::EPA()
 {
-
-	EMoveY =PSpeed;
-	PSpeed += 0.01f;
+	EMoveX = PSpeedX;
+	EMoveY =PSpeedY;
+	PSpeedY += 0.01f;
 	if (EMoveY >= 1.0f) {
 		EMoveY = 1.0f;
 	}
 
+	if (f == FALSE) {
+		PSpeedX += 0.02f;
+	}
+	else if (f == TRUE) {
+		PSpeedX -= 0.02f;
+	}
+
+	if (EMoveX >= 0.5f) {
+		EMoveX = 0;
+		f = TRUE;
+	}
+	if (EMoveX < -0.5f) {
+		EMoveX = 0;
+		f = FALSE;
+	}
 
 	//パラシュート
 	
@@ -358,15 +375,18 @@ void Enemy::EPA()
 		Estate = 2;
 	}
 
+
+
 	if (flyingFlg != FALSE) {
 		EMoveY = 0;
+		EMoveX = 0;
 		i = 0;
 		cflg = 0;
 		eflg = TRUE;
 	}
 	
 	
-	
+	ELocationX += EMoveX;
 	ELocationY += EMoveY;
 }
 

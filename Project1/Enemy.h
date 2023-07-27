@@ -27,11 +27,13 @@ private:
 	int reboundFlgStageY;
 	int reboundFlgStageX;
 	int flyingFlg;
-	float PSpeed;
+	float PSpeedY;
+	float PSpeedX;
 	int eflg;
 	int count;
 	int aflg;
 	int Estate;
+	int f;      //¶‰E‚É—h‚ê‚é‚â‚Â
 
 	static int Score;
 
