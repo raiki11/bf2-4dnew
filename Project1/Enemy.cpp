@@ -8,8 +8,9 @@ HitBox hit;
 Stage stage;
 
 int Enemy::DeadFlg = FALSE;
-int Enemy::EdeadCount = 0;
-
+int Enemy::EdeadCount = -1;
+int Enemy::ElastFlg = FALSE;
+int Enemy::Score = 0;
 Enemy::Enemy(int set_X,int set_Y)
 {
 	//ELocationX = 320;
@@ -22,10 +23,20 @@ Enemy::Enemy(int set_X,int set_Y)
 	fpscount = 0;
 	i = 0;
 	cnt = 0;
+	PSpeedY = 0;
+	PSpeedX = 0;
 	Flag = FALSE;
 	reboundFlgStageY = FALSE;
 	reboundFlgStageX = FALSE;
 	flyingFlg = FALSE;
+	eflg = FALSE;
+	aflg = FALSE;
+	count = 0;
+	f = FALSE;
+	
+
+
+
 
 	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
 	switch (enemy.type)
@@ -44,7 +55,7 @@ Enemy::Enemy(int set_X,int set_Y)
 	Epoint = 500;
 	changeimg = 0;
 	changeCt = 0;
-	cflg = FALSE;
+	cflg = 0;
 	cy = 0;
 	cycount = 0;
 	swy = 0;
@@ -73,22 +84,34 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	if (++fpscount >= 60)
 	{
 		EAnimation();
+		
 	}
 
-	if (i >= 8 && i< 13) {
-		EnemyMoveX(P);
-		EnemyMoveY(P);
+	if (cflg == 1) {
+		EPA();
 	}
 
-
-	if (CheckHitKey(KEY_INPUT_A) == TRUE) {
-		cflg = TRUE;
-	}
-
-	if (cflg == TRUE) {
-
+	if (cflg == 2) {
 		EDeadAnim();
 	}
+
+	if (cflg == 0) {
+		if (i >= 8 && i < 13) {
+			EnemyMoveX(P);
+			EnemyMoveY(P);
+		}
+	}
+	
+
+
+	/*if (CheckHitKey(KEY_INPUT_A) == TRUE) {
+		cflg = TRUE;
+	}*/
+
+	//if (cflg == TRUE) {
+	//	EDeadAnim();
+	//}
+
 	//デバッグ用
 	DebagHit(P);
 	Eflgcnt++;
@@ -110,11 +133,7 @@ void Enemy::EnemyDraw() const
 	//DrawCircle(ELocationX, ELocationY, 4, 0x00ff00, TRUE);
 	/*DrawGraph(enemyLocationX, enemyLocationY, img[i], TRUE);*/
 
-	//DrawFormatString(0, 400, 0xffffff, "ElY%f", ELocationY);
-	DrawBox(0, 440, 600, 600, 0x00ff00, FALSE);
-
-
-	if (cflg == TRUE) {
+	if (cflg == 2) {
 		switch (enemy.type)
 		{
 		case 0:
@@ -151,7 +170,7 @@ void Enemy::EnemyDraw() const
 		//デバッグ用
 		//DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
 		//DrawFormatString(0, 160, 0xffffff, "time::%d", time);
-		//DrawFormatString(0, 175, 0xffffff, "i::%d", i);
+		DrawFormatString(0, 300, 0xffffff, "Score::%d", Score);
 		if (reboundFlgStageY == TRUE) {
 			DrawFormatString(0, 205, 0xffffff, "Y:TRUE");
 		}
@@ -165,7 +184,7 @@ void Enemy::EnemyDraw() const
 			DrawFormatString(0, 220, 0xffffff, "X:FALSE");
 		}
 	}
-	//DrawFormatString(300, 0, 0xffffff, "Eflg::%d", Eflg);
+	//DrawFormatString(0, 300, 0xffffff, "Score::%d", Score);
 	//printfDx("%d", Eflg);
 	
 	//switch (switch_on)
@@ -302,14 +321,78 @@ void Enemy::EAnimation()
 
 		if (i < 8) {
 			++i;
+			Estate = 0;
 		}
+
 		if (i >= 8 ) {
+			if (eflg == TRUE) {
+				if (enemy.type != 2) {
+					enemy.type = enemy.type + 1;
+					eflg = FALSE;
+				}
+			}
 			++i;
+			Estate = 1;
 		}
+
 		if (i == 12) {
 		i = 8;
 		}
 	
+}
+
+void Enemy::EPA()
+{
+	EMoveX = PSpeedX;
+	EMoveY =PSpeedY;
+
+
+	PSpeedY += 0.01f;
+	if (EMoveY >= 0.5f) {
+		EMoveY = 0.5f;
+	}
+
+	if (f == FALSE) {
+		PSpeedX += 0.02f;
+	}
+	else if (f == TRUE) {
+		PSpeedX -= 0.02f;
+	}
+
+	if (EMoveX >= 0.5f) {
+		EMoveX = 0;
+		f = TRUE;
+	}
+	if (EMoveX < -0.5f) {
+		EMoveX = 0;
+		f = FALSE;
+	}
+
+	//パラシュート
+	
+	if (cflg == 1) {
+		if (i >= 8 && i < 13) {
+			i = 13;
+		}
+		if (++i >= 17) {
+			i = 17;
+		}
+		Estate = 2;
+	}
+
+
+
+	if (flyingFlg != FALSE) {
+		EMoveY = 0;
+		EMoveX = 0;
+		i = 0;
+		cflg = 0;
+		eflg = TRUE;
+	}
+	
+	
+	ELocationX += EMoveX;
+	ELocationY += EMoveY;
 }
 
 void Enemy::EDeadAnim() {
@@ -335,9 +418,7 @@ void Enemy::EDeadAnim() {
 			if (ELocationY+cy>=450)swy += 1;
 			break;
 		case 2:
-			Enemy::EdeadCount += 1;
 			DeadFlg = TRUE;
-			swy += 1;
 			break;
 		default:
 			break;
@@ -369,10 +450,77 @@ void Enemy::DebagHit(Player P) {
 	float py = P.GetPlayerLocationY();
 	float pywidth = py + 64;
 
-
+	
+	count++;
 	if (Ex<=pxwidth && Exwidth>=px &&Ey<=pywidth && Eywidth>=py) {
-		cflg = TRUE;
-		Eflg = TRUE;
-	}
+		if (count >= 60) {
 
+			aflg = TRUE;
+			if (cflg == 0 && i >= 8 && aflg == TRUE) {
+				cflg = 1;
+				aflg = FALSE;
+				EScore();
+			}
+
+			if(aflg == TRUE /*&& eflg == TRUE*/){
+
+				Enemy::EdeadCount += 1;
+				cflg = 2;
+				aflg = FALSE;
+				EScore();
+			}
+			count = 0;
+		}
+	}
+}
+
+
+int Enemy::EScore()
+{
+	switch (enemy.type)
+	{
+	case 0:
+		//地面に立ってる時
+		if (Estate == 0) {
+			Score += 750;
+		}
+		//風船割る
+		else if (Estate == 1) {
+			Score += 500;
+		}
+		//パラシュート状態の時
+		else if (Estate == 2) {
+			Score += 1000;
+		}
+		break;
+	case 1:
+		//地面に立ってる時
+		if (Estate == 0) {
+			Score += 1000;
+		}
+		//風船割る
+		else if (Estate == 1) {
+			Score += 750;
+		}
+		//パラシュート状態の時
+		else if (Estate == 2) {
+			Score += 1500;
+		}
+		break;
+	case 2:
+		//地面に立ってる時
+		if (Estate == 0) {
+			Score += 1500;
+		}
+		//風船割る
+		else if (Estate == 1) {
+			Score += 1000;
+		}
+		//パラシュート状態の時
+		else if (Estate == 2) {
+			Score += 2000;
+		}
+		break;
+	}
+	return Score;
 }

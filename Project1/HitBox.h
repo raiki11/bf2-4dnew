@@ -32,6 +32,8 @@ public:
 	int EnemyAndStageRight(Enemy e, Stage s);
 	int EnemyAndStageLeft(Enemy e, Stage s);
 
+	int PlayerAndThunder(Player p, Thunder t);
+
 	int ThunderAndStageUnder(Thunder th, Stage s);
 	int ThunderAndStageTop(Thunder th, Stage s);
 	int ThunderAndStageRight(Thunder th, Stage s);

@@ -10,9 +10,11 @@ Enemy* enemy[6];
 GameMain::GameMain()
 {
 	PauseFlg = FALSE;
+	ClearFlg = FALSE;
+	Elast = -1;
 	a = 0;
+	count = 0;
 	OldSnum = Stage::Snum;
-
 	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 		enemy[i] = new Enemy(i, i);
 	}
@@ -32,30 +34,36 @@ AbstractScene* GameMain::Update()
 	}
 	//ポーズ中でないとき
 	if (PauseFlg == FALSE) {
-		// PHASE点滅カウント
-		UI.Update(player.GetPlayerLife());
-		// ゲームメイン処理
-		player.PlayerUpdate();
+		if (ClearFlg == FALSE) {
+			// PHASE点滅カウント
+			UI.Update(player.GetPlayerLife());
+			// ゲームメイン処理
+			player.PlayerUpdate();
+			//printfDx("%d", Enemy::EdeadCount);
 
-		fish.FishUpdate(player, enemy[0]);
-		thunder.ThunderUpdate();
-		bubble.BabbleUpdate();
+			//エネミーアップデート
+			for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+				if (enemy[i] != nullptr) {
+					enemy[i]->EnemyUpdate(player, i);
+				}
+				//エネミーを倒したら
+				if (Enemy::EdeadCount == Stage::EnemyMax[Stage::Snum]) {
+					if (++count > 10) {
+						ClearFlg = TRUE;
+						Enemy::EdeadCount += 1;
+						Elast = i;
+						Enemy::DeadFlg = FALSE;
+						//enemy[i] = nullptr;
+					}
+	
+				}
+				if (Enemy::DeadFlg == TRUE) {
+					enemy[i] = nullptr;
+					Enemy::DeadFlg = FALSE;
+				}
 
-		//エネミーアップデート
-		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
-			if (enemy[i] != nullptr) {
-				enemy[i]->EnemyUpdate(player, i);
+
 			}
-			//エネミーを倒したら
-			if (Enemy::DeadFlg == TRUE) {
-				enemy[i] = nullptr;
-				Enemy::DeadFlg = FALSE;
-				Enemy::EdeadCount += 1;
-			}
-			//cflg=TRUE&&nullptrじゃない奴がラス１だったら
-
-
-
 
 			/*fish.FishUpdate(player, enemy[0]);
 			thunder.ThunderUpdate();
@@ -106,7 +114,6 @@ AbstractScene* GameMain::Update()
 			}
 		}
 
-
 		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 			if (enemy[i] != nullptr) {
 
@@ -146,22 +153,13 @@ AbstractScene* GameMain::Update()
 				}
 			}
 		}
+	}
 
-		/* ステージと雷の当たり判定 */
-		if (hit.ThunderAndStageUnder(thunder, stage) == TRUE) {
-			thunder.ChangeAngle();
-		}
 
-		if (hit.ThunderAndStageTop(thunder, stage) == TRUE) {
-			thunder.ChangeAngle();
-		}
-
-		if (hit.ThunderAndStageRight(thunder, stage) == TRUE) {
-			thunder.ChangeAngle();
-		}
-
-		if (hit.ThunderAndStageLeft(thunder, stage) == TRUE) {
-			thunder.ChangeAngle();
+		//プレイヤーと雷
+		if (hit.PlayerAndThunder(player, thunder) == TRUE) {
+			player.SetPlayerDeathFlg(TRUE);
+			player.SetPlayerDeathFState(1);
 		}
 
 		/* 魚とプレイヤーの当たり判定 */
@@ -181,23 +179,31 @@ AbstractScene* GameMain::Update()
 		//	}
 		//}
 
-			//次のステージの敵生成
-		if (Enemy::EdeadCount > Stage::EnemyMax[Stage::Snum]) {
+	if (ClearFlg == TRUE) {
+		//countで少しまってから
+		if (++count > 100) {
+			ClearFlg = FALSE;
+			count = 0;
+			enemy[Elast] = nullptr;
+			Enemy::EdeadCount = -1;
 			Stage::Snum += 1;
-			Enemy::EdeadCount = 0;
+			player.InitPlayer();  //プレイヤーの初期化
+
+			//ステージを最後までクリアしたらタイトルに戻る
+			if (Stage::Snum > 4) {
+				Stage::Snum = 0;
+				return new TitleScene;
+			}
+			//次のステージの敵生成
 			if (OldSnum != Stage::Snum) {
-				for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++)
-				{
+				for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 					enemy[i] = new Enemy(i, i);
 				}
 			}
 		}
-
 	}
-
 	return this;
 }
-
 
 void GameMain::Draw() const
 {
@@ -212,6 +218,7 @@ void GameMain::Draw() const
 		DrawFormatString(0, 0, 0xffffff, "ゲームメイン"); 
 	}
 	
+
 	player.PlayerDraw();
 
 	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
@@ -228,8 +235,9 @@ void GameMain::Draw() const
 	UI.DrawUI();
 	hit.DrawHitBox();
 	//enemy.EnemyDraw();
-	fish.FishDraw(player);
+	//fish.FishDraw(player);
 	thunder.ThunderDraw();
 	bubble.BabbleDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
+	//DrawBox(200, 99, 242, 117, 0xff0000, TRUE);
 }

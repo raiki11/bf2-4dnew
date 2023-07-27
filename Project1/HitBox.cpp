@@ -31,9 +31,9 @@ int HitBox::PlayerAndStageUnder(Player p, Stage s)
 	px1 = p.GetPlayerLocationX() + 10;
 	py1 = p.GetPlayerLocationY() + 32;		//óví≤êÆ
 
-	for (int i = 0; i < 6; i += 2) {
-		if (s.GetStageXY(0, i, 0) <= px1 && s.GetStageXY(0, i + 1, 0) >= px0 &&
-			s.GetStageXY(0, i, 1) <= py1 && s.GetStageXY(0, i + 1, 1) >= py0) {
+	for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
+		if (s.GetStageXY(Stage::Snum, i, 0) <= px1 && s.GetStageXY(Stage::Snum, i + 1, 0) >= px0 &&
+			s.GetStageXY(Stage::Snum, i, 1) <= py1 && s.GetStageXY(Stage::Snum, i + 1, 1) >= py0) {
 
 			return TRUE;
 		}
@@ -48,9 +48,9 @@ int HitBox::PlayerAndStageTop(Player p, Stage s)
 	px1 = p.GetPlayerLocationX() + 22;
 	py1 = p.GetPlayerLocationY() - 22;
 
-	for (int i = 0; i < 6; i += 2) {
-		if (s.GetStageXY(0, i, 0) <= px1 && s.GetStageXY(0, i + 1, 0) >= px0 &&
-			s.GetStageXY(0, i, 1) <= py1 && s.GetStageXY(0, i + 1, 1) >= py0) {
+	for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
+		if (s.GetStageXY(Stage::Snum, i, 0) <= px1 && s.GetStageXY(Stage::Snum, i + 1, 0) >= px0 &&
+			s.GetStageXY(Stage::Snum, i, 1) <= py1 && s.GetStageXY(Stage::Snum, i + 1, 1) >= py0) {
 
 			return TRUE;
 		}
@@ -67,9 +67,9 @@ int HitBox::PlayerAndStageRight(Player p, Stage s)
 	py1 = p.GetPlayerLocationY() + 30;
 
 	if (p.GetPlayerMoveX() > 0) {
-		for (int i = 0; i < 6; i += 2) {
-			if (s.GetStageXY(0, i, 0) <= px1 && s.GetStageXY(0, i + 1, 0) >= px0 &&
-				s.GetStageXY(0, i, 1) <= py1 && s.GetStageXY(0, i + 1, 1) >= py0) {
+		for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
+			if (s.GetStageXY(Stage::Snum, i, 0) <= px1 && s.GetStageXY(Stage::Snum, i + 1, 0) >= px0 &&
+				s.GetStageXY(Stage::Snum, i, 1) <= py1 && s.GetStageXY(Stage::Snum, i + 1, 1) >= py0) {
 
 				return TRUE;
 			}
@@ -87,9 +87,9 @@ int HitBox::PlayerAndStageLeft(Player p, Stage s)
 	py1 = p.GetPlayerLocationY() + 30;
 
 	if (p.GetPlayerMoveX() < 0) {
-		for (int i = 0; i < 6; i += 2) {
-			if (s.GetStageXY(0, i, 0) <= px1 && s.GetStageXY(0, i + 1, 0) >= px0 &&
-				s.GetStageXY(0, i, 1) <= py1 && s.GetStageXY(0, i + 1, 1) >= py0) {
+		for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
+			if (s.GetStageXY(Stage::Snum, i, 0) <= px1 && s.GetStageXY(Stage::Snum, i + 1, 0) >= px0 &&
+				s.GetStageXY(Stage::Snum, i, 1) <= py1 && s.GetStageXY(Stage::Snum, i + 1, 1) >= py0) {
 
 				return TRUE;
 			}
@@ -106,9 +106,9 @@ int HitBox::EnemyAndStageUnder(Enemy e, Stage s)
 	ex1 = e.GetEnemyLocationX() + 15;
 	ey1 = e.GetEnemyLocationY() + 32;		//óví≤êÆ
 
-	for (int i = 0; i < 6; i += 2) {
-		if (s.GetStageXY(0, i, 0) <= ex1 && s.GetStageXY(0, i + 1, 0) >= ex0 &&
-			s.GetStageXY(0, i, 1) <= ey1 && s.GetStageXY(0, i + 1, 1) >= ey0) {
+	for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
+		if (s.GetStageXY(Stage::Snum, i, 0) <= ex1 && s.GetStageXY(Stage::Snum, i + 1, 0) >= ex0 &&
+			s.GetStageXY(Stage::Snum, i, 1) <= ey1 && s.GetStageXY(Stage::Snum, i + 1, 1) >= ey0) {
 
 			return TRUE;
 		}
@@ -123,9 +123,9 @@ int HitBox::EnemyAndStageTop(Enemy e, Stage s)
 	ex1 = e.GetEnemyLocationX() + 25;
 	ey1 = e.GetEnemyLocationY() - 22;
 
-	for (int i = 0; i < 6; i += 2) {
-		if (s.GetStageXY(0, i, 0) <= ex1 && s.GetStageXY(0, i + 1, 0) >= ex0 &&
-			s.GetStageXY(0, i, 1) <= ey1 && s.GetStageXY(0, i + 1, 1) >= ey0) {
+	for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
+		if (s.GetStageXY(Stage::Snum, i, 0) <= ex1 && s.GetStageXY(Stage::Snum, i + 1, 0) >= ex0 &&
+			s.GetStageXY(Stage::Snum, i, 1) <= ey1 && s.GetStageXY(Stage::Snum, i + 1, 1) >= ey0) {
 
 			return TRUE;
 		}
@@ -142,9 +142,9 @@ int HitBox::EnemyAndStageRight(Enemy e, Stage s)
 	ey1 = e.GetEnemyLocationY() + 25;
 
 	if (e.GetEnemyMoveX() > 0) {
-		for (int i = 0; i < 6; i += 2) {
-			if (s.GetStageXY(0, i, 0) <= ex1 && s.GetStageXY(0, i + 1, 0) >= ex0 &&
-				s.GetStageXY(0, i, 1) <= ey1 && s.GetStageXY(0, i + 1, 1) >= ey0) {
+		for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
+			if (s.GetStageXY(Stage::Snum, i, 0) <= ex1 && s.GetStageXY(Stage::Snum, i + 1, 0) >= ex0 &&
+				s.GetStageXY(Stage::Snum, i, 1) <= ey1 && s.GetStageXY(Stage::Snum, i + 1, 1) >= ey0) {
 
 				return TRUE;
 			}
@@ -162,9 +162,9 @@ int HitBox::EnemyAndStageLeft(Enemy e, Stage s)
 	ey1 = e.GetEnemyLocationY() + 25;
 
 	if (e.GetEnemyMoveX() < 0) {
-		for (int i = 0; i < 6; i += 2) {
-			if (s.GetStageXY(0, i, 0) <= ex1 && s.GetStageXY(0, i + 1, 0) >= ex0 &&
-				s.GetStageXY(0, i, 1) <= ey1 && s.GetStageXY(0, i + 1, 1) >= ey0) {
+		for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
+			if (s.GetStageXY(Stage::Snum, i, 0) <= ex1 && s.GetStageXY(Stage::Snum, i + 1, 0) >= ex0 &&
+				s.GetStageXY(Stage::Snum, i, 1) <= ey1 && s.GetStageXY(Stage::Snum, i + 1, 1) >= ey0) {
 
 				return TRUE;
 			}
@@ -246,6 +246,28 @@ int HitBox::ThunderAndStageLeft(Thunder th, Stage s)
 	}
 
 	return FALSE;
+}
+
+int HitBox::PlayerAndThunder(Player p, Thunder t)
+{
+	px0 = p.GetPlayerLocationX() - 20;
+	py0 = p.GetPlayerLocationY() - 20;
+	px1 = p.GetPlayerLocationX() + 20;
+	py1 = p.GetPlayerLocationY() + 20;
+
+	tx0 = t.GetThunderX() - 10;
+	ty0 = t.GetThunderY() - 10;
+	tx1 = t.GetThunderX() + 10;
+	ty1 = t.GetThunderY() + 10;
+
+	if (tx0 <= px1 && tx1 >= px0 &&
+		ty0 <= py1 && ty1 >= py0) {
+
+		return TRUE;
+	}
+
+
+	return 0;
 }
 
 int HitBox::FishAndPlayer(Fish f, Player p)

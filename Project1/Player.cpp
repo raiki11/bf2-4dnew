@@ -28,7 +28,7 @@ Player::Player()
 	playerNoInputFlg = TRUE;
 
 	LoadDivGraph("images/Player/Player_Animation.png", 32, 8, 4, 64, 64, playerImg);
-	LoadDivGraph("images/Stage/Stage_SplashAnimation.png", 3, 3, 1, 64, 32, splashImg);
+	LoadDivGraph("images/Stage/Stage_SplashAnimation.png", 4, 4, 1, 64, 32, splashImg);
 	playerImgNum = 0;
 	playerImgReturnFlg = TRUE;
 	playerImgFpsCnt = 0;
@@ -43,6 +43,8 @@ Player::Player()
 	St_Sea = LoadGraph("images/Stage/Stage_Sea01.png");
 
 	splashNum = 99;
+
+	playerDeathState = -1;
 }
 
 Player::~Player()
@@ -52,18 +54,53 @@ Player::~Player()
 void Player::PlayerUpdate()
 {
 	if (deathFlg == TRUE) {
-		
-		if (PlayerThunderDeathAnim() == TRUE) {
-			deathFlg = FALSE;
-			playerImgNum = 0;
-			playerLocationX = 100;
-			playerLocationY = 387;
-			playerMoveX = 0;
-			playerMoveY = 0.0f;
-			remainBalloon = 2;
-			splashNum = 99;
-			playerLife--;
-			playerNoInputFlg = TRUE;
+		switch (playerDeathState)
+		{
+		case 0:
+			if (PlayerDeathAnim() == TRUE) {
+				deathFlg = FALSE;
+				playerImgNum = 0;
+				playerLocationX = 100;
+				playerLocationY = 387;
+				playerMoveX = 0;
+				playerMoveY = 0.0f;
+				remainBalloon = 2;
+				splashNum = 99;
+				playerLife--;
+				playerNoInputFlg = TRUE;
+				playerDeathState = -1;
+			}
+			break;
+		case 1:
+			if (PlayerThunderDeathAnim() == TRUE) {
+				deathFlg = FALSE;
+				playerImgNum = 0;
+				playerLocationX = 100;
+				playerLocationY = 387;
+				playerMoveX = 0;
+				playerMoveY = 0.0f;
+				remainBalloon = 2;
+				splashNum = 99;
+				playerLife--;
+				playerNoInputFlg = TRUE;
+				playerDeathState = -1;
+			}
+			break;
+		case 2:
+			if (PlayerSplashAnim() == TRUE) {
+				deathFlg = FALSE;
+				playerImgNum = 0;
+				playerLocationX = 100;
+				playerLocationY = 387;
+				playerMoveX = 0;
+				playerMoveY = 0.0f;
+				remainBalloon = 2;
+				splashNum = 99;
+				playerLife--;
+				playerNoInputFlg = TRUE;
+				playerDeathState = -1;
+			}
+			break;
 		}
 	}
 	else {
@@ -115,7 +152,12 @@ void Player::PlayerUpdate()
 		SetRemainBalloon();
 		SetFallLimit();
 
-		if (remainBalloon == 0 || playerLocationY > 470) {
+		if (remainBalloon == 0 ) {
+			playerDeathState = 0;
+			deathFlg = TRUE;
+		}
+		if (playerLocationY > 470) {
+			playerDeathState = 2;
 			deathFlg = TRUE;
 		}
 	}
@@ -131,7 +173,7 @@ void Player::PlayerDraw() const
 	//DrawGraph(160, 442, St_Sea, TRUE);
 
 	DrawFormatString(0, 40, 0xffffff, "count::%d", count);
-	DrawFormatString(0, 55, 0xffffff, "flyButtonFlg::%d", flyButtonFlg);
+	DrawFormatString(0, 55, 0xffffff, "splashsnum::%d", splashNum);
 	DrawFormatString(0, 70, 0xffffff, "moveFpsCountY::%d", moveFpsCountY);
 	DrawFormatString(0, 85, 0xffffff, "playerMoveX::%f", playerMoveX);
 	/*DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", playerLocationY);*/
@@ -789,7 +831,7 @@ int Player::PlayerDeathAnim()
 	
 	playerLocationY += playerMoveY;
 
-	if (playerLocationY > 500) {
+	if (playerLocationY > 450) {
 		if (PlayerSplashAnim() == TRUE) {
 			return TRUE;
 		}
@@ -864,7 +906,7 @@ int Player::PlayerSplashAnim()
 	if (splashNum == 99) {
 		splashNum = 0;
 	}
-	if (playerImgFpsCnt % 5 == 0) {
+	if (++playerImgFpsCnt % 5 == 0) {
 		if (splashNum++ > 3) {
 			return TRUE;
 		}
@@ -907,4 +949,19 @@ int Player::AnyButtons()
 		return 1;
 	}
 	return 0;
+}
+
+void Player::InitPlayer()
+{
+	playerImgNum = 0;
+	playerLocationX = 100;
+	playerLocationY = 387;
+	playerMoveX = 0;
+	playerMoveY = 0.0f;
+
+	flyingFlg = 1;
+	takeOffFlg = FALSE;
+	flapFlg = FALSE;
+	flapInterval = 3;
+	playerNoInputFlg = TRUE;
 }
