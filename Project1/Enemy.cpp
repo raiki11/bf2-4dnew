@@ -11,6 +11,7 @@ int Enemy::DeadFlg = FALSE;
 int Enemy::EdeadCount = -1;
 int Enemy::ElastFlg = FALSE;
 int Enemy::Score =999990;
+int Enemy::Eflg = FALSE;
 Enemy::Enemy(int set_X,int set_Y)
 {
 	//ELocationX = 320;
@@ -65,7 +66,7 @@ Enemy::Enemy(int set_X,int set_Y)
 	LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, G_img); // 画像の分割読み込み
 	LoadDivGraph("images/Stage/Stage_SplashAnimation.png", 3, 3, 1, 64, 32, EspAnim);
 	
-	Eflg = FALSE;
+	//Eflg = FALSE;
 	point = 0;
 	Eflgcnt = 0;
 	Escore1 = LoadGraph("images/Score/GetScore_500.png");
@@ -205,16 +206,61 @@ void Enemy::EnemyDraw() const
 	//}
 	
 	// 敵を倒した時のポイント表示
-	if (c <= 1) {
+		if (c <= 1) {
 
-		if (Eflgcnt <= 100) {
-			if (Eflg == TRUE) {
-				DrawGraph(ELocationX - 15, ELocationY - 30, Escore1, TRUE);
+			if (Eflgcnt <= 100) {
+				if (Eflg == TRUE) {
+					switch (enemy.type)
+					{
+					case 0:
+						//地面に立ってる時
+						if (Estate == 0) {
+							DrawGraph(ELocationX - 15, ELocationY - 30, Escore2, TRUE);
+						}
+						//風船割る
+						else if (Estate == 1) {
+							DrawGraph(ELocationX - 15, ELocationY - 30, Escore1, TRUE);
+						}
+						//パラシュート状態の時
+						else if (Estate == 2) {
+							DrawGraph(ELocationX - 15, ELocationY - 30, Escore3, TRUE);
+						}
+						break;
+					case 1:
+						//地面に立ってる時
+						if (Estate == 0) {
+							DrawGraph(ELocationX - 15, ELocationY - 30, Escore3, TRUE);
+						}
+						//風船割る
+						else if (Estate == 1) {
+							DrawGraph(ELocationX - 15, ELocationY - 30, Escore2, TRUE);
+						}
+						//パラシュート状態の時
+						else if (Estate == 2) {
+							DrawGraph(ELocationX - 15, ELocationY - 30, Escore4, TRUE);
+
+						}
+						break;
+					case 2:
+						//地面に立ってる時
+						if (Estate == 0) {
+							DrawGraph(ELocationX - 15, ELocationY - 30, Escore4, TRUE);
+						}
+						//風船割る
+						else if (Estate == 1) {
+							DrawGraph(ELocationX - 15, ELocationY - 30, Escore3, TRUE);
+						}
+						//パラシュート状態の時
+						else if (Estate == 2) {
+							DrawGraph(ELocationX - 15, ELocationY - 30, Escore5, TRUE);
+						}
+						break;
+					}
+				
+				}
 			}
 		}
-		
-	}
-
+	
 	if(spflg == true)DrawGraph(ELocationX - 30, 415, EspAnim[spc], TRUE);
 
 
@@ -507,6 +553,7 @@ void Enemy::DebagHit(Player P) {
 
 int Enemy::EScore()
 {
+	//Eflg = TRUE;
 	switch (enemy.type)
 	{
 	case 0:

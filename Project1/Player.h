@@ -126,5 +126,6 @@ public:
 	void SetRemainBalloon();
 	int AnyButtons();
 	void InitPlayer();
+
 };
 

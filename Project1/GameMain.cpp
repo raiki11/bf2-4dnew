@@ -2,8 +2,9 @@
 #include"DxLib.h"
 #include"PadInput.h"
 #include "Stage.h"
-
+#include "Player.h"
 #include "UI.h"
+#include "End.h"
 
 Enemy* enemy[6];
 
@@ -37,7 +38,7 @@ AbstractScene* GameMain::Update()
 	//ポーズ中でないとき
 	if (PauseFlg == FALSE) {
 		if (ClearFlg == FALSE) {
-			// PHASE点滅カウント
+			// PHASE点滅カウント			
 			UI.Update(player.GetPlayerLife());
 			// ゲームメイン処理
 			player.PlayerUpdate();
@@ -162,6 +163,7 @@ AbstractScene* GameMain::Update()
 				if (player.GetPlayerImgNum() >= 0 && player.GetPlayerImgNum() <= 26) {
 					if (enemy[i]->GetI() >= 8 && enemy[i]->GetI() <= 12) {
 						if (hit.PlayerAndEnemy(player, *enemy[i]) == TRUE) {
+							Enemy::Eflg = TRUE;
 							player.SetReboundFlgStageX(TRUE);
 							enemy[i]->ESetReboundFlgStageX(TRUE);
 						}
@@ -228,6 +230,10 @@ AbstractScene* GameMain::Update()
 				Stage::Snum = 0;
 				return new TitleScene;
 			}
+			// End
+		/*	if (player.GetPlayerLife()==-1) {
+				return new End;
+			}*/
 			//次のステージの敵生成
 			if (OldSnum != Stage::Snum) {
 				for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
