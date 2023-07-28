@@ -6,6 +6,9 @@
 End::End()
 {
     image = LoadGraph("images/UI/UI_GameOver.png");
+	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+		enemy[i] = new Enemy(i, i);
+	}
 }
 
 End::~End()
@@ -14,6 +17,7 @@ End::~End()
 
 AbstractScene* End::Update()
 {
+
     return this;
 }
 
@@ -27,6 +31,8 @@ void End::Draw() const
 	UI.DrawUI();
 
 	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
-		enemy[i]->EnemyDraw();
+		if (enemy[i] != nullptr) {
+			enemy[i]->EnemyDraw();
+		}
 	}
 }

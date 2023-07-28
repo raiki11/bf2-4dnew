@@ -2,7 +2,7 @@
 #include"DxLib.h"
 #include"PadInput.h"
 #include "Stage.h"
-
+#include "End.h"
 #include "UI.h"
 
 Enemy* enemy[6];
@@ -237,13 +237,19 @@ AbstractScene* GameMain::Update()
 		}
 	}
 
+	tst=player.GetPlayerLife();
+	if (tst <= -1) {
 
+		return new End;
+	}
 	return this;
 }
 
 void GameMain::Draw() const
 {
-	//DrawFormatString(200, 300, 0xffffff, "Snum%d", Stage::Snum);
+	DrawFormatString(200, 300, 0xffffff, "life%d",tst);
+
+	
 
 	if (PauseFlg == TRUE) {
 		DrawFormatString(0, 0, 0xffffff, "Pause");
