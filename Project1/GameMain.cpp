@@ -202,6 +202,10 @@ AbstractScene* GameMain::Update()
 				player.SetPlayerDeathFState(1);
 			}
 		}
+
+		if (hit.ThunderAndStageUnder(thunder, stage) == TRUE) {
+			thunder.ChangeAngle();
+		}
 	}
 	//次のステージの敵生成
 	//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
