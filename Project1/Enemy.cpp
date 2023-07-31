@@ -11,6 +11,7 @@ int Enemy::DeadFlg = FALSE;
 int Enemy::EdeadCount = -1;
 int Enemy::ElastFlg = FALSE;
 int Enemy::Score = 0;
+bool Enemy::FishFlg = false;
 Enemy::Enemy(int set_X,int set_Y)
 {
 	//ELocationX = 320;
@@ -431,6 +432,7 @@ void Enemy::EDeadAnim() {
 			break;
 		case 2:
 			spflg = true;
+			FishFlg = true;
 			//DeadFlg = TRUE;
 			break;
 		default:

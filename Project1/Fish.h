@@ -8,6 +8,10 @@ private:
 	int Time;
 	int fpscount;
 	int i;
+	int Fishmove;
+	int Fy;
+	int Fimg;
+	int count;
 public:
 
 	// コンストラクタ
@@ -28,6 +32,9 @@ public:
 	void FishUpAnimation(); // サカナの上がるアニメーション
 	void FishDownAnimation(); // サカナの下がるアニメーション
 	void FishHitAnimation(); // サカナに当たった時のアニメーション
+
+	void EdeadFish();		//くち動かしてさがる
+	void EdeadFishAnim()const;	//やられたエネミー回収
 
 	int sakana;       // 確率結果を入れる変数
 	int FishImg[10];   // 画像を入れる配列 

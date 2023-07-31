@@ -1,6 +1,7 @@
 #include<time.h>
 #include "Fish.h"
 #include"DxLib.h"
+#include "Enemy.h"
 
 #define FishAreaX0    160
 #define FishAreaX1    480
@@ -12,6 +13,10 @@ Fish::Fish()
 	Time = 0;
 	fpscount = 0;
 	i = 0;
+	Fishmove=0;
+	Fy = 0;
+	Fimg = 1;
+	count = 0;
 }
 
 Fish::~Fish()
@@ -70,6 +75,9 @@ void Fish::FishUpdate(Player p , Enemy e[])
 		fpscount = 180;
 	}
 	
+	if (Enemy::FishFlg == true) {
+		EdeadFish();
+	}
 
 	/* 敵がサカナの稼働エリアに入った時 */
 	//if (FishAreaX0 <= e.GetEnemyLocationX() <= FishAreaX1 && FishAreaY <= e.GetEnemyLocationY() && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
@@ -182,4 +190,36 @@ bool Fish::Orientation() {
 		return TRUE;
 	}
 	else return FALSE;
+}
+
+void Fish::EdeadFish() {
+	//3まで再生
+//上に出てくる動きと、口を動かす動き、下に下がる動き
+//iが動き
+	switch (Fishmove) {
+	case 0:
+		count++;
+		Fy--;
+		if (count >= 10) {
+			count = 0;
+			Fishmove+=1;
+		}
+		break;
+		case 1:
+			count++;
+			Fy++;
+			if (count >= 10) {
+				Fishmove +=1;
+				count = 0;
+			}
+			break;
+		default:
+			break;
+	}
+}
+
+void Fish::EdeadFishAnim()const{
+
+	DrawRotaGraph(300, 420 + Fy, 1.0f, 0, FishImg[Fimg], TRUE, FishOrientation);
+
 }

@@ -70,6 +70,7 @@ public:
 	static int DeadFlg;		//死亡フラグ
 	static int EdeadCount;//エネミーがやられた数のカウント
 	static int ElastFlg;	//最後の一匹か確認するフラグ
+	static bool FishFlg;	//サカナが出てくるか
 
 	void EnemyUpdate(Player P,int& j);
 	void EnemyDraw() const;

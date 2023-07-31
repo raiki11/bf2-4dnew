@@ -237,6 +237,8 @@ AbstractScene* GameMain::Update()
 		}
 	}
 
+	
+
 	tst=player.GetPlayerLife();
 	if (tst <= -1) {
 
@@ -278,6 +280,7 @@ void GameMain::Draw() const
 	hit.DrawHitBox();
 	//enemy.EnemyDraw();
 	//fish.FishDraw(player);
+	fish.EdeadFishAnim();
 	thunder.ThunderDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 
