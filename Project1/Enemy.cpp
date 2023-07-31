@@ -11,7 +11,7 @@ int Enemy::DeadFlg = FALSE;
 int Enemy::EdeadCount = -1;
 int Enemy::ElastFlg = FALSE;
 int Enemy::Score =999990;
-int Enemy::Eflg = FALSE;
+//int Enemy::Eflg = FALSE;
 Enemy::Enemy(int set_X,int set_Y)
 {
 	//ELocationX = 320;
@@ -36,6 +36,7 @@ Enemy::Enemy(int set_X,int set_Y)
 	once = false;
 	spc = 0;
 	spflg = false;
+	Eflg = FALSE;
 
 	f = FALSE;
 	
@@ -74,6 +75,7 @@ Enemy::Enemy(int set_X,int set_Y)
 	Escore3 = LoadGraph("images/Score/GetScore_1000.png");
 	Escore4 = LoadGraph("images/Score/GetScore_1500.png");
 	Escore5 = LoadGraph("images/Score/GetScore_2000.png");
+	c = 0;
 };
 
 
@@ -136,6 +138,7 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	}
 	if (c > 1) {
 		Eflg = FALSE;
+		c = 0;
 	}
 	
 }
@@ -265,7 +268,7 @@ void Enemy::EnemyDraw() const
 
 
 	//DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
-	DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
+	//DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
 }
 
 void Enemy::EnemyMoveX(Player P)
@@ -560,28 +563,34 @@ int Enemy::EScore()
 		//地面に立ってる時
 		if (Estate == 0) {
 			Score += 750;
+			Eflg = TRUE;
 		}
 		//風船割る
 		else if (Estate == 1) {
 			Score += 500;
+			Eflg = TRUE;
 		}
 		//パラシュート状態の時
 		else if (Estate == 2) {
 			Score += 1000;
+			Eflg = TRUE;
 		}
 		break;
 	case 1:
 		//地面に立ってる時
 		if (Estate == 0) {
 			Score += 1000;
+			Eflg = TRUE;
 		}
 		//風船割る
 		else if (Estate == 1) {
 			Score += 750;
+			Eflg = TRUE;
 		}
 		//パラシュート状態の時
 		else if (Estate == 2) {
 			Score += 1500;
+			Eflg = TRUE;
 
 		}
 		break;
@@ -589,14 +598,17 @@ int Enemy::EScore()
 		//地面に立ってる時
 		if (Estate == 0) {
 			Score += 1500;
+			Eflg = TRUE;
 		}
 		//風船割る
 		else if (Estate == 1) {
 			Score += 1000;
+			Eflg = TRUE;
 		}
 		//パラシュート状態の時
 		else if (Estate == 2) {
 			Score += 2000;
+			Eflg = TRUE;
 		}
 		break;
 	}

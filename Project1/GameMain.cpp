@@ -56,6 +56,7 @@ AbstractScene* GameMain::Update()
 						Enemy::EdeadCount = -1;
 						Elast = i;
 						Enemy::DeadFlg = FALSE;
+						
 						//enemy[i] = nullptr;
 					}
 
@@ -63,6 +64,7 @@ AbstractScene* GameMain::Update()
 				if (Enemy::DeadFlg == TRUE) {
 					enemy[i] = nullptr;
 					Enemy::DeadFlg = FALSE;
+					
 				}
 
 
@@ -163,9 +165,9 @@ AbstractScene* GameMain::Update()
 				if (player.GetPlayerImgNum() >= 0 && player.GetPlayerImgNum() <= 26) {
 					if (enemy[i]->GetI() >= 8 && enemy[i]->GetI() <= 12) {
 						if (hit.PlayerAndEnemy(player, *enemy[i]) == TRUE) {
-							Enemy::Eflg = TRUE;
 							player.SetReboundFlgStageX(TRUE);
 							enemy[i]->ESetReboundFlgStageX(TRUE);
+						
 						}
 
 						if (player.GetRemainBalloon() > 0) {
@@ -186,6 +188,7 @@ AbstractScene* GameMain::Update()
 
 						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE) {
 							//player.SubtractRemainBalloon();
+							
 							player.SetReboundFlgStageX(TRUE);
 							//player.SetReboundFlgStageY(TRUE);
 							player.SetPlayerMoveY();
@@ -281,7 +284,7 @@ void GameMain::Draw() const
 	thunder.ThunderDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 
-
+	//DrawFormatString(300,0, 0xffffff, "%d", Enemy::Eflg);
 	//DrawBox(200, 99, 242, 117, 0xff0000, TRUE);
 }
 

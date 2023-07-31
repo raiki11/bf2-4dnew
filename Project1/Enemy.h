@@ -117,7 +117,7 @@ public:
 	static  int GetScore() { return Score; }
 
 	int EScore();
-  static  int  Eflg;
+  int  Eflg;
 	 int c;
 	 bool once;
 	 void ECheckY();
