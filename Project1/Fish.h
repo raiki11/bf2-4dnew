@@ -37,6 +37,8 @@ public:
 	float FishLocationX() { return FishX; }
 	float FishLocationY() { return FishY; }
 
+	int FishAnimation() { return i; }
+
 	float FishX = 320;  // サカナのX座標
 	float FishY = 420;  // サカナのY座標
 

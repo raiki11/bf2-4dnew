@@ -217,11 +217,14 @@ AbstractScene* GameMain::Update()
 
 		/* ãõÇ∆ÉvÉåÉCÉÑÅ[ÇÃìñÇΩÇËîªíË */
 
-		if (fish.FishProbability() == TRUE && fish.PFlg == 1) {
-			if (hit.FishAndPlayer(fish, player) == TRUE) {
+		if (fish.FishProbability() == TRUE /*&& fish.PFlg == 1*/) {
+			if (hit.FishAndPlayer(fish, player) == TRUE && fish.FishAnimation() == 1) {
 				fish.FishPlayerHitAnimation(player);
 				/*player.SetPlayerDeathFlg(TRUE);
 				player.SetPlayerDeathFState(1);*/
+				fish.PFlg = 3;
+			}
+			if (hit.FishAndPlayer(fish,player) == TRUE && fish.FishAnimation() != 1) {
 				fish.FishDownAnimation();
 			}
 		}

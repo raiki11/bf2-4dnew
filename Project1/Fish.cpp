@@ -52,7 +52,7 @@ void Fish::FishUpdate(Player p , Enemy e[])
 			FishPlayerHitAnimation(p);
 			
 		}*/
-		if (i == 2) {
+		if (i == 2 || i == 6) {
 			PFlg = 3;
 		}
 	}
@@ -152,7 +152,9 @@ void Fish::FishDownAnimation()
 {
 	
 	++Time;
-
+	if (i == 6) {
+		if (Time % 30 == 0) i = 2;
+	}
 	if (i < 5 && Time % 30 == 0) { // —v’²®
 		++i;
 	}
@@ -161,7 +163,7 @@ void Fish::FishDownAnimation()
 void Fish::FishPlayerHitAnimation(Player p)
 {
 	++Time;
-	if(Time<=60)
+	if(Time <=60)
 	i = 6;
 }
 
