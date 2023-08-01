@@ -11,7 +11,7 @@ Fish::Fish()
 	LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 11, 5, 2, 64, 64, FishImg);
 	Time = 0;
 	fpscount = 0;
-	i = 0;
+	j = 0;
 	FishFlg = 0;
 	PFlg = 0;
 	EFlg = 0;
@@ -52,7 +52,7 @@ void Fish::FishUpdate(Player p , Enemy e[])
 			FishPlayerHitAnimation(p);
 			
 		}*/
-		if (i == 2 || i == 6) {
+		if (j == 2 || j == 6) {
 			PFlg = 3;
 		}
 	}
@@ -61,8 +61,8 @@ void Fish::FishUpdate(Player p , Enemy e[])
 		//FishY += 2;             // フィッシュを下に下げる
 		/* アニメーション処理 */
 		FishDownAnimation();
-		if (i == 5) {
-			i = 10;
+		if (j == 5) {
+			j = 10;
 			PFlg = 4;
 			FishFlg = 0;     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
 			/*fpscount = 0;*/
@@ -71,7 +71,7 @@ void Fish::FishUpdate(Player p , Enemy e[])
 	}
 	
 	/* プレイヤーがサカナエリアに居続ける時の処理 */
-	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() && FishFlg == 0 && i == 10 && PFlg==4) {
+	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() && FishFlg == 0 && j == 10 && PFlg==4) {
 		fpscount = 180;
 	}
 	
@@ -115,7 +115,7 @@ void Fish::FishUpdate(Player p , Enemy e[])
 
 void Fish:: FishDraw(Player p) const
 {
-	DrawRotaGraph(FishX, FishY, 1.0f, 0, FishImg[i], TRUE, FishOrientation);
+	DrawRotaGraph(FishX, FishY, 1.0f, 0, FishImg[j], TRUE, FishOrientation);
 
 	/* デバック用 */
 	DrawFormatString(400, 200, 0xffffff, "playerLocationX::%f", p.GetPlayerLocationX());
@@ -141,10 +141,10 @@ int Fish::FishProbability()
 void Fish::FishUpAnimation()
 {
 	Time;
-	if (i == 10) i = 0;   // サカナが出てないときiをリセットする
+	if (j == 10) j = 0;   // サカナが出てないときiをリセットする
 
-	if (i < 2 && ++Time % 30 == 0) { // 要調整
-		i++;
+	if (j < 2 && ++Time % 30 == 0) { // 要調整
+	j++;
 	}
 }
 
@@ -152,11 +152,11 @@ void Fish::FishDownAnimation()
 {
 	
 	++Time;
-	if (i == 6) {
-		if (Time % 30 == 0) i = 2;
+	if (j == 6) {
+		if (Time % 30 == 0) j = 2;
 	}
-	if (i < 5 && Time % 30 == 0) { // 要調整
-		++i;
+	if (j < 5 && Time % 30 == 0) { // 要調整
+		++j;
 	}
 }
 
@@ -164,7 +164,7 @@ void Fish::FishPlayerHitAnimation(Player p)
 {
 	++Time;
 	if(Time <=60)
-	i = 6;
+	j = 6;
 }
 
 void Fish::FishEnemyHitAnimation(Enemy enemy[]) {

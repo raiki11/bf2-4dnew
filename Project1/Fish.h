@@ -7,7 +7,7 @@ class Fish {
 private:
 	int Time;
 	int fpscount;
-	int i;
+	int j;
 	
 	int FishFlg;  // 0:プレイヤーかエネミーが入ってない 1: サカナが上に上がる 2: サカナが下に下がる
 	
