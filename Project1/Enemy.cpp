@@ -2,10 +2,12 @@
 #include "Enemy.h"
 #include "Stage.h"
 #include "HitBox.h"
+#include "Fish.h"
 
 Enemy* hitenemy[6];
 HitBox hit;
 Stage stage;
+Fish fish;
 
 int Enemy::DeadFlg = FALSE;
 int Enemy::EdeadCount = -1;
@@ -214,7 +216,6 @@ void Enemy::EnemyDraw() const
 	}
 
 	if(spflg == true)DrawGraph(ELocationX - 30, 415, EspAnim[spc], TRUE);
-
 
 	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
 	DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
@@ -576,6 +577,7 @@ void Enemy::EsplashAnim()
 		spc = 0;
 		count = 0;
 		spflg = false;
+		FishFlg = false;
 		DeadFlg = TRUE;
 	}
 }

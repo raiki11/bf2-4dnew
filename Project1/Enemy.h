@@ -114,6 +114,8 @@ public:
 
 	static int GetScore() { return Score; }
 
+	static int GetFishflg() { return FishFlg; }
+
 	int EScore();
     int  Eflg;
 	 int c;

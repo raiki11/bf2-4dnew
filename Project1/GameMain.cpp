@@ -15,6 +15,7 @@ GameMain::GameMain()
 	a = 0;
 	count = 0;
 	OldSnum = Stage::Snum;
+	fishi = 0;
 
 	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 		enemy[i] = new Enemy(i, i);
@@ -47,6 +48,7 @@ AbstractScene* GameMain::Update()
 			for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 				if (enemy[i] != nullptr) {
 					enemy[i]->EnemyUpdate(player, i);
+					fishi = i;
 				}
 				//エネミーを倒したら
 				if (Enemy::EdeadCount == Stage::EnemyMax[Stage::Snum]) {
@@ -66,8 +68,11 @@ AbstractScene* GameMain::Update()
 
 
 			}
-
-			fish.FishUpdate(player, enemy[0]);
+			for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+				if (enemy[i] != nullptr) {
+					fish.FishUpdate(player, *enemy[i]);
+				}
+			}
 			thunder.ThunderUpdate();
 		}
 
@@ -269,18 +274,20 @@ void GameMain::Draw() const
 		//DrawFormatString(200, 300, 0xffffff, "EnemyMax%d", Stage::EnemyMax[Stage::Snum]);
 		if (enemy[i] != nullptr) {
 			enemy[i]->EnemyDraw();
+			if (Enemy::GetFishflg() == true)fish.EdeadFishAnim(*enemy[i]);
+
 		}
 		
 	}
 
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	
 	stage.DrawStage();
 	UI.DrawUI();
 	hit.DrawHitBox();
 	//enemy.EnemyDraw();
 	//fish.FishDraw(player);
-	fish.EdeadFishAnim();
 	thunder.ThunderDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 

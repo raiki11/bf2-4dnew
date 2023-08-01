@@ -10,6 +10,7 @@ private:
 	int i;
 	int Fishmove;
 	int Fy;
+	int Fx;
 	int Fimg;
 	int count;
 public:
@@ -20,7 +21,7 @@ public:
 	// デストラクタ
 	~Fish();
 
-	void FishUpdate(Player p, Enemy e[]);
+	void FishUpdate(Player p, Enemy e);
 
 	void FishDraw(Player p) const;
 
@@ -34,7 +35,7 @@ public:
 	void FishHitAnimation(); // サカナに当たった時のアニメーション
 
 	void EdeadFish();		//くち動かしてさがる
-	void EdeadFishAnim()const;	//やられたエネミー回収
+	void EdeadFishAnim(Enemy e)const;	//やられたエネミー回収
 
 	int sakana;       // 確率結果を入れる変数
 	int FishImg[10];   // 画像を入れる配列 
