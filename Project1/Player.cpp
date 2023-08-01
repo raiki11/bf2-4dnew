@@ -45,6 +45,8 @@ Player::Player()
 	splashNum = 99;
 
 	playerDeathState = -1;
+
+	noInputFps = 0;
 }
 
 Player::~Player()
@@ -53,6 +55,7 @@ Player::~Player()
 
 void Player::PlayerUpdate()
 {
+	noInputFps++;
 	if (deathFlg == TRUE) {
 		switch (playerDeathState)
 		{
@@ -70,6 +73,8 @@ void Player::PlayerUpdate()
 				playerNoInputFlg = TRUE;
 				playerDeathState = -1;
 				playerImgReturnFlg = TRUE;
+				playerImgFpsCnt = 0;
+				noInputFps = 0;
 			}
 			break;
 		case 1:
@@ -86,6 +91,9 @@ void Player::PlayerUpdate()
 				playerNoInputFlg = TRUE;
 				playerDeathState = -1;
 				playerImgReturnFlg = TRUE;
+				playerImgFpsCnt = 0;
+				noInputFps = 0;
+
 			}
 			break;
 		case 2:
@@ -102,6 +110,9 @@ void Player::PlayerUpdate()
 				playerNoInputFlg = TRUE;
 				playerDeathState = -1;
 				playerImgReturnFlg = TRUE;
+				playerImgFpsCnt = 0;
+				noInputFps = 0;
+
 			}
 			break;
 		}
@@ -145,10 +156,10 @@ void Player::PlayerUpdate()
 
 		/***à⁄ìÆêßå¿Å@Ç±Ç±Ç‹Ç≈***/
 
-		if (playerMoveY == 0 && playerMoveX == 0 && playerNoInputFlg == TRUE) {
+		if (playerMoveY == 0 && playerMoveX == 0 && playerNoInputFlg == TRUE && noInputFps < 600) {
 			PlayerNoInputAnim();
 		}
-		else if(AnyButtons() == TRUE) {
+		else if(AnyButtons() == TRUE || noInputFps >= 600) {
 			playerNoInputFlg = FALSE;
 		}
 
@@ -409,7 +420,7 @@ void Player::PlayerMoveX()
 		playerImgFpsCnt++;
 
 		//îÚÇ—óßÇø
-		if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
+		if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
 			
 			flyingFlg = TRUE;
 			flyButtonFlg = TRUE;
