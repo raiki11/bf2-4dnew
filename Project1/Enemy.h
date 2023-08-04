@@ -116,6 +116,9 @@ public:
 
 	static int GetFishflg() { return FishFlg; }
 
+	static int EgetFx;
+	int Fishprobability;
+	
 	int EScore();
     int  Eflg;
 	 int c;

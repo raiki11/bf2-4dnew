@@ -35,7 +35,7 @@ public:
 	void FishHitAnimation(); // サカナに当たった時のアニメーション
 
 	void EdeadFish();		//くち動かしてさがる
-	void EdeadFishAnim(Enemy e)const;	//やられたエネミー回収
+	void EdeadFishAnim()const;	//やられたエネミー回収
 
 	int sakana;       // 確率結果を入れる変数
 	int FishImg[10];   // 画像を入れる配列 

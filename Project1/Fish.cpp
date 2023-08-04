@@ -87,6 +87,8 @@ void Fish::FishUpdate(Player p , Enemy e)
 
 	}
 
+	Fx = e.GetEnemyLocationX();
+
 	/* 敵がサカナの稼働エリアに入った時 */
 	//if (FishAreaX0 <= e.GetEnemyLocationX() <= FishAreaX1 && FishAreaY <= e.GetEnemyLocationY() && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
 	//	if (EFlg == 0) {
@@ -201,9 +203,6 @@ bool Fish::Orientation() {
 }
 
 void Fish::EdeadFish() {
-	//3まで再生
-//上に出てくる動きと、口を動かす動き、下に下がる動き
-//iが動き
 	switch (Fishmove) {
 	case 0:
 		Fy--;
@@ -227,8 +226,8 @@ void Fish::EdeadFish() {
 	}
 }
 
-void Fish::EdeadFishAnim(Enemy e)const{
+void Fish::EdeadFishAnim()const{
 
-	DrawRotaGraph(e.GetEnemyLocationX(), Fy, 1.0f, 0, FishImg[Fimg], TRUE, FishOrientation);
+	DrawRotaGraph(Enemy::EgetFx, Fy, 1.0f, 0, FishImg[Fimg], TRUE, FishOrientation);
 
 }

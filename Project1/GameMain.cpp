@@ -274,12 +274,12 @@ void GameMain::Draw() const
 		//DrawFormatString(200, 300, 0xffffff, "EnemyMax%d", Stage::EnemyMax[Stage::Snum]);
 		if (enemy[i] != nullptr) {
 			enemy[i]->EnemyDraw();
-			if (Enemy::GetFishflg() == true)fish.EdeadFishAnim(*enemy[i]);
 
 		}
 		
 	}
 
+	if (Enemy::GetFishflg() == true)fish.EdeadFishAnim();
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	

@@ -3,6 +3,7 @@
 #include "Stage.h"
 #include "HitBox.h"
 #include "Fish.h"
+#include "math.h"
 
 Enemy* hitenemy[6];
 HitBox hit;
@@ -14,6 +15,7 @@ int Enemy::EdeadCount = -1;
 int Enemy::ElastFlg = FALSE;
 int Enemy::Score = 0;
 bool Enemy::FishFlg = false;
+int Enemy::EgetFx = 0;
 Enemy::Enemy(int set_X,int set_Y)
 {
 	//ELocationX = 320;
@@ -40,7 +42,7 @@ Enemy::Enemy(int set_X,int set_Y)
 	spflg = false;
 
 	f = FALSE;
-	
+	Fishprobability = 0;
 
 	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
 	switch (enemy.type)
@@ -86,6 +88,8 @@ Enemy::~Enemy()
 
 void Enemy::EnemyUpdate(Player P,int& j)
 {
+	Fishprobability = rand() % (30 + 1);
+
 	if (++fpscount >= 60)
 	{
 		EAnimation();
@@ -117,6 +121,8 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	//}
 
 	if (spflg == true) {
+		EgetFx = ELocationX;
+
 		EsplashAnim();
 	}
 
@@ -142,6 +148,10 @@ void Enemy::EnemyUpdate(Player P,int& j)
 
 void Enemy::EnemyDraw() const
 {
+
+	DrawFormatString(0, 400, 0xffffff, "Fish::%d", Fishprobability);
+
+
 	//DrawCircle(ELocationX, ELocationY, 4, 0x00ff00, TRUE);
 	/*DrawGraph(enemyLocationX, enemyLocationY, img[i], TRUE);*/
 
@@ -433,7 +443,11 @@ void Enemy::EDeadAnim() {
 			break;
 		case 2:
 			spflg = true;
-			FishFlg = true;
+			//30%
+			if (Fishprobability == 30) {
+
+				FishFlg = true;
+			}
 			//DeadFlg = TRUE;
 			break;
 		default:
