@@ -12,7 +12,7 @@ Fish::Fish()
 	LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 11, 5, 2, 64, 64, FishImg);
 	Time = 0;
 	fpscount = 0;
-	i = 0;
+	i = 10;
 	FishFlg = 0;
 	PFlg = 0;
 	EFlg = 0;
@@ -27,20 +27,14 @@ void Fish::FishUpdate(Player p , Enemy e[])
 {
 	/* プレイヤーがサカナの稼働エリアに入った時 */
 	if (FishAreaX0 <= p.GetPlayerLocationX() && p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() + 32 && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
-		if (PFlg == 0) {
-			PFlg = 1;
-		}
-		else {
-			PFlg = 0;
-		}
 		if (++fpscount >= 180) {  // ３秒以上たったら
 			fpscount = 180;  // 加算し続けないように値を固定
-			if (FishProbability() == TRUE && PFlg == 1) { // サカナの確率
-				PFlg = 2;
-				FishFlg = 1;         // フィッシュフラグをサカナが上がるフラグに変更
-				FishOrientation = Orientation();  // サカナの向きを描く際の変数に入れる
-				FishX = p.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
-			}
+			//if (FishProbability() == TRUE && PFlg == 1) { // サカナの確率
+			//	PFlg = 2;
+			//	FishFlg = 1;         // フィッシュフラグをサカナが上がるフラグに変更
+			//	FishOrientation = Orientation();  // サカナの向きを描く際の変数に入れる
+			//	FishX = p.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
+			//}
 		}
 	}
 	else fpscount = 0;  // FPSのカウントをリセットする
@@ -64,8 +58,8 @@ void Fish::FishUpdate(Player p , Enemy e[])
 		FishDownAnimation();
 		if (i == 5) {
 			i = 10;
-			PFlg = 4;
-			FishFlg = 0;     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
+			/*PFlg = 4;
+			FishFlg = 0;*/     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
 			/*fpscount = 0;*/
 		}
 		
@@ -121,9 +115,10 @@ void Fish:: FishDraw(Player p) const
 	/* デバック用 */
 	DrawFormatString(400, 200, 0xffffff, "playerLocationX::%f", p.GetPlayerLocationX());
 	DrawFormatString(400, 230, 0xffffff, "fishLocationX::%f", FishX);
-	DrawFormatString(400, 260, 0xffffff, "FishOrientation::%d", FishOrientation);
+	/*DrawFormatString(400, 260, 0xffffff, "FishOrientation::%d", FishOrientation);*/
 	DrawFormatString(400, 290, 0xffffff, "flg::%d", fpscount);
 	DrawFormatString(400, 350, 0xffffff, "Pflg::%d", PFlg);
+	DrawFormatString(400, 380, 0xffffff, "i::%d", i);
 }
 
 int Fish::FishProbability() 
@@ -158,6 +153,9 @@ void Fish::FishDownAnimation()
 	}
 	if (i < 5 && Time % 30 == 0) { // 要調整
 		++i;
+	}
+	if (i == 5) {
+		i = 10;
 	}
 }
 
