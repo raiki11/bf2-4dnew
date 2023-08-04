@@ -3,14 +3,18 @@
 #include"Player.h"
 #include"Enemy.h"
 
+#define FishAreaX0    160
+#define FishAreaX1    480
+#define FishAreaY     419
+
+
 class Fish {
 private:
 	int Time;
 	int fpscount;
-	int j;
+	int i;
 	
 	int FishFlg;  // 0:プレイヤーかエネミーが入ってない 1: サカナが上に上がる 2: サカナが下に下がる
-	
 
 public:
 
