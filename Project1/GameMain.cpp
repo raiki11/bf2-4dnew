@@ -72,6 +72,7 @@ AbstractScene* GameMain::Update()
 
 			fish.FishUpdate(player, enemy[0]);
 			thunder.ThunderUpdate();
+			bubble.BabbleUpdate();
 		}
 
 
@@ -217,6 +218,34 @@ AbstractScene* GameMain::Update()
 	//		}
 	//	}
 	//}
+		
+
+		/* 魚とプレイヤーの当たり判定 */
+
+		if (fish.FishProbability() == TRUE && fish.PFlg == 1) {
+			if (hit.FishAndPlayer(fish, player) == TRUE) {
+				fish.FishPlayerHitAnimation(player);
+				/*player.SetPlayerDeathFlg(TRUE);
+				player.SetPlayerDeathFState(1);*/
+				fish.FishDownAnimation();
+			}
+		}
+
+		/*if (hit.FishAndPlayer(fish, player) == TRUE) {
+			fish.FishPlayerHitAnimation(player);
+			fish.FishDownAnimation();
+		}*/
+
+		//次のステージの敵生成
+		//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
+		//	if (Stage::Snum >= 4) { Stage::Snum = 0; }
+		//		Stage::Snum += 1;
+		//	if (OldSnum != Stage::Snum) {
+		//		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+		//			enemy[i] = new Enemy(i, i);
+		//		}
+		//	}
+		//}
 
 	if (ClearFlg == TRUE) {
 		//countで少しまってから
@@ -280,8 +309,9 @@ void GameMain::Draw() const
 	UI.DrawUI();
 	hit.DrawHitBox();
 	//enemy.EnemyDraw();
-	//fish.FishDraw(player);
+	fish.FishDraw(player);
 	thunder.ThunderDraw();
+	bubble.BabbleDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 
 	//DrawFormatString(300,0, 0xffffff, "%d", Enemy::Eflg);
