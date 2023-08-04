@@ -39,7 +39,6 @@ private:
 	int efectcout;
 	int e;
 
-	static int Score;
 
 	int changeimg;//エネミー落下画像切り替え用
 	int changeCt;//画像切り替えのカウント
@@ -124,5 +123,7 @@ public:
 	 int c;
 	 bool once;
 	 void ECheckY();
+
+	 static int Score;
 };
 
