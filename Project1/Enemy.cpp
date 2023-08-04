@@ -10,7 +10,7 @@ Stage stage;
 int Enemy::DeadFlg = FALSE;
 int Enemy::EdeadCount = -1;
 int Enemy::ElastFlg = FALSE;
-int Enemy::Score = 0;
+int Enemy::Score =999990;
 Enemy::Enemy(int set_X,int set_Y)
 {
 	//ELocationX = 320;
@@ -71,11 +71,10 @@ Enemy::Enemy(int set_X,int set_Y)
 	Eflg = FALSE;
 	Eflgcnt = 0;
 	Escore1 = LoadGraph("images/Score/GetScore_500.png");
-	/*Escore2 = LoadGraph("images/Score/GetScore_750.png");
+	Escore2 = LoadGraph("images/Score/GetScore_750.png");
 	Escore3 = LoadGraph("images/Score/GetScore_1000.png");
 	Escore4 = LoadGraph("images/Score/GetScore_1500.png");
-	Escore5 = LoadGraph("images/Score/GetScore_2000.png");*/
-	n_score = 0;
+	Escore5 = LoadGraph("images/Score/GetScore_2000.png");
 };
 
 

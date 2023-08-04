@@ -1,14 +1,14 @@
 #pragma once
 
-class Babble {
+class Bubble {
 private:
 
 public:
 	// コンストラクタ
-	Babble();
+	Bubble();
 
 	// デストラクタ
-	~Babble();
+	~Bubble();
 
 	// バブルのアップデート
 	void BabbleUpdate();
@@ -16,8 +16,11 @@ public:
 	// バブルの描画
 	void BabbleDraw() const;
 
+	// バブルの画像表示
+	int BubbleImg[4];
+
 	// バブルの座標
-	int BabbleX;
-	int BabbleY;
+	int BabbleX = 400;
+	int BabbleY = 300;
 
 };
