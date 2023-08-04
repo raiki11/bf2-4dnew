@@ -35,6 +35,10 @@ private:
 	int aflg;
 	int Estate;
 	int f;      //左右に揺れるやつ
+	int EfectFlag;
+	int EfectScore;
+	int efectcout;
+	int e;
 
 
 	int changeimg;//エネミー落下画像切り替え用
@@ -60,14 +64,12 @@ private:
 	int Escore5;
 	int Eflgcnt;
 	bool onlyOnce;
-	
-	
+	int n_score;	// 現在のスコア
+	int hi_score;	// ハイスコア
 
 public:
 	Enemy(int set_X,int set_Y);
 	~Enemy();
-
-	static int Score;
 
 	int cflg;		//死亡アニメーションフラグ
 	static int DeadFlg;		//死亡フラグ
@@ -114,12 +116,16 @@ public:
 		flyingFlg = f;
 	}
 
-	static  int GetScore() { return Score; }
+	void Efect();
+
+	static int GetScore() { return Score; }
 
 	int EScore();
   int  Eflg;
 	 int c;
 	 bool once;
 	 void ECheckY();
+
+	 static int Score;
 };
 
