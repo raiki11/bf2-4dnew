@@ -34,6 +34,10 @@ private:
 	int aflg;
 	int Estate;
 	int f;      //¶‰E‚É—h‚ê‚é‚â‚Â
+	int EfectFlag;
+	int EfectScore;
+	int efectcout;
+	int e;
 
 	static int Score;
 
@@ -110,6 +114,8 @@ public:
 	{
 		flyingFlg = f;
 	}
+
+	void Efect();
 
 	static int GetScore() { return Score; }
 

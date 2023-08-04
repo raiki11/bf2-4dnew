@@ -37,7 +37,10 @@ Enemy::Enemy(int set_X,int set_Y)
 	spflg = false;
 
 	f = FALSE;
-	
+	EfectFlag = FALSE;
+	EfectScore = 0;
+	efectcout = 0;
+	e = FALSE;
 
 	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
 	switch (enemy.type)
@@ -134,6 +137,12 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	if (c > 1) {
 		Eflg = FALSE;
 	}
+	if (cflg != 0) {
+		e = TRUE;
+	}
+	if (e == TRUE) {
+		Efect();
+	}
 	
 }
 
@@ -175,6 +184,11 @@ void Enemy::EnemyDraw() const
 	
 		}
 
+		if (EfectFlag == TRUE) {
+			
+			DrawFormatString(ELocationX, ELocationY, 0xffffff,"%d",EfectScore);
+			
+		}
 	
 		//デバッグ用
 		//DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
@@ -217,6 +231,8 @@ void Enemy::EnemyDraw() const
 
 	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
 	DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
+	DrawFormatString(500, 340, 0xffffff, "%d", efectcout);
+
 }
 
 void Enemy::EnemyMoveX(Player P)
@@ -482,7 +498,10 @@ void Enemy::DebagHit(Player P) {
 			if (cflg == 0 && i >= 8 && aflg == TRUE) {
 				cflg = 1;
 				aflg = FALSE;
+				EfectFlag = TRUE;
+
 				EScore();
+				
 			}
 
 			if(aflg == TRUE ){
@@ -495,11 +514,25 @@ void Enemy::DebagHit(Player P) {
 				}
 				cflg = 2;
 				aflg = FALSE;
+				EfectFlag = TRUE;
 				EScore();
+				
 			}
 			count = 0;
 		}
 	}
+}
+
+void Enemy::Efect()
+{
+	
+	if (efectcout++ >= 60) {
+			EfectFlag = FALSE;
+			efectcout = 0;
+			e = FALSE;
+		
+	}
+
 }
 
 int Enemy::EScore()
@@ -510,42 +543,77 @@ int Enemy::EScore()
 		//地面に立ってる時
 		if (Estate == 0) {
 			Score += 750;
+			EfectScore = 750;
+		
+			
 		}
 		//風船割る
 		else if (Estate == 1) {
 			Score += 500;
+			EfectScore = 500;
+
+			
+
 		}
 		//パラシュート状態の時
 		else if (Estate == 2) {
 			Score += 1000;
+			EfectScore = 1000;
+
+			
+
 		}
 		break;
 	case 1:
 		//地面に立ってる時
 		if (Estate == 0) {
 			Score += 1000;
+			EfectScore = 1000;
+
+			
+
 		}
 		//風船割る
 		else if (Estate == 1) {
 			Score += 750;
+			EfectScore = 750;
+
+			
+
 		}
 		//パラシュート状態の時
 		else if (Estate == 2) {
 			Score += 1500;
+			EfectScore = 1500;
+
+			
+
 		}
 		break;
 	case 2:
 		//地面に立ってる時
 		if (Estate == 0) {
 			Score += 1500;
+			EfectScore = 1500;
+
+			
+
 		}
 		//風船割る
 		else if (Estate == 1) {
 			Score += 1000;
+			EfectScore = 1000;
+
+		
+
 		}
 		//パラシュート状態の時
 		else if (Estate == 2) {
 			Score += 2000;
+			EfectScore = 2000;
+
+			
+
 		}
 		break;
 	}
