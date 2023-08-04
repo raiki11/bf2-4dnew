@@ -522,6 +522,7 @@ void Enemy::DebagHit(Player P) {
 	count++;
 	if (Ex <= pxwidth && Exwidth >= px && Ey <= pywidth && Eywidth >= py) {
 		a = true;
+
 	}
 	else {
 		a = false;
