@@ -121,11 +121,10 @@ public:
 	static int GetScore() { return Score; }
 
 	int EScore();
-  int  Eflg;
+    static int  Eflg;
 	 int c;
 	 bool once;
 	 void ECheckY();
-
 	 static int Score;
 };
 

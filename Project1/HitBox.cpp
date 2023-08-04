@@ -1,6 +1,7 @@
 #include "HitBox.h"
 #include "DxLib.h"
-
+#include "Enemy.h"
+//int Enemy::Eflg = FALSE;
 HitBox::HitBox()
 {
 }
@@ -286,7 +287,7 @@ int HitBox::PlayerAndEnemy(Player p, Enemy e)
 
 	if (ex0 <= px1 && ex1 >= px0 &&
 		ey0 <= py1 && ey1 >= py0) {
-
+		Enemy::Eflg = TRUE;
 		return TRUE;
 	}
 

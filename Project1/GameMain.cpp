@@ -262,7 +262,7 @@ AbstractScene* GameMain::Update()
 				Stage::Snum = 0;
 				return new TitleScene;
 			}
-			// End
+			// ライフポイントが0になったらゲームオーバー
 		/*	if (player.GetPlayerLife()==-1) {
 				return new End;
 			}*/

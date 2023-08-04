@@ -6,11 +6,11 @@
 Enemy* hitenemy[6];
 HitBox hit;
 Stage stage;
-
+int Enemy::Eflg = FALSE;
 int Enemy::DeadFlg = FALSE;
 int Enemy::EdeadCount = -1;
 int Enemy::ElastFlg = FALSE;
-int Enemy::Score =999990;
+int Enemy::Score =0;
 Enemy::Enemy(int set_X,int set_Y)
 {
 	//ELocationX = 320;
@@ -68,7 +68,7 @@ Enemy::Enemy(int set_X,int set_Y)
 	LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, G_img); // 画像の分割読み込み
 	LoadDivGraph("images/Stage/Stage_SplashAnimation.png", 3, 3, 1, 64, 32, EspAnim);
 
-	Eflg = FALSE;
+
 	Eflgcnt = 0;
 	Escore1 = LoadGraph("images/Score/GetScore_500.png");
 	Escore2 = LoadGraph("images/Score/GetScore_750.png");
@@ -134,7 +134,7 @@ void Enemy::EnemyUpdate(Player P,int& j)
 		Eflgcnt = 0;
 	}
 	if (c > 1) {
-		Eflg = FALSE;
+		//Eflg = FALSE;
 	}
 	if (cflg != 0) {
 		e = TRUE;
@@ -182,12 +182,25 @@ void Enemy::EnemyDraw() const
 			break;
 	
 		}
-
-		if (EfectFlag == TRUE) {
-			
-			DrawFormatString(ELocationX, ELocationY, 0xffffff,"%d",EfectScore);
+		// プレイヤーと敵の風船
+		if (EfectFlag == TRUE&&enemy.type==0) {
+			DrawGraph(ELocationX - 15, ELocationY - 30, Escore1, TRUE);
+			//DrawFormatString(ELocationX, ELocationY, 0xffffff,"%d",EfectScore);
 			
 		}
+		if (EfectFlag == TRUE && enemy.type == 1) {
+
+			//DrawFormatString(ELocationX, ELocationY, 0xffffff,"%d",EfectScore);
+			DrawGraph(ELocationX - 15, ELocationY - 30, Escore2, TRUE);
+
+		}
+		if (EfectFlag == TRUE && enemy.type == 2) {
+
+			//DrawFormatString(ELocationX, ELocationY, 0xffffff,"%d",EfectScore);
+			DrawGraph(ELocationX - 15, ELocationY - 30, Escore3, TRUE);
+
+		}
+	// プレイヤーと敵
 	
 		//デバッグ用
 		//DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
@@ -215,7 +228,7 @@ void Enemy::EnemyDraw() const
 	//	break;
 	//}
 	
-	if (c <= 1) {
+	/*if (c <= 1) {
 
 		if (Eflgcnt <= 100) {
 			if (Eflg == TRUE) {
@@ -223,7 +236,7 @@ void Enemy::EnemyDraw() const
 			}
 		}
 		
-	}
+	}*/
 
 	if(spflg == true)DrawGraph(ELocationX - 30, 415, EspAnim[spc], TRUE);
 

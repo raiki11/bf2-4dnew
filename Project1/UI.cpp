@@ -5,6 +5,8 @@
 #include "Stage.h"
 int UI:: m_DrawCount;
 int UI::b;
+int UI::getsco;// 現在のスコア
+int UI::old_score = 0;// ハイスコア
 UI::UI()
 {
 	m_DrawCount = 0;
@@ -22,7 +24,7 @@ UI::UI()
 	p_life = 0;
 	n = 0;
 	q = 100000;
-	getsco = 0;	// 現在のスコア
+	//getsco = 0;	// 現在のスコア
 	old_score = 0;	// ハイスコア
 }
 
