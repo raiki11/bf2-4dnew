@@ -66,7 +66,7 @@ Enemy::Enemy(int set_X,int set_Y)
 	LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, P_img); // ‰æ‘œ‚Ì•ªŠ„“Ç‚İ‚İ
 	LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, R_img); // ‰æ‘œ‚Ì•ªŠ„“Ç‚İ‚İ
 	LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, G_img); // ‰æ‘œ‚Ì•ªŠ„“Ç‚İ‚İ
-	LoadDivGraph("images/Stage/Stage_SplashAnimation.png", 3, 3, 1, 64, 32, EspAnim);
+	LoadDivGraph("images/Stage/Stage_SplashAnimation.png", 4, 4, 1, 64, 32, EspAnim);
 
 
 	Eflgcnt = 0;

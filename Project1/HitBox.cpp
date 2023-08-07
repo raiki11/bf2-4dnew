@@ -246,6 +246,7 @@ int HitBox::ThunderAndStageLeft(Thunder th, Stage s)
 			}
 		}
 	}
+	return FALSE;
 }
 
 //	return FALSE;
