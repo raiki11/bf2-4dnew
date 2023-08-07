@@ -30,12 +30,16 @@ private:
 	float PSpeedY;
 	float PSpeedX;
 	int eflg;
+	int point;		// ポイント表示の変数
 	int count;
 	int aflg;
 	int Estate;
 	int f;      //左右に揺れるやつ
+	int EfectFlag;
+	int EfectScore;
+	int efectcout;
+	int e;
 
-	static int Score;
 
 	int changeimg;//エネミー落下画像切り替え用
 	int changeCt;//画像切り替えのカウント
@@ -52,6 +56,7 @@ private:
 	
 	int Epoint;
 	int cnt;
+
 	int Escore1;
 	int Escore2;
 	int Escore3;
@@ -112,6 +117,8 @@ public:
 		flyingFlg = f;
 	}
 
+	void Efect();
+
 	static int GetScore() { return Score; }
 
 	static int GetFishflg() { return FishFlg; }
@@ -120,9 +127,10 @@ public:
 	int Fishprobability;
 	
 	int EScore();
-    int  Eflg;
+    static int  Eflg;
 	 int c;
 	 bool once;
 	 void ECheckY();
+	 static int Score;
 };
 

@@ -1,6 +1,7 @@
 #include "HitBox.h"
 #include "DxLib.h"
-
+#include "Enemy.h"
+//int Enemy::Eflg = FALSE;
 HitBox::HitBox()
 {
 }
@@ -21,6 +22,7 @@ void HitBox::DrawHitBox() const
 	DrawFormatString(200, 20, 0xffffff, "y0:%d", py0);
 	DrawFormatString(200, 40, 0xffffff, "x1:%d", px1);
 	DrawFormatString(200, 60, 0xffffff, "y1:%d", py1);*/
+
 }
 
 int HitBox::PlayerAndStageUnder(Player p, Stage s)
@@ -173,6 +175,83 @@ int HitBox::EnemyAndStageLeft(Enemy e, Stage s)
 	return FALSE;
 }
 
+int HitBox::ThunderAndStageUnder(Thunder th, Stage s) 
+{
+	tx0 = th.GetThunderX() - 32;
+	ty0 = th.GetThunderY() + 32;
+	tx1 = th.GetThunderX() + 32;
+	ty1 = th.GetThunderY() + 32;
+
+	for (int i = 0; i < 6; i += 2) {
+		if (s.GetStageXY(0, i, 0) <= tx1 && s.GetStageXY(0, i + 1, 0) >= tx0 &&
+			s.GetStageXY(0, i, 1) <= ty1 && s.GetStageXY(0, i + 1, 1) >= ty0) {
+
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+int HitBox::ThunderAndStageTop(Thunder th, Stage s)
+{
+	tx0 = th.GetThunderX() - 32;
+	ty0 = th.GetThunderY() - 32;
+	tx1 = th.GetThunderX() + 32;
+	ty1 = th.GetThunderY() - 32;
+
+	for (int i = 0; i < 6; i += 2) {
+		if (s.GetStageXY(0, i, 0) <= tx1 && s.GetStageXY(0, i + 1, 0) >= tx0 &&
+			s.GetStageXY(0, i, 1) <= ty1 && s.GetStageXY(0, i + 1, 1) >= ty0) {
+
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+int HitBox::ThunderAndStageRight(Thunder th, Stage s)
+{
+	tx0 = th.GetThunderX() + 32;
+	ty0 = th.GetThunderY() - 32;
+	tx1 = th.GetThunderX() + 32;
+	ty1 = th.GetThunderY() + 32;
+
+	if (th.GetThunderMoveLocationX() > 0) {
+		for (int i = 0; i < 6; i += 2) {
+			if (s.GetStageXY(0, i, 0) <= ex1 && s.GetStageXY(0, i + 1, 0) >= ex0 &&
+				s.GetStageXY(0, i, 1) <= ey1 && s.GetStageXY(0, i + 1, 1) >= ey0) {
+
+				return TRUE;
+			}
+		}
+	}
+	return FALSE;
+}
+
+int HitBox::ThunderAndStageLeft(Thunder th, Stage s)
+{
+	tx0 = th.GetThunderX() - 32;
+	ty0 = th.GetThunderY() - 32;
+	tx1 = th.GetThunderX() - 32;
+	ty1 = th.GetThunderY() + 32;
+
+	if (th.GetThunderMoveLocationX() < 0) {
+		for (int i = 0; i < 6; i += 2) {
+			if (s.GetStageXY(0, i, 0) <= ex1 && s.GetStageXY(0, i + 1, 0) >= ex0 &&
+				s.GetStageXY(0, i, 1) <= ey1 && s.GetStageXY(0, i + 1, 1) >= ey0) {
+
+				return TRUE;
+
+			}
+		}
+	}
+	return FALSE;
+}
+
+//	return FALSE;
+//}
+
 int HitBox::PlayerAndThunder(Player p, Thunder t)
 {
 	px0 = p.GetPlayerLocationX() - 20;
@@ -209,7 +288,7 @@ int HitBox::PlayerAndEnemy(Player p, Enemy e)
 
 	if (ex0 <= px1 && ex1 >= px0 &&
 		ey0 <= py1 && ey1 >= py0) {
-
+		Enemy::Eflg = TRUE;
 		return TRUE;
 	}
 
@@ -278,4 +357,23 @@ int HitBox::PlayerAndEnemyBalloon(Player p, Enemy e)
 		now1 = FALSE;
 	}
 	return 0;
+}
+
+int HitBox::FishAndPlayer(Fish f, Player p)
+{
+	fx0 = f.FishLocationX() - 20;
+	fy0 = f.FishLocationY() - 20;
+	fx1 = f.FishLocationX() + 20;
+	fy1 = f.FishLocationY() + 20;
+
+	px0 = p.GetPlayerLocationX() - 20;
+	py0 = p.GetPlayerLocationY() - 20;
+	px1 = p.GetPlayerLocationX() + 20;
+	py1 = p.GetPlayerLocationY() + 20;
+
+	if (fx0 <= px1 && fx1 >= px0 &&
+		fy0 <= py1 && fy1 >= py0) {
+		return TRUE;
+	}
+	else return FALSE;
 }

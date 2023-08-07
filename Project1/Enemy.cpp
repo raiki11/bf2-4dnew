@@ -8,6 +8,7 @@
 Enemy* hitenemy[6];
 HitBox hit;
 Stage stage;
+int Enemy::Eflg = FALSE;
 Fish fish;
 
 int Enemy::DeadFlg = FALSE;
@@ -42,6 +43,11 @@ Enemy::Enemy(int set_X,int set_Y)
 	spflg = false;
 
 	f = FALSE;
+	EfectFlag = FALSE;
+	EfectScore = 0;
+	efectcout = 0;
+	e = FALSE;
+
 	Fishprobability = 0;
 
 	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
@@ -70,14 +76,13 @@ Enemy::Enemy(int set_X,int set_Y)
 	LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, G_img); // 画像の分割読み込み
 	LoadDivGraph("images/Stage/Stage_SplashAnimation.png", 4, 4, 1, 64, 32, EspAnim);
 
-	Eflg = FALSE;
+
 	Eflgcnt = 0;
 	Escore1 = LoadGraph("images/Score/GetScore_500.png");
-	/*Escore2 = LoadGraph("images/Score/GetScore_750.png");
+	Escore2 = LoadGraph("images/Score/GetScore_750.png");
 	Escore3 = LoadGraph("images/Score/GetScore_1000.png");
 	Escore4 = LoadGraph("images/Score/GetScore_1500.png");
-	Escore5 = LoadGraph("images/Score/GetScore_2000.png");*/
-	n_score = 0;
+	Escore5 = LoadGraph("images/Score/GetScore_2000.png");
 };
 
 
@@ -141,7 +146,13 @@ void Enemy::EnemyUpdate(Player P,int& j)
 		Eflgcnt = 0;
 	}
 	if (c > 1) {
-		Eflg = FALSE;
+		//Eflg = FALSE;
+	}
+	if (cflg != 0) {
+		e = TRUE;
+	}
+	if (e == TRUE) {
+		Efect();
 	}
 	
 }
@@ -187,7 +198,25 @@ void Enemy::EnemyDraw() const
 			break;
 	
 		}
+		// プレイヤーと敵の風船
+		if (EfectFlag == TRUE&&enemy.type==0) {
+			DrawGraph(ELocationX - 15, ELocationY - 30, Escore1, TRUE);
+			//DrawFormatString(ELocationX, ELocationY, 0xffffff,"%d",EfectScore);
+			
+		}
+		if (EfectFlag == TRUE && enemy.type == 1) {
 
+			//DrawFormatString(ELocationX, ELocationY, 0xffffff,"%d",EfectScore);
+			DrawGraph(ELocationX - 15, ELocationY - 30, Escore2, TRUE);
+
+		}
+		if (EfectFlag == TRUE && enemy.type == 2) {
+
+			//DrawFormatString(ELocationX, ELocationY, 0xffffff,"%d",EfectScore);
+			DrawGraph(ELocationX - 15, ELocationY - 30, Escore3, TRUE);
+
+		}
+	// プレイヤーと敵
 	
 		//デバッグ用
 		//DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
@@ -215,7 +244,7 @@ void Enemy::EnemyDraw() const
 	//	break;
 	//}
 	
-	if (c <= 1) {
+	/*if (c <= 1) {
 
 		if (Eflgcnt <= 100) {
 			if (Eflg == TRUE) {
@@ -223,12 +252,14 @@ void Enemy::EnemyDraw() const
 			}
 		}
 		
-	}
+	}*/
 
 	if(spflg == true)DrawGraph(ELocationX - 30, 415, EspAnim[spc], TRUE);
 
 	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
 	DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
+	DrawFormatString(500, 340, 0xffffff, "%d", efectcout);
+
 }
 
 void Enemy::EnemyMoveX(Player P)
@@ -498,7 +529,10 @@ void Enemy::DebagHit(Player P) {
 			if (cflg == 0 && i >= 8 && aflg == TRUE) {
 				cflg = 1;
 				aflg = FALSE;
+				EfectFlag = TRUE;
+
 				EScore();
+				
 			}
 
 			if(aflg == TRUE ){
@@ -511,11 +545,25 @@ void Enemy::DebagHit(Player P) {
 				}
 				cflg = 2;
 				aflg = FALSE;
+				EfectFlag = TRUE;
 				EScore();
+				
 			}
 			count = 0;
 		}
 	}
+}
+
+void Enemy::Efect()
+{
+	
+	if (efectcout++ >= 60) {
+			EfectFlag = FALSE;
+			efectcout = 0;
+			e = FALSE;
+		
+	}
+
 }
 
 int Enemy::EScore()
@@ -526,42 +574,77 @@ int Enemy::EScore()
 		//地面に立ってる時
 		if (Estate == 0) {
 			Score += 750;
+			EfectScore = 750;
+		
+			
 		}
 		//風船割る
 		else if (Estate == 1) {
 			Score += 500;
+			EfectScore = 500;
+
+			
+
 		}
 		//パラシュート状態の時
 		else if (Estate == 2) {
 			Score += 1000;
+			EfectScore = 1000;
+
+			
+
 		}
 		break;
 	case 1:
 		//地面に立ってる時
 		if (Estate == 0) {
 			Score += 1000;
+			EfectScore = 1000;
+
+			
+
 		}
 		//風船割る
 		else if (Estate == 1) {
 			Score += 750;
+			EfectScore = 750;
+
+			
+
 		}
 		//パラシュート状態の時
 		else if (Estate == 2) {
 			Score += 1500;
+			EfectScore = 1500;
+
+			
+
 		}
 		break;
 	case 2:
 		//地面に立ってる時
 		if (Estate == 0) {
 			Score += 1500;
+			EfectScore = 1500;
+
+			
+
 		}
 		//風船割る
 		else if (Estate == 1) {
 			Score += 1000;
+			EfectScore = 1000;
+
+		
+
 		}
 		//パラシュート状態の時
 		else if (Estate == 2) {
 			Score += 2000;
+			EfectScore = 2000;
+
+			
+
 		}
 		break;
 	}

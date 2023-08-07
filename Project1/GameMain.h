@@ -9,6 +9,7 @@
 #include "UI.h"
 #include"Thunder.h"
 #include "TitleScene.h"
+#include"Bubble.h"
 // シーンマネージャークラス
 // 各シーンの切り替えを管理する
 
@@ -28,6 +29,7 @@ private:
     HitBox hit;
     Fish fish;
     Thunder thunder;
+    Bubble bubble;
     bool PauseFlg;            // ポーズ
     
     bool ClearFlg;            //ステージclearフラグ

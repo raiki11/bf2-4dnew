@@ -9,16 +9,17 @@ private:
 	int phase;
 	int stock;
 	int Num[10];
+	int n;			// Numの変数
 	int Flag;
-	int i;
-
+	int i;			//	Scoreの変数
+	int Score[6];
 
 	
 	// スコア
 	int p_score;
 	int p_top;
 	int p_phase;
-	
+	int q;
 	 
 	//プレイヤー残機取得用
 	int p_life;
@@ -26,6 +27,8 @@ private:
 public:
 	static int m_DrawCount;
 	static int b;
+	static int getsco;		// 現在のスコア
+	static int old_score;	// ハイスコア
 	UI();
 	~UI();
 	void Update(int p);

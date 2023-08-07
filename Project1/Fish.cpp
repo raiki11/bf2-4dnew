@@ -21,6 +21,9 @@ Fish::Fish()
 	Fx = 0;
 	Fimg = 1;
 	count = 0;
+	FishFlg = 0;
+	PFlg = 0;
+	EFlg = 0;
 }
 
 Fish::~Fish()
@@ -54,8 +57,8 @@ void Fish::FishUpdate(Player p , Enemy e)
 		//FishX = p.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
 		/* アニメーション処理 */
 		FishUpAnimation();
-		/*if (p.GetPlayerLocationX() == FishX && p.GetPlayerLocationY() == FishY) {
-			FishHitAnimation();
+		/*if (hb.FishAndPlayer(f, p) == TRUE) {
+			FishPlayerHitAnimation(p);
 			
 		}*/
 		if (i == 2) {
@@ -69,13 +72,15 @@ void Fish::FishUpdate(Player p , Enemy e)
 		FishDownAnimation();
 		if (i == 5) {
 			i = 10;
-			PFlg = 0;
+			PFlg = 4;
 			FishFlg = 0;     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
 			/*fpscount = 0;*/
 		}
+		
 	}
-
-	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() && FishFlg == 0 && i == 10) {
+	
+	/* プレイヤーがサカナエリアに居続ける時の処理 */
+	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() && FishFlg == 0 && i == 10 && PFlg==4) {
 		fpscount = 180;
 	}
 
@@ -136,10 +141,11 @@ void Fish:: FishDraw(Player p) const
 	DrawRotaGraph(FishX, FishY, 1.0f, 0, FishImg[i], TRUE, FishOrientation);
 
 	/* デバック用 */
-	DrawFormatString(0, 200, 0xffffff, "playerLocationY::%f", p.GetPlayerLocationY());
-	DrawFormatString(0, 230, 0xffffff, "fishLocationY::%d", FishY);
-	DrawFormatString(0, 260, 0xffffff, "FishOrientation::%d", FishOrientation);
-	DrawFormatString(0, 290, 0xffffff, "flg::%d", fpscount);
+	DrawFormatString(400, 200, 0xffffff, "playerLocationX::%f", p.GetPlayerLocationX());
+	DrawFormatString(400, 230, 0xffffff, "fishLocationX::%f", FishX);
+	DrawFormatString(400, 260, 0xffffff, "FishOrientation::%d", FishOrientation);
+	DrawFormatString(400, 290, 0xffffff, "flg::%d", fpscount);
+	DrawFormatString(400, 350, 0xffffff, "Pflg::%d", PFlg);
 }
 
 int Fish::FishProbability() 
@@ -160,7 +166,7 @@ void Fish::FishUpAnimation()
 	Time;
 	if (i == 10) i = 0;   // サカナが出てないときiをリセットする
 
-	if (i < 2 && ++Time % 15 == 0) {
+	if (i < 2 && ++Time % 30 == 0) { // 要調整
 		i++;
 	}
 }
@@ -170,13 +176,19 @@ void Fish::FishDownAnimation()
 	
 	++Time;
 
-	if (i < 5 && Time % 15 == 0) {
+	if (i < 5 && Time % 30 == 0) { // 要調整
 		++i;
 	}
 }
 
-void Fish::FishHitAnimation()
+void Fish::FishPlayerHitAnimation(Player p)
 {
+	++Time;
+	if(Time<=60)
+	i = 6;
+}
+
+void Fish::FishEnemyHitAnimation(Enemy enemy[]) {
 	//switch(/* 何が当たったかをここに書く */)
 	//	case 0:   // プレイヤーが当たった場合
 	//		i = 7;

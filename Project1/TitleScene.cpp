@@ -15,6 +15,8 @@ TitleScene::TitleScene()
 	turnNum = 0;
 
 	selectNum = 0;
+
+	//ResetScore();
 }
 
 TitleScene::~TitleScene()
@@ -76,7 +78,7 @@ AbstractScene* TitleScene::Update()
 		return new GameMain();
 	}
 
-
+	UI::getsco = 0;
 	return this;
 }
 

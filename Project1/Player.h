@@ -45,6 +45,7 @@ private:
 	int playerImgFlyFlg;
 	int playerNoInputFlg;
 	int playerThunderFlg;
+	int noInputFps;
 
 	int splashNum;
 	int St_Sea;
@@ -126,5 +127,6 @@ public:
 	void SetRemainBalloon();
 	int AnyButtons();
 	void InitPlayer();
+
 };
 
