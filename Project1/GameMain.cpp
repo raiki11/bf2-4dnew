@@ -227,6 +227,7 @@ AbstractScene* GameMain::Update()
 		}
 		if (fish.FPSCount() >= 180) {  // ３秒以上たったら
 			fish.FPSCount();  // 加算し続けないように値を固定
+
 			/* デバック用 */
 			b = fish.FishAnimation();
 

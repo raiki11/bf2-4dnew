@@ -58,4 +58,5 @@ public:
 	int FishFlg;  // 0:プレイヤーかエネミーが入ってない 1: サカナが上に上がる 2: サカナが下に下がる
 	bool FishOrientation;  // サカナの向きを決める
 	int sakanaOrientation;  // サカナの向きを決める乱数
+	int j;
 };

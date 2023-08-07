@@ -3,10 +3,6 @@
 #include"DxLib.h"
 #include"HitBox.h"
 
-#define FishAreaX0    160
-#define FishAreaX1    480
-#define FishAreaY     419
-
 Fish::Fish()
 {
 	LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 11, 5, 2, 64, 64, FishImg);
@@ -25,8 +21,9 @@ Fish::~Fish()
 
 void Fish::FishUpdate(Player p , Enemy e[])
 {
+	j = i;
 	/* プレイヤーがサカナの稼働エリアに入った時 */
-	if (FishAreaX0 <= p.GetPlayerLocationX() && p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() + 32 && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
+	if (FishAreaX0 <= p.GetPlayerLocationX() - 16 && p.GetPlayerLocationX() + 16 <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() + 32 && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
 		if (++fpscount >= 180) {  // ３秒以上たったら
 			fpscount = 180;  // 加算し続けないように値を固定
 			//if (FishProbability() == TRUE && PFlg == 1) { // サカナの確率
@@ -42,7 +39,8 @@ void Fish::FishUpdate(Player p , Enemy e[])
 	if (FishFlg == 1 && PFlg == 2) {      // フィッシュフラグがサカナを上げるフラグになった時
 		//FishX = p.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
 		/* アニメーション処理 */
-		FishUpAnimation();
+		//FishUpAnimation();
+		j = i;
 		/*if (hb.FishAndPlayer(f, p) == TRUE) {
 			FishPlayerHitAnimation(p);
 			
@@ -53,9 +51,10 @@ void Fish::FishUpdate(Player p , Enemy e[])
 	}
 	
 	if (PFlg == 3) {      // フィッシュフラグがサカナを下げるフラグになった時
-		//FishY += 2;             // フィッシュを下に下げる
+
 		/* アニメーション処理 */
-		FishDownAnimation();
+		//FishDownAnimation();
+		j = i;
 		if (i == 5) {
 			i = 10;
 			/*PFlg = 4;
@@ -69,7 +68,6 @@ void Fish::FishUpdate(Player p , Enemy e[])
 	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() && FishFlg == 0 && i == 10 && PFlg==4) {
 		fpscount = 180;
 	}
-	
 
 	/* 敵がサカナの稼働エリアに入った時 */
 	//if (FishAreaX0 <= e.GetEnemyLocationX() <= FishAreaX1 && FishAreaY <= e.GetEnemyLocationY() && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
@@ -137,7 +135,9 @@ int Fish::FishProbability()
 void Fish::FishUpAnimation()
 {
 	Time;
-	if (i == 10) i = 0;   // サカナが出てないときiをリセットする
+	if (i == 10) {
+		i = 0;   // サカナが出てないときiをリセットする
+	}
 
 	if (i < 2 && ++Time % 30 == 0) { // 要調整
 	i++;
