@@ -278,18 +278,81 @@ AbstractScene* GameMain::Update()
 		fish.FPSCount();
 	}
 
+	/* 魚と敵の当たり判定 */
+	/* 敵がサカナの稼働エリアに入った時 */
+	//if (FishAreaX0 <= *enemy[].GetEnemyLocationX() && enemy[].GetEnemyLocationX() <= FishAreaX1 && FishAreaY <= enemy[].GetEnemyLocationY() + 32 && fish.FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
+	//	if (fish.EFlg == 0) {
+	//		fish.EFlg = 1;
+	//	}
+	//	else {
+	//		fish.EFlg = 0;
+	//	}
+	//	if (fish.FPSCount() >= 180) {  // ３秒以上たったら
+	//		fish.FPSCount();  // 加算し続けないように値を固定
 
-		//if (fish.FishProbability() == TRUE /*&& fish.PFlg == 1*/) {
-		//	if (hit.FishAndPlayer(fish, player) == TRUE && fish.FishAnimation() == 1) {
-		//		fish.FishPlayerHitAnimation(player);
-		//		/*player.SetPlayerDeathFlg(TRUE);
-		//		player.SetPlayerDeathFState(1);*/
-		//		fish.PFlg = 3;
-		//	}
-		//	if (hit.FishAndPlayer(fish, player) == TRUE && fish.FishAnimation() != 1) {
-		//		fish.FishDownAnimation();
-		//	}
-		//}
+	//		/* デバック用 */
+	//		b = fish.FishAnimation();
+
+	//		if (fish.FishProbability() == TRUE && fish.EFlg == 1) { // サカナの確率
+	//			fish.EFlg = 2;
+	//			fish.FishFlg = 1;         // フィッシュフラグをサカナが上がるフラグに変更
+	//			fish.FishOrientation = fish.Orientation();  // サカナの向きを描く際の変数に入れる
+	//			fish.FishX = player.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
+	//		}
+	//	}
+	//}
+	//else fish.FPSCount();  // FPSのカウントをリセットする
+
+	//if (fish.FishFlg == 1 && fish.EFlg == 2 || fish.EFlg == 5) {      // フィッシュフラグがサカナを上げるフラグになった時
+	//	//FishX = p.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
+	//	/* アニメーション処理 */
+	//	fish.FishUpAnimation();
+	//	if (hit.FishAndPlayer(fish, player) == TRUE && fish.FishAnimation() == 1 /*|| fish.FishAnimation() == 2*/) {
+	//		fish.FishPlayerHitAnimation(player);
+	//		/*player.SetPlayerDeathFlg(TRUE);
+	//		player.SetPlayerDeathFState(1);*/
+	//		fish.EFlg = 5;
+	//	}
+	//	/*if (hb.FishAndPlayer(f, p) == TRUE) {
+	//		FishPlayerHitAnimation(p);
+
+	//	}*/
+	//	if (fish.FishAnimation() == 2 || fish.FishAnimation() == 6 || fish.EFlg == 5) {
+	//		fish.EFlg = 3;
+	//	}
+	//}
+
+	//if (fish.EFlg == 3) {      // フィッシュフラグがサカナを下げるフラグになった時
+	//	//FishY += 2;             // フィッシュを下に下げる
+	//	/* アニメーション処理 */
+	//	fish.FishDownAnimation();
+	//	if (fish.FishAnimation() == 10) {
+	//		fish.FishAnimation();  // i == 10
+	//		fish.EFlg = 4;
+	//		fish.FishFlg = 0;     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
+	//		/*fpscount = 0;*/
+	//	}
+
+	//}
+
+	///* プレイヤーがサカナエリアに居続ける時の処理 */
+	//if (FishAreaX0 <= *enemy[].GetEnemyLocationX() && enemy[].GetEnemyLocationX() <= FishAreaX1 && FishAreaY <= enemy[].GetEnemyLocationY() + 32 && fish.FishFlg == 0 && fish.FishAnimation() == 10 && fish.EFlg == 4) {
+	//	fish.FPSCount();
+	//}
+
+
+
+	//if (fish.FishProbability() == TRUE /*&& fish.PFlg == 1*/) {
+	//	if (hit.FishAndPlayer(fish, player) == TRUE && fish.FishAnimation() == 1) {
+	//		fish.FishPlayerHitAnimation(player);
+	//		/*player.SetPlayerDeathFlg(TRUE);
+	//		player.SetPlayerDeathFState(1);*/
+	//		fish.PFlg = 3;
+	//	}
+	//	if (hit.FishAndPlayer(fish, player) == TRUE && fish.FishAnimation() != 1) {
+	//		fish.FishDownAnimation();
+	//	}
+	//}
 
 		/*if (hit.FishAndPlayer(fish, player) == TRUE) {
 			fish.FishPlayerHitAnimation(player);
