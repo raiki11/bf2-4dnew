@@ -460,10 +460,10 @@ void Player::PlayerMoveY()
 		moveFpsCountY = 0;
 	}
 
-	if (!(PAD_INPUT::OnPressed(XINPUT_BUTTON_B))) {
-		flapInterval = 6;
-		flapFlg = FALSE;
-	}
+	//if (!(PAD_INPUT::OnPressed(XINPUT_BUTTON_B))) {
+	//	flapInterval = 6;
+	//	flapFlg = FALSE;
+	//}
 
 
 	//Aƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚©
@@ -474,14 +474,13 @@ void Player::PlayerMoveY()
 		}
 		else {
 			flapInterval = 4;
-			flapFlg = FALSE;
+			flapFlg = TRUE;
 		}
 
-		if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)){
+		/*if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)){
 			flapInterval = 4;
 			flapFlg = TRUE;
-
-		}
+		}*/
 
 		/*playerImgFpsCnt = 0;*/
 		if (interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
