@@ -13,8 +13,7 @@ private:
 	int Flag;
 	int i;			//	Scoreの変数
 	int Score[6];
-	int getsco;		// 現在のスコア
-	int old_score;	// ハイスコア
+
 	
 	// スコア
 	int p_score;
@@ -28,6 +27,8 @@ private:
 public:
 	static int m_DrawCount;
 	static int b;
+	static int getsco;		// 現在のスコア
+	static int old_score;	// ハイスコア
 	UI();
 	~UI();
 	void Update(int p);

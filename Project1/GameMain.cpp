@@ -2,8 +2,9 @@
 #include"DxLib.h"
 #include"PadInput.h"
 #include "Stage.h"
-
+#include "Player.h"
 #include "UI.h"
+#include "End.h"
 
 Enemy* enemy[6];
 
@@ -37,7 +38,7 @@ AbstractScene* GameMain::Update()
 	//ポーズ中でないとき
 	if (PauseFlg == FALSE) {
 		if (ClearFlg == FALSE) {
-			// PHASE点滅カウント
+			// PHASE点滅カウント			
 			UI.Update(player.GetPlayerLife());
 			// ゲームメイン処理
 			player.PlayerUpdate();
@@ -55,6 +56,7 @@ AbstractScene* GameMain::Update()
 						Enemy::EdeadCount = -1;
 						Elast = i;
 						Enemy::DeadFlg = FALSE;
+						
 						//enemy[i] = nullptr;
 					}
 
@@ -62,6 +64,7 @@ AbstractScene* GameMain::Update()
 				if (Enemy::DeadFlg == TRUE) {
 					enemy[i] = nullptr;
 					Enemy::DeadFlg = FALSE;
+					
 				}
 
 
@@ -165,6 +168,7 @@ AbstractScene* GameMain::Update()
 						if (hit.PlayerAndEnemy(player, *enemy[i]) == TRUE) {
 							player.SetReboundFlgStageX(TRUE);
 							enemy[i]->ESetReboundFlgStageX(TRUE);
+						
 						}
 
 						if (player.GetRemainBalloon() > 0) {
@@ -185,6 +189,7 @@ AbstractScene* GameMain::Update()
 
 						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE) {
 							//player.SubtractRemainBalloon();
+							
 							player.SetReboundFlgStageX(TRUE);
 							//player.SetReboundFlgStageY(TRUE);
 							player.SetPlayerMoveY();
@@ -387,6 +392,10 @@ AbstractScene* GameMain::Update()
 				Stage::Snum = 0;
 				return new TitleScene;
 			}
+			// ライフポイントが0になったらゲームオーバー
+		/*	if (player.GetPlayerLife()==-1) {
+				return new End;
+			}*/
 			//次のステージの敵生成
 			if (OldSnum != Stage::Snum) {
 				for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
@@ -435,7 +444,7 @@ void GameMain::Draw() const
 	bubble.BabbleDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 
-
+	//DrawFormatString(300,0, 0xffffff, "%d", Enemy::Eflg);
 	//DrawBox(200, 99, 242, 117, 0xff0000, TRUE);
 }
 

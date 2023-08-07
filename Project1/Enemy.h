@@ -30,6 +30,7 @@ private:
 	float PSpeedY;
 	float PSpeedX;
 	int eflg;
+	int point;		// ポイント表示の変数
 	int count;
 	int aflg;
 	int Estate;
@@ -55,6 +56,7 @@ private:
 	
 	int Epoint;
 	int cnt;
+
 	int Escore1;
 	int Escore2;
 	int Escore3;
@@ -119,11 +121,10 @@ public:
 	static int GetScore() { return Score; }
 
 	int EScore();
-    int  Eflg;
+    static int  Eflg;
 	 int c;
 	 bool once;
 	 void ECheckY();
-
 	 static int Score;
 };
 
