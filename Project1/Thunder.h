@@ -55,4 +55,5 @@ public:
 
 	// “®‚­—Ê‚ðŽæ“¾
 	float GetThunderMoveLocationX() { return MoveX; }
+	float GetThunderMoveLocationY() { return MoveY; }
 };
