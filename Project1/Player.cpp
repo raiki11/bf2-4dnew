@@ -197,7 +197,7 @@ void Player::PlayerDraw() const
 	DrawFormatString(0, 145, 0xffffff, "flyingflg::%d", flyingFlg);
 	DrawFormatString(0, 160, 0xffffff, "reboundflgx::%d", reboundFlgStageX);
 	DrawFormatString(0, 175, 0xffffff, "reboundcntx::%d", reboundFrameCntX);
-	DrawFormatString(0, 190, 0xffffff, "interval::%d", interval);
+	DrawFormatString(0, 190, 0xffffff, "flapflg::%d", flapFlg);
 	DrawFormatString(0, 205, 0xffffff, "imgnum::%d", playerImgNum);
 	DrawFormatString(0, 220, 0xffffff, "takeoff::%d", takeOffFlg);
 	
@@ -479,7 +479,7 @@ void Player::PlayerMoveY()
 
 		if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)){
 			flapInterval = 4;
-			flapFlg = FALSE;
+			flapFlg = TRUE;
 
 		}
 
