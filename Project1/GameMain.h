@@ -40,8 +40,6 @@ private:
 
     int a;
     int reboundFlg;
-
-    int b;
    
 public:
 

@@ -202,6 +202,19 @@ AbstractScene* GameMain::Update()
 				player.SetPlayerDeathFState(1);
 			}
 		}
+		// ステージと当たり判定
+		if (hit.ThunderAndStageLeft(thunder, stage) == TRUE) {
+			thunder.ChangeAngle();
+		}
+		if (hit.ThunderAndStageRight(thunder, stage) == TRUE) {
+			thunder.ChangeAngle();
+		}
+		if (hit.ThunderAndStageUnder(thunder, stage) == TRUE) {
+			thunder.ChangeAngle();
+		}
+		if (hit.ThunderAndStageTop(thunder, stage) == TRUE) {
+			thunder.ChangeAngle();
+		}
 	}
 	//次のステージの敵生成
 	//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
@@ -228,9 +241,6 @@ AbstractScene* GameMain::Update()
 		if (fish.FPSCount() >= 180) {  // ３秒以上たったら
 			fish.FPSCount();  // 加算し続けないように値を固定
 
-			/* デバック用 */
-			b = fish.FishAnimation();
-
 			if (fish.FishProbability() == TRUE && fish.PFlg == 1) { // サカナの確率
 				fish.PFlg = 2;
 				fish.FishFlg = 1;         // フィッシュフラグをサカナが上がるフラグに変更
@@ -251,10 +261,6 @@ AbstractScene* GameMain::Update()
 			player.SetPlayerDeathFState(1);*/
 			fish.PFlg = 5;
 		}
-		/*if (hb.FishAndPlayer(f, p) == TRUE) {
-			FishPlayerHitAnimation(p);
-
-		}*/
 		if (fish.FishAnimation() == 2 || fish.FishAnimation() == 6 || fish.PFlg == 5) {
 			fish.PFlg = 3;
 		}
@@ -289,9 +295,6 @@ AbstractScene* GameMain::Update()
 	//	}
 	//	if (fish.FPSCount() >= 180) {  // ３秒以上たったら
 	//		fish.FPSCount();  // 加算し続けないように値を固定
-
-	//		/* デバック用 */
-	//		b = fish.FishAnimation();
 
 	//		if (fish.FishProbability() == TRUE && fish.EFlg == 1) { // サカナの確率
 	//			fish.EFlg = 2;
@@ -341,7 +344,7 @@ AbstractScene* GameMain::Update()
 	//}
 
 
-
+	/* 当たった時の処理 */
 	//if (fish.FishProbability() == TRUE /*&& fish.PFlg == 1*/) {
 	//	if (hit.FishAndPlayer(fish, player) == TRUE && fish.FishAnimation() == 1) {
 	//		fish.FishPlayerHitAnimation(player);
@@ -353,11 +356,10 @@ AbstractScene* GameMain::Update()
 	//		fish.FishDownAnimation();
 	//	}
 	//}
-
-		/*if (hit.FishAndPlayer(fish, player) == TRUE) {
-			fish.FishPlayerHitAnimation(player);
-			fish.FishDownAnimation();
-		}*/
+	/*if (hit.FishAndPlayer(fish, player) == TRUE) {
+		fish.FishPlayerHitAnimation(player);
+		fish.FishDownAnimation();
+	}*/
 
 		//次のステージの敵生成
 		//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
@@ -435,6 +437,5 @@ void GameMain::Draw() const
 
 
 	//DrawBox(200, 99, 242, 117, 0xff0000, TRUE);
-	DrawFormatString(400, 260, 0xffffff, "F&P::%d", b);
 }
 

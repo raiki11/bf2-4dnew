@@ -103,7 +103,7 @@ void Fish::FishUpdate(Player p , Enemy e[])
 	//	//FishDownAnimation();
 	//	if (i == 5) {
 	//		i = 10;
-	//		/*PFlg = 4;
+	//		/*EFlg = 4;
 	//		FishFlg = 0;*/     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
 	//		/*fpscount = 0;*/
 	//	}
