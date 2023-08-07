@@ -207,20 +207,11 @@ AbstractScene* GameMain::Update()
 			}
 		}
 	}
-	//次のステージの敵生成
-	//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
-	//	if (Stage::Snum >= 4) { Stage::Snum = 0; }
-	//		Stage::Snum += 1;
-	//	if (OldSnum != Stage::Snum) {
-	//		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
-	//			enemy[i] = new Enemy(i, i);
-	//		}
-	//	}
-	//}
 
 	if (ClearFlg == TRUE) {
 		//countで少しまってから
 		if (++count > 100) {
+			Fish::FyInitFlg = true;
 			ClearFlg = FALSE;
 			count = 0;
 			enemy[Elast] = nullptr;
@@ -242,8 +233,6 @@ AbstractScene* GameMain::Update()
 		}
 	}
 
-	
-
 	tst=player.GetPlayerLife();
 	if (tst <= -1) {
 
@@ -255,8 +244,6 @@ AbstractScene* GameMain::Update()
 void GameMain::Draw() const
 {
 	DrawFormatString(200, 300, 0xffffff, "life%d",tst);
-
-	
 
 	if (PauseFlg == TRUE) {
 		DrawFormatString(0, 0, 0xffffff, "Pause");

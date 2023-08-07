@@ -47,4 +47,6 @@ public:
 	int EFlg = 0;      // 敵がサカナエリアに入っているかどうかのフラグ 0: サカナエリアに入ってない 1: サカナエリアに入った 2: サカナのアニメーション開始
 	bool FishOrientation;  // サカナの向きを決める
 	int sakanaOrientation;  // サカナの向きを決める乱数
+
+	static bool FyInitFlg;
 };

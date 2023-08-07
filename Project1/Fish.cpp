@@ -3,10 +3,12 @@
 #include"DxLib.h"
 #include "Enemy.h"
 
+
 #define FishAreaX0    160
 #define FishAreaX1    480
 #define FishAreaY     419
 
+bool Fish::FyInitFlg = false;
 
 Fish::Fish()
 {
@@ -76,15 +78,18 @@ void Fish::FishUpdate(Player p , Enemy e)
 	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() && FishFlg == 0 && i == 10) {
 		fpscount = 180;
 	}
-	
+
+
+	if (FyInitFlg == true) {
+		Fy = 445;
+		FyInitFlg = false;
+	}
 
 	if (Enemy::GetFishflg() == true) {
 		EdeadFish();
 	}
 	else {
-
 		Fishmove = 0;
-
 	}
 
 	Fx = e.GetEnemyLocationX();
@@ -210,14 +215,22 @@ void Fish::EdeadFish() {
 			Fishmove+=1;
 		}
 		break;
-		case 1:
+	case 1:
+		count++;
+		if (count > 20) {
+			count = 0;
+			Fishmove += 1;
+		}
+		break;
+		case 2:
 			Fy++;
 			if (Fy>=440) {
 				Fishmove +=1;
+
 				count = 0;
 			}
 			break;
-		case 2:
+		case 3:
 			Fishmove += 1;
 			Fy = 440;
 			break;

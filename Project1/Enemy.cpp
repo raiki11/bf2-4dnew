@@ -442,13 +442,12 @@ void Enemy::EDeadAnim() {
 			if (ELocationY+cy>=450)swy += 1;
 			break;
 		case 2:
+			FishFlg = true;
 			spflg = true;
 			//30%
-			if (Fishprobability == 30) {
-
-				FishFlg = true;
-			}
-			//DeadFlg = TRUE;
+			//if (Fishprobability == 30) {
+			//	FishFlg = true;
+			//}
 			break;
 		default:
 			break;
