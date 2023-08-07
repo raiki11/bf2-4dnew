@@ -1,6 +1,7 @@
 #include "End.h"
 #include <DxLib.h>
-
+#include "PadInput.h"
+#include "TitleScene.h"
 
 
 End::End()
@@ -17,6 +18,9 @@ End::~End()
 
 AbstractScene* End::Update()
 {
+	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
+		return new TitleScene();
+	}
 
     return this;
 }
