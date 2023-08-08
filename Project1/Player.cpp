@@ -47,6 +47,9 @@ Player::Player()
 	playerDeathState = -1;
 
 	noInputFps = 0;
+
+	reboundFlgEnemyY = FALSE;
+	reboundFlgEnemyX = FALSE;
 }
 
 Player::~Player()
@@ -464,6 +467,20 @@ void Player::PlayerMoveY()
 	//	flapInterval = 6;
 	//	flapFlg = FALSE;
 	//}
+
+	if (reboundFlgEnemyX == TRUE) {
+		playerMoveX = playerMoveX * -1;
+		reboundFlgEnemyX = FALSE;
+	}
+
+	if (reboundFlgEnemyY == TRUE) {
+		/*playerMoveY = playerMoveY * -1;*/
+		if (playerMoveY > 0) {
+			playerMoveY *= -1;
+		}
+		playerMoveY = -3;
+		reboundFlgEnemyY = FALSE;
+	}
 
 
 	//Aƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚©

@@ -23,6 +23,7 @@ GameMain::GameMain()
 		enemy[i] = new Enemy(i, i);
 	}
 
+	reboundFlg = FALSE;
 }
 
 GameMain::~GameMain()
@@ -172,7 +173,7 @@ AbstractScene* GameMain::Update()
 				if (player.GetPlayerImgNum() >= 0 && player.GetPlayerImgNum() <= 26) {
 					if (enemy[i]->GetI() >= 8 && enemy[i]->GetI() <= 12) {
 						if (hit.PlayerAndEnemy(player, *enemy[i]) == TRUE) {
-							player.SetReboundFlgStageX(TRUE);
+							player.SetReboundEnemyX(TRUE);
 							enemy[i]->ESetReboundFlgStageX(TRUE);
 						
 						}
@@ -182,8 +183,8 @@ AbstractScene* GameMain::Update()
 								if (player.GetNoInputFlg() == FALSE) {
 									player.SubtractRemainBalloon();
 								}
-								player.SetReboundFlgStageX(TRUE);
-								player.SetReboundFlgStageY(TRUE);
+								player.SetReboundEnemyX(TRUE);
+								player.SetReboundEnemyY(TRUE);
 								player.SetPlayerImgFpsCnt(0);
 								enemy[i]->ESetReboundFlgStageX(TRUE);
 								enemy[i]->ESetReboundFlgStageY(TRUE);
@@ -193,12 +194,23 @@ AbstractScene* GameMain::Update()
 					}
 					if (enemy[i]->GetI() >= 8 && enemy[i]->GetI() <= 17) {
 
-						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE) {
+						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE && reboundFlg == FALSE) {
 							//player.SubtractRemainBalloon();
 							
-							player.SetReboundFlgStageX(TRUE);
+							//player.SetReboundFlgStageX(TRUE);
 							//player.SetReboundFlgStageY(TRUE);
-							player.SetPlayerMoveY();
+							//player.SetPlayerMoveY();
+
+							player.SetReboundEnemyX(TRUE);
+							player.SetReboundEnemyY(TRUE);
+							/*player.SetPlayerLocationX();
+							player.SetPlayerLocationY();*/
+							//player.SetReboundEnemyY(TRUE);
+
+							reboundFlg = TRUE;
+						}
+						else {
+							reboundFlg = FALSE;
 						}
 					}
 				}

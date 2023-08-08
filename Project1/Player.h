@@ -51,6 +51,9 @@ private:
 	int St_Sea;
 
 	int playerDeathState; //‰½‚Å€‚ñ‚¾‚© 0,•—‘D‚ª‚È‚­‚È‚Á‚½@1,—‹
+
+	int reboundFlgEnemyY;
+	int reboundFlgEnemyX;
 public:
 	Player();
 	~Player();
@@ -122,6 +125,26 @@ public:
 	void SetPlayerMoveY()
 	{
 		playerMoveY *= -1;
+	}
+
+	void SetReboundEnemyX(int f)
+	{
+		reboundFlgEnemyX = f;
+	}
+
+	void SetReboundEnemyY(int f)
+	{
+		reboundFlgEnemyY = f;
+	}
+
+	void SetPlayerLocationX()
+	{
+		playerLocationX += playerMoveX * 10;
+	}
+
+	void SetPlayerLocationY()
+	{
+		playerLocationY += -10;
 	}
 	void SetFallLimit();
 	void SetRemainBalloon();
