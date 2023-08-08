@@ -127,7 +127,6 @@ void Enemy::EnemyUpdate(Player P,int& j)
 
 	if (spflg == true) {
 		EgetFx = ELocationX;
-
 		EsplashAnim();
 	}
 

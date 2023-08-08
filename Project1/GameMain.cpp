@@ -412,6 +412,8 @@ AbstractScene* GameMain::Update()
 		}
 	}
 
+	bubble.BabbleUpdate();
+
 	tst=player.GetPlayerLife();
 	if (tst <= -1) {
 

@@ -1,9 +1,21 @@
 #include"Bubble.h"
 #include"DxLib.h"
+#define _USE_MATH_DEFINES
+#include<math.h>
+
+#define DEGREE_RADIAN(_deg)	(M_PI*(_deg)/180.0f)
 
 Bubble::Bubble() 
 {
 	LoadDivGraph("images/Stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, BubbleImg);
+	BabbleX = 300;
+	BabbleY = 400;
+	additionX = 0;
+	additionY = 0;
+	count = 0;
+	rad = DEGREE_RADIAN(180.0);
+	flg = 0;
+
 }
 
 Bubble::~Bubble() 
@@ -14,9 +26,150 @@ Bubble::~Bubble()
 void Bubble::BabbleUpdate() 
 {
 	
+	//BabbleX += 1/sqrt(2);
+	//BabbleY -= 1 / sqrt(2);
+
+	//switch (count++)
+	//{
+	//case 0:
+	//	rad = DEGREE_RADIAN(0);
+	//	break;
+	//case 10:
+	//	rad = DEGREE_RADIAN(45.0);
+	//	break;
+	//case 20:
+	//	rad = DEGREE_RADIAN(90.0);
+	//	break;
+	//case 30:
+	//	rad = DEGREE_RADIAN(135.0);
+	//	break;
+	//case 40:
+	//	rad = DEGREE_RADIAN(180.0);
+	//	break;
+	//case 50:
+	//	rad = DEGREE_RADIAN(225.0);
+	//	break;
+	//case 60:
+	//	rad = DEGREE_RADIAN(270.0);
+	//	break;
+	//case 70:
+	//	rad = DEGREE_RADIAN(315.0);
+	//	break;
+	//case 80:
+	//	rad = DEGREE_RADIAN(360.0);
+	//	break;
+	//case 90:
+	//	count = 0;
+	//	break;
+	//default:
+	//	break;
+	//}
+
+	//0~1~0~-1
+
+
+
+	switch (flg) {
+	case 0:
+		additionX += 0.15;
+		additionY -= 0.3;
+		if (additionX > 13.5) {
+			flg = 1;
+		}
+		break;
+	case 1:
+		additionX += 0.3;
+		additionY -= 0.2;
+		if (count++ > 5) {
+			count = 0;
+			flg = 2;
+		}
+		break;
+	case 2:
+		additionY -= 0.2;
+		if (count++ > 20) {
+			count = 0;
+			flg = 3;
+		}
+		break;
+	case 3:
+		additionX -= 0.15;
+		additionY -= 0.3;
+		if (additionX < -13) {
+			flg = 4;
+		}
+		break;
+	case 4:
+		additionX -= 0.3;
+		additionY -= 0.2;
+		if (count++ > 5) {
+			count = 0;
+			flg = 5;
+		}
+	case 5:
+		additionY -= 0.2;
+		if (count++ > 20) {
+			count = 0;
+			flg = 0;
+		}
+		break;
+	default:
+		break;
+	}
+
+
+	/*
+	switch (flg) {
+	case 0:
+		additionX += 0.3;
+		if (additionX > 13) {
+			flg = 1;
+		}
+		break;
+	case 1:
+		additionX -= 0.1;
+		if (count++ > 5) {
+			count = 0;
+			flg = 2;
+		}
+		break;
+	case 2:
+		if (count++ > 5) {
+			count = 0;
+			flg = 3;
+		}
+		break;
+	case 3:
+		additionX -= 0.3;
+		if (additionX < -13) {
+			flg = 4;
+		}
+		break;
+	case 4:
+		if (count++ > 5) {
+			count = 0;
+			flg = 5;
+		}
+	case 5:
+		additionX += 0.1;
+		if (count++ > 5) {
+			count = 0;
+			flg = 0;
+		}
+		break;
+	default:
+		break;
+	}*/
+
+		//additionX =sin(rad);
+
+
+
 }
 
 void Bubble::BabbleDraw() const 
 {
-	DrawRotaGraph(BabbleX, BabbleY, 1.0f, 0, BubbleImg[0], TRUE, FALSE);
+	DrawRotaGraph(BabbleX+additionX, BabbleY+additionY, 1.0f, 0, BubbleImg[0], TRUE, FALSE);
+	DrawFormatString(400, 400, 0xffffff, "addX%f", additionX);
+	DrawFormatString(400, 440, 0xffffff, "addY%f", additionY);
 }
