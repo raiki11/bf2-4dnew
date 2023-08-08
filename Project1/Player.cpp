@@ -233,11 +233,11 @@ void Player::PlayerMoveX()
 			}
 
 			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
-					playerMoveX += 1.0f;
+				playerMoveX += 0.6f;
 			}
 			else if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
 				if (interval % 10 == 0) {
-					playerMoveX += 1.0f;
+					playerMoveX += 0.6f;
 				}
 			}
 
@@ -268,11 +268,11 @@ void Player::PlayerMoveX()
 			}
 
 			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
-					playerMoveX -= 1.0f;
+					playerMoveX -= 0.6f;
 			}
 			else if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
 				if (interval % 10 == 0) {
-					playerMoveX -= 1.0f;
+					playerMoveX -= 0.6f;
 				}
 			}
 			
@@ -469,16 +469,16 @@ void Player::PlayerMoveY()
 	//}
 
 	if (reboundFlgEnemyX == TRUE) {
-		playerMoveX = playerMoveX * -1;
+		playerMoveX = playerMoveX * -1 * 0.8f;
 		reboundFlgEnemyX = FALSE;
 	}
 
 	if (reboundFlgEnemyY == TRUE) {
 		/*playerMoveY = playerMoveY * -1;*/
 		if (playerMoveY > 0) {
-			playerMoveY *= -1;
+			playerMoveY *= -1 * 0.8f;
 		}
-		playerMoveY = -3;
+		playerMoveY = -3 * 0.8f;
 		reboundFlgEnemyY = FALSE;
 	}
 

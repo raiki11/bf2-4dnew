@@ -217,6 +217,36 @@ AbstractScene* GameMain::Update()
 			}
 		}
 
+		//“G‚Æ“G
+		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+			if (enemy[i] != nullptr) {
+				for (int j = i + 1; j <= Stage::EnemyMax[Stage::Snum]; j++) {
+					if (enemy[j] != nullptr) {
+						if (hit.EnemyAndEnemy(*enemy[i], *enemy[j]) == TRUE) {
+							if (enemy[i]->GetEnemyLocationX() < enemy[j]->GetEnemyLocationX()) {
+								enemy[j]->ESetReboundFlgStageX(TRUE);
+							}
+							else {
+								enemy[i]->ESetReboundFlgStageX(TRUE);
+							}
+
+
+							if (enemy[i]->GetEnemyLocationY() > enemy[j]->GetEnemyLocationY()) {
+								enemy[j]->ESetReboundFlgStageY(TRUE);
+							}
+							else {
+								enemy[i]->ESetReboundFlgStageY(TRUE);
+							}
+							//enemy[i]->ESetReboundFlgStageY(TRUE);
+
+
+							//enemy[i]->ESetReboundFlgStageY(TRUE);
+						}
+					}
+				}
+			}
+		}
+
 
 		//ƒvƒŒƒCƒ„[‚Æ—‹
 		if (hit.PlayerAndThunder(player, thunder) == TRUE) {
