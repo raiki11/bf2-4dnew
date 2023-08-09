@@ -25,7 +25,7 @@ UI::UI()
 	n = 0;
 	q = 100000;
 	//getsco = 0;	// 現在のスコア
-	old_score = 0;	// ハイスコア
+	//old_score = 0;	// ハイスコア
 }
 
 UI::~UI()
@@ -58,6 +58,10 @@ void UI::Update(int p)
 	{
 		old_score = getsco;
 	}
+	/*if (Stage::Snum > 4) {
+		Enemy::Score = 0;
+		getsco = 0;
+	}*/
 	/*else {
 
 	}*/

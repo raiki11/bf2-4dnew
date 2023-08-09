@@ -260,6 +260,9 @@ AbstractScene* GameMain::Update()
 			//ステージを最後までクリアしたらタイトルに戻る
 			if (Stage::Snum > 4) {
 				Stage::Snum = 0;
+				UI::old_score = Enemy::Score;
+				Enemy::Score = 0;
+				UI::getsco = 0;
 				return new TitleScene;
 			}
 			// ライフポイントが0になったらゲームオーバー
