@@ -17,7 +17,12 @@ Bubble::Bubble()
 	count = 0;
 	rad = DEGREE_RADIAN(180.0);
 	flg = 0;
-
+	Px = 0;
+	Py = 0;
+	babbleaddX = 0;
+	babbleaddY = 0;
+	a, b, c = 0;
+	check = FALSE;
 }
 
 Bubble::~Bubble() 
@@ -30,7 +35,17 @@ void Bubble::BabbleUpdate(Player p, Enemy e)
 	//座標受け取って当たり判定するのと、エネミーが死んだ時の座標貰ってそこから発生させる
 	//BabbleX += 1/sqrt(2);
 	//BabbleY -= 1 / sqrt(2);
+	
+	Px=p.GetPlayerLocationX();
+	Py=p.GetPlayerLocationY();
 
+	babbleaddX = BabbleX + additionX;
+	babbleaddY = BabbleY + additionY;
+
+	a = babbleaddX - Px;
+	b = babbleaddY - Py;
+	c = sqrt((a * a) + (b * b));
+	
 	//switch (count++)
 	//{
 	//case 0:
@@ -69,7 +84,9 @@ void Bubble::BabbleUpdate(Player p, Enemy e)
 
 	//0~1~0~-1
 
-
+	if (c <= 20) {
+		check = TRUE;
+	}
 
 	switch (flg) {
 	case 0:
@@ -175,6 +192,12 @@ void Bubble::BabbleDraw() const
 	DrawRotaGraph(BabbleX+additionX, BabbleY+additionY, 1.0f, 0, BubbleImg[0], TRUE, FALSE);
 	DrawCircle(BabbleX + additionX, BabbleY + additionY, 20, 0xffffff, TRUE);
 	DrawCircle(BabbleX + additionX, BabbleY + additionY, 2, 0xff00ff, TRUE);
+	DrawCircle(Px,Py, 2, 0xfff0ff, TRUE);
+	DrawBox(Px-24, Py-20, Px+24, Py+34, 0xffffff, FALSE);
 	DrawFormatString(400, 400, 0xffffff, "addX%f", additionX);
 	DrawFormatString(400, 440, 0xffffff, "addY%f", additionY);
+	if (check == TRUE) {
+		DrawCircle(BabbleX + additionX, BabbleY + additionY, 20, 0xff00ff, TRUE);
+
+	}
 }

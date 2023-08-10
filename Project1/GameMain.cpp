@@ -77,7 +77,6 @@ AbstractScene* GameMain::Update()
 				}
 			}
 			thunder.ThunderUpdate();
-			bubble.BabbleUpdate();
 		}
 
 
@@ -201,6 +200,10 @@ AbstractScene* GameMain::Update()
 						}
 					}
 				}
+
+				bubble.BabbleUpdate(player,*enemy[i]);
+
+
 			}
 		}
 
@@ -411,7 +414,6 @@ AbstractScene* GameMain::Update()
 		}
 	}
 
-	bubble.BabbleUpdate();
 
 	tst=player.GetPlayerLife();
 	if (tst <= -1) {

@@ -10,15 +10,28 @@ private:
 	float BabbleX;
 	float BabbleY;
 
-	double rad;
-	int count;
-	int flg;//0:X座標プラス 1:X座標そのまま　2:X座標マイナス
+	float babbleaddX;
+	float babbleaddY;
 
 	//バブルの移動用
 	double additionX;
 	double additionY;
 
+	double rad;
+
+	//バブルアニメーション用
+	int count;
+	int flg;//0:X座標プラス 1:X座標そのまま　2:X座標マイナス
+
 	//バブルの当たり判定用
+
+	float Px;//プレイヤーX座標
+	float Py;//プレイヤーY座標
+	float Pxy;//プレイヤーの中心
+
+	float a,b,c;
+
+	int check;//当たり判定できてるか確認用
 
 public:
 	// コンストラクタ
