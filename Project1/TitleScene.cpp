@@ -78,7 +78,7 @@ AbstractScene* TitleScene::Update()
 		return new GameMain();
 	}
 
-	
+	Stage::Snum = 0;
 	return this;
 }
 

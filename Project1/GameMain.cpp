@@ -473,7 +473,7 @@ AbstractScene* GameMain::Update()
 	// ライフポイントが0になったらゲームオーバー
 	tst=player.GetPlayerLife();
 	if (tst <= -1) {
-		Stage::Snum = 0;
+		
 		Enemy::Score = 0;
 		UI::getsco = 0;
 		return new End;
