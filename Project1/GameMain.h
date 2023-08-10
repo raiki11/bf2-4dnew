@@ -42,7 +42,8 @@ private:
 
     int a;
     int reboundFlg;
-   
+    //BGM用変数
+    int BGM;
 public:
 
     // コンストラクタ

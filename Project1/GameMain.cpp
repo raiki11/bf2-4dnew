@@ -24,14 +24,29 @@ GameMain::GameMain()
 	}
 
 	reboundFlg = FALSE;
+
+	
+	//BGMの読み込み
+	(BGM = LoadSoundMem("sounds/BGM_Trip.wav"));
+
+	//BGMの音量変更
+	ChangeVolumeSoundMem(100, BGM);
 }
 
 GameMain::~GameMain()
 {
+	//BGMの削除
+	DeleteSoundMem(BGM);
 }
 
 AbstractScene* GameMain::Update()
 {
+
+	//BGMの再生
+	if (CheckSoundMem(BGM) == 0)
+	{
+		PlaySoundMem(BGM, DX_PLAYTYPE_LOOP, TRUE);
+	}
 	//ポーズフラグ切り替え処理
 	if (PAD_INPUT::OnButton(XINPUT_BUTTON_START))
 	{
