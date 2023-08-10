@@ -55,5 +55,9 @@ public:
     //描画に関することを実装
     void Draw() const override;
 
+    /* デバック用 */
+    int b;
 
+    // 角度調整
+    void ChangeAngle();
 };

@@ -207,18 +207,19 @@ AbstractScene* GameMain::Update()
 				player.SetPlayerDeathFState(1);
 			}
 		}
+		b = hit.ThunderAndStageLeft(thunder, stage);
 		// ステージと当たり判定
 		if (hit.ThunderAndStageLeft(thunder, stage) == TRUE) {
-			thunder.ChangeAngle();
+			thunder.ChangeAngle(/*thunder.GetThunderMoveLocationX(),thunder.GetThunderMoveLocationY()*/);
 		}
 		if (hit.ThunderAndStageRight(thunder, stage) == TRUE) {
-			thunder.ChangeAngle();
+			thunder.ChangeAngle(/*thunder.GetThunderMoveLocationX(), thunder.GetThunderMoveLocationY()*/);
 		}
 		if (hit.ThunderAndStageUnder(thunder, stage) == TRUE) {
-			thunder.ChangeAngle();
+			thunder.ChangeAngle(/*thunder.GetThunderMoveLocationX(), thunder.GetThunderMoveLocationY()*/);
 		}
 		if (hit.ThunderAndStageTop(thunder, stage) == TRUE) {
-			thunder.ChangeAngle();
+			thunder.ChangeAngle(/*thunder.GetThunderMoveLocationX(), thunder.GetThunderMoveLocationY()*/);
 		}
 	}
 	//次のステージの敵生成
@@ -446,5 +447,6 @@ void GameMain::Draw() const
 
 	//DrawFormatString(300,0, 0xffffff, "%d", Enemy::Eflg);
 	//DrawBox(200, 99, 242, 117, 0xff0000, TRUE);
-}
 
+	DrawFormatString(400, 0, 0xffffff, "hitflg:%d", b);
+}
