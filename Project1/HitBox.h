@@ -49,5 +49,7 @@ public:
 	int PlayerBalloonAndEnemy(Player p,Enemy e);
 	int PlayerAndEnemyBalloon(Player p,Enemy e);
 
+	int EnemyAndEnemy(Enemy e0, Enemy e1);
+
 };
 

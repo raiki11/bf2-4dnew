@@ -78,7 +78,7 @@ AbstractScene* TitleScene::Update()
 		return new GameMain();
 	}
 
-	UI::getsco = 0;
+	
 	return this;
 }
 

@@ -3,12 +3,24 @@
 #include"DxLib.h"
 #include"HitBox.h"
 
+
+//#define FishAreaX0    160
+//#define FishAreaX1    480
+//#define FishAreaY     419
+
+bool Fish::FyInitFlg = false;
+
 Fish::Fish()
 {
 	LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 11, 5, 2, 64, 64, FishImg);
 	Time = 0;
 	fpscount = 0;
-	i = 10;
+	i = 0;
+	Fishmove=0;
+	Fy = 440;
+	Fx = 0;
+	Fimg = 1;
+	count = 0;
 	FishFlg = 0;
 	PFlg = 0;
 	EFlg = 0;
@@ -19,7 +31,7 @@ Fish::~Fish()
 
 }
 
-void Fish::FishUpdate(Player p , Enemy e[])
+void Fish::FishUpdate(Player p , Enemy e)
 {
 	/* プレイヤーがサカナの稼働エリアに入った時 */
 	if (FishAreaX0 <= p.GetPlayerLocationX() - 16 && p.GetPlayerLocationX() + 16 <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() + 32 && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
@@ -67,6 +79,21 @@ void Fish::FishUpdate(Player p , Enemy e[])
 	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() && FishFlg == 0 && i == 10 && PFlg==4) {
 		fpscount = 180;
 	}
+
+
+	if (FyInitFlg == true) {
+		Fy = 445;
+		FyInitFlg = false;
+	}
+
+	if (Enemy::GetFishflg() == true) {
+		EdeadFish();
+	}
+	else {
+		Fishmove = 0;
+	}
+
+	Fx = e.GetEnemyLocationX();
 
 	/* 敵がサカナの稼働エリアに入った時 */
 	//if (FishAreaX0 <= e[].GetEnemyLocationX() - 16 && e[].GetEnemyLocationX() + 16 <= FishAreaX1 && FishAreaY <= e[].GetEnemyLocationY() + 32 && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
@@ -205,4 +232,42 @@ bool Fish::Orientation() {
 		return TRUE;
 	}
 	else return FALSE;
+}
+
+void Fish::EdeadFish() {
+	switch (Fishmove) {
+	case 0:
+		Fy--;
+		if (Fy<=420) {
+			Fishmove+=1;
+		}
+		break;
+	case 1:
+		count++;
+		if (count > 20) {
+			count = 0;
+			Fishmove += 1;
+		}
+		break;
+		case 2:
+			Fy++;
+			if (Fy>=440) {
+				Fishmove +=1;
+
+				count = 0;
+			}
+			break;
+		case 3:
+			Fishmove += 1;
+			Fy = 440;
+			break;
+		default:
+			break;
+	}
+}
+
+void Fish::EdeadFishAnim()const{
+
+	DrawRotaGraph(Enemy::EgetFx, Fy, 1.0f, 0, FishImg[Fimg], TRUE, FishOrientation);
+
 }

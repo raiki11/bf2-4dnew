@@ -15,6 +15,11 @@ private:
 	int i;
 	
 
+	int Fishmove;
+	int Fy;
+	int Fx;
+	int Fimg;
+	int count;
 public:
 
 	// コンストラクタ
@@ -23,7 +28,7 @@ public:
 	// デストラクタ
 	~Fish();
 
-	void FishUpdate(Player p, Enemy e[]);
+	void FishUpdate(Player p, Enemy e);
 
 	void FishDraw(Player p) const;
 
@@ -48,6 +53,9 @@ public:
 	float FishX = 320;  // サカナのX座標
 	float FishY = 420;  // サカナのY座標
 
+	void EdeadFish();		//くち動かしてさがる
+	void EdeadFishAnim()const;	//やられたエネミー回収
+
 	int sakana;       // 確率結果を入れる変数
 	int FishImg[10];   // 画像を入れる配列 
 
@@ -58,4 +66,6 @@ public:
 	int FishFlg;  // 0:プレイヤーかエネミーが入ってない 1: サカナが上に上がる 2: サカナが下に下がる
 	bool FishOrientation;  // サカナの向きを決める
 	int sakanaOrientation;  // サカナの向きを決める乱数
+
+	static bool FyInitFlg;
 };

@@ -38,6 +38,8 @@ private:
 
     int OldSnum;//ステージ数比較用
 
+    int fishi;//サカナに渡すエネミーの番号保管用
+
     int a;
     int reboundFlg;
    
@@ -54,6 +56,7 @@ public:
 
     //描画に関することを実装
     void Draw() const override;
+    int tst;
 
     /* デバック用 */
     int b;

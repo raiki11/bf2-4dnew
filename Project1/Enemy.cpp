@@ -2,15 +2,21 @@
 #include "Enemy.h"
 #include "Stage.h"
 #include "HitBox.h"
+#include "Fish.h"
+#include "math.h"
 
 Enemy* hitenemy[6];
 HitBox hit;
 Stage stage;
 int Enemy::Eflg = FALSE;
+Fish fish;
+
 int Enemy::DeadFlg = FALSE;
 int Enemy::EdeadCount = -1;
 int Enemy::ElastFlg = FALSE;
-int Enemy::Score =0;
+int Enemy::Score = 0;
+bool Enemy::FishFlg = false;
+int Enemy::EgetFx = 0;
 Enemy::Enemy(int set_X,int set_Y)
 {
 	//ELocationX = 320;
@@ -41,6 +47,8 @@ Enemy::Enemy(int set_X,int set_Y)
 	EfectScore = 0;
 	efectcout = 0;
 	e = FALSE;
+
+	Fishprobability = 0;
 
 	enemy.type = Stage::EnemyType[Stage::Snum][set_X];
 	switch (enemy.type)
@@ -85,6 +93,8 @@ Enemy::~Enemy()
 
 void Enemy::EnemyUpdate(Player P,int& j)
 {
+	Fishprobability = rand() % (30 + 1);
+
 	if (++fpscount >= 60)
 	{
 		EAnimation();
@@ -116,6 +126,8 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	//}
 
 	if (spflg == true) {
+		EgetFx = ELocationX;
+
 		EsplashAnim();
 	}
 
@@ -147,6 +159,10 @@ void Enemy::EnemyUpdate(Player P,int& j)
 
 void Enemy::EnemyDraw() const
 {
+
+	DrawFormatString(0, 400, 0xffffff, "Fish::%d", Fishprobability);
+
+
 	//DrawCircle(ELocationX, ELocationY, 4, 0x00ff00, TRUE);
 	/*DrawGraph(enemyLocationX, enemyLocationY, img[i], TRUE);*/
 
@@ -239,7 +255,6 @@ void Enemy::EnemyDraw() const
 	}*/
 
 	if(spflg == true)DrawGraph(ELocationX - 30, 415, EspAnim[spc], TRUE);
-
 
 	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
 	DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
@@ -458,8 +473,12 @@ void Enemy::EDeadAnim() {
 			if (ELocationY+cy>=450)swy += 1;
 			break;
 		case 2:
+			FishFlg = true;
 			spflg = true;
-			//DeadFlg = TRUE;
+			//30%
+			//if (Fishprobability == 30) {
+			//	FishFlg = true;
+			//}
 			break;
 		default:
 			break;
@@ -650,10 +669,11 @@ void Enemy::EsplashAnim()
 		spc += 1;
 		count = 0;
 	}
-	if (spc >= 4) {
+	if (spc > 4) {
 		spc = 0;
 		count = 0;
 		spflg = false;
+		FishFlg = false;
 		DeadFlg = TRUE;
 	}
 }

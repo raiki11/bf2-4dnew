@@ -3,6 +3,7 @@
 #include"PadInput.h"
 #include "Stage.h"
 #include "Player.h"
+#include "End.h"
 #include "UI.h"
 #include "End.h"
 
@@ -16,11 +17,13 @@ GameMain::GameMain()
 	a = 0;
 	count = 0;
 	OldSnum = Stage::Snum;
+	fishi = 0;
 
 	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 		enemy[i] = new Enemy(i, i);
 	}
 
+	reboundFlg = FALSE;
 }
 
 GameMain::~GameMain()
@@ -48,6 +51,7 @@ AbstractScene* GameMain::Update()
 			for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 				if (enemy[i] != nullptr) {
 					enemy[i]->EnemyUpdate(player, i);
+					fishi = i;
 				}
 				//エネミーを倒したら
 				if (Enemy::EdeadCount == Stage::EnemyMax[Stage::Snum]) {
@@ -69,8 +73,11 @@ AbstractScene* GameMain::Update()
 
 
 			}
-
-			fish.FishUpdate(player, enemy[0]);
+			for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+				if (enemy[i] != nullptr) {
+					fish.FishUpdate(player, *enemy[i]);
+				}
+			}
 			thunder.ThunderUpdate();
 			bubble.BabbleUpdate();
 		}
@@ -166,7 +173,7 @@ AbstractScene* GameMain::Update()
 				if (player.GetPlayerImgNum() >= 0 && player.GetPlayerImgNum() <= 26) {
 					if (enemy[i]->GetI() >= 8 && enemy[i]->GetI() <= 12) {
 						if (hit.PlayerAndEnemy(player, *enemy[i]) == TRUE) {
-							player.SetReboundFlgStageX(TRUE);
+							player.SetReboundEnemyX(TRUE);
 							enemy[i]->ESetReboundFlgStageX(TRUE);
 						
 						}
@@ -176,8 +183,8 @@ AbstractScene* GameMain::Update()
 								if (player.GetNoInputFlg() == FALSE) {
 									player.SubtractRemainBalloon();
 								}
-								player.SetReboundFlgStageX(TRUE);
-								player.SetReboundFlgStageY(TRUE);
+								player.SetReboundEnemyX(TRUE);
+								player.SetReboundEnemyY(TRUE);
 								player.SetPlayerImgFpsCnt(0);
 								enemy[i]->ESetReboundFlgStageX(TRUE);
 								enemy[i]->ESetReboundFlgStageY(TRUE);
@@ -187,12 +194,53 @@ AbstractScene* GameMain::Update()
 					}
 					if (enemy[i]->GetI() >= 8 && enemy[i]->GetI() <= 17) {
 
-						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE) {
+						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE && reboundFlg == FALSE) {
 							//player.SubtractRemainBalloon();
 							
-							player.SetReboundFlgStageX(TRUE);
+							//player.SetReboundFlgStageX(TRUE);
 							//player.SetReboundFlgStageY(TRUE);
-							player.SetPlayerMoveY();
+							//player.SetPlayerMoveY();
+
+							player.SetReboundEnemyX(TRUE);
+							player.SetReboundEnemyY(TRUE);
+							/*player.SetPlayerLocationX();
+							player.SetPlayerLocationY();*/
+							//player.SetReboundEnemyY(TRUE);
+
+							reboundFlg = TRUE;
+						}
+						else {
+							reboundFlg = FALSE;
+						}
+					}
+				}
+			}
+		}
+
+		//敵と敵
+		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+			if (enemy[i] != nullptr) {
+				for (int j = i + 1; j <= Stage::EnemyMax[Stage::Snum]; j++) {
+					if (enemy[j] != nullptr) {
+						if (hit.EnemyAndEnemy(*enemy[i], *enemy[j]) == TRUE) {
+							if (enemy[i]->GetEnemyLocationX() < enemy[j]->GetEnemyLocationX()) {
+								enemy[j]->ESetReboundFlgStageX(TRUE);
+							}
+							else {
+								enemy[i]->ESetReboundFlgStageX(TRUE);
+							}
+
+
+							if (enemy[i]->GetEnemyLocationY() > enemy[j]->GetEnemyLocationY()) {
+								enemy[j]->ESetReboundFlgStageY(TRUE);
+							}
+							else {
+								enemy[i]->ESetReboundFlgStageY(TRUE);
+							}
+							//enemy[i]->ESetReboundFlgStageY(TRUE);
+
+
+							//enemy[i]->ESetReboundFlgStageY(TRUE);
 						}
 					}
 				}
@@ -381,6 +429,7 @@ AbstractScene* GameMain::Update()
 	if (ClearFlg == TRUE) {
 		//countで少しまってから
 		if (++count > 100) {
+			Fish::FyInitFlg = true;
 			ClearFlg = FALSE;
 			count = 0;
 			enemy[Elast] = nullptr;
@@ -391,6 +440,9 @@ AbstractScene* GameMain::Update()
 			//ステージを最後までクリアしたらタイトルに戻る
 			if (Stage::Snum > 4) {
 				Stage::Snum = 0;
+				UI::old_score = Enemy::Score;
+				Enemy::Score = 0;
+				UI::getsco = 0;
 				return new TitleScene;
 			}
 			// ライフポイントが0になったらゲームオーバー
@@ -406,13 +458,17 @@ AbstractScene* GameMain::Update()
 		}
 	}
 
+	tst=player.GetPlayerLife();
+	if (tst <= -1) {
 
+		return new End;
+	}
 	return this;
 }
 
 void GameMain::Draw() const
 {
-	//DrawFormatString(200, 300, 0xffffff, "Snum%d", Stage::Snum);
+	DrawFormatString(200, 300, 0xffffff, "life%d",tst);
 
 	if (PauseFlg == TRUE) {
 		DrawFormatString(0, 0, 0xffffff, "Pause");
@@ -430,12 +486,15 @@ void GameMain::Draw() const
 		//DrawFormatString(200, 300, 0xffffff, "EnemyMax%d", Stage::EnemyMax[Stage::Snum]);
 		if (enemy[i] != nullptr) {
 			enemy[i]->EnemyDraw();
+
 		}
 		
 	}
 
+	if (Enemy::GetFishflg() == true)fish.EdeadFishAnim();
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	
 	stage.DrawStage();
 	UI.DrawUI();
 	hit.DrawHitBox();
