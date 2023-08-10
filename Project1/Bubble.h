@@ -1,5 +1,6 @@
 #pragma once
-
+#include"Player.h"
+#include"Enemy.h"
 class Bubble {
 private:
 	// バブルの画像表示
@@ -27,7 +28,7 @@ public:
 	~Bubble();
 
 	// バブルのアップデート
-	void BabbleUpdate();
+	void BabbleUpdate(Player p,Enemy e);
 
 	// バブルの描画
 	void BabbleDraw() const;

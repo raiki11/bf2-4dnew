@@ -3,7 +3,9 @@
 #define _USE_MATH_DEFINES
 #include<math.h>
 
+
 #define DEGREE_RADIAN(_deg)	(M_PI*(_deg)/180.0f)
+
 
 Bubble::Bubble() 
 {
@@ -23,9 +25,9 @@ Bubble::~Bubble()
 
 }
 
-void Bubble::BabbleUpdate() 
+void Bubble::BabbleUpdate(Player p, Enemy e)
 {
-	
+	//座標受け取って当たり判定するのと、エネミーが死んだ時の座標貰ってそこから発生させる
 	//BabbleX += 1/sqrt(2);
 	//BabbleY -= 1 / sqrt(2);
 
@@ -172,7 +174,7 @@ void Bubble::BabbleDraw() const
 {
 	DrawRotaGraph(BabbleX+additionX, BabbleY+additionY, 1.0f, 0, BubbleImg[0], TRUE, FALSE);
 	DrawCircle(BabbleX + additionX, BabbleY + additionY, 20, 0xffffff, TRUE);
-	DrawCircle(BabbleX + additionX, BabbleY + additionY, 1, 0x00ffff, TRUE);
+	DrawCircle(BabbleX + additionX, BabbleY + additionY, 2, 0xff00ff, TRUE);
 	DrawFormatString(400, 400, 0xffffff, "addX%f", additionX);
 	DrawFormatString(400, 440, 0xffffff, "addY%f", additionY);
 }
