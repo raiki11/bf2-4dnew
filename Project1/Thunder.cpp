@@ -30,7 +30,7 @@ void Thunder::ThunderUpdate()
 		ThunderSpeed = 2;
 		ThunderAngle = 0.625f;
 
-		Thunder::ChangeAngle();
+		ChangeAngle();
 	}
 	else {
 		ThunderX += MoveX;
@@ -53,12 +53,12 @@ void Thunder::ThunderUpdate()
 		}
 		ThunderAngle = (1 - ThunderAngle) + 0.5f;
 		if (ThunderAngle > 1)ThunderAngle -= 1.0f;
-		Thunder::ChangeAngle();
+		ChangeAngle();
 	}
 
 	if (ThunderY < 8) {
 		ThunderAngle = (1 - ThunderAngle);
-		Thunder::ChangeAngle();
+		ChangeAngle();
 	}
 	if (ThunderY > 480 + 32) { // 雷が画面下に落ちた時
 		ThunderFlg = 2; // 雷をスタート状態にする

@@ -246,6 +246,7 @@ int HitBox::ThunderAndStageLeft(Thunder th, Stage s)
 			}
 		}
 	}
+	return FALSE;
 }
 
 //	return FALSE;
@@ -355,6 +356,28 @@ int HitBox::PlayerAndEnemyBalloon(Player p, Enemy e)
 	else {
 		now1 = FALSE;
 	}
+	return 0;
+}
+
+int HitBox::EnemyAndEnemy(Enemy e0, Enemy e1)
+{
+	ex0 = e0.GetEnemyLocationX() - 20;
+	ey0 = e0.GetEnemyLocationY() - 20;
+	ex1 = e0.GetEnemyLocationX() + 20;
+	ey1 = e0.GetEnemyLocationY() + 20;
+
+	px0 = e1.GetEnemyLocationX() - 20;
+	py0 = e1.GetEnemyLocationY() - 20;
+	px1 = e1.GetEnemyLocationX() + 20;
+	py1 = e1.GetEnemyLocationY() + 20;
+
+
+	if(ex0 <= px1 && ex1 >= px0 &&
+		ey0 <= py1 && ey1 >= py0) {
+
+		return TRUE;
+	}
+
 	return 0;
 }
 

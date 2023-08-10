@@ -45,11 +45,15 @@ private:
 	int playerImgFlyFlg;
 	int playerNoInputFlg;
 	int playerThunderFlg;
+	int noInputFps;
 
 	int splashNum;
 	int St_Sea;
 
 	int playerDeathState; //âΩÇ≈éÄÇÒÇæÇ© 0,ïóëDÇ™Ç»Ç≠Ç»Ç¡ÇΩÅ@1,óã
+
+	int reboundFlgEnemyY;
+	int reboundFlgEnemyX;
 public:
 	Player();
 	~Player();
@@ -121,6 +125,26 @@ public:
 	void SetPlayerMoveY()
 	{
 		playerMoveY *= -1;
+	}
+
+	void SetReboundEnemyX(int f)
+	{
+		reboundFlgEnemyX = f;
+	}
+
+	void SetReboundEnemyY(int f)
+	{
+		reboundFlgEnemyY = f;
+	}
+
+	void SetPlayerLocationX()
+	{
+		playerLocationX += playerMoveX * 10;
+	}
+
+	void SetPlayerLocationY()
+	{
+		playerLocationY += -10;
 	}
 	void SetFallLimit();
 	void SetRemainBalloon();

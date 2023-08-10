@@ -3,6 +3,7 @@
 #include"PadInput.h"
 #include "Stage.h"
 #include "Player.h"
+#include "End.h"
 #include "UI.h"
 #include "End.h"
 
@@ -16,11 +17,13 @@ GameMain::GameMain()
 	a = 0;
 	count = 0;
 	OldSnum = Stage::Snum;
+	fishi = 0;
 
 	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 		enemy[i] = new Enemy(i, i);
 	}
 
+	reboundFlg = FALSE;
 }
 
 GameMain::~GameMain()
@@ -48,6 +51,7 @@ AbstractScene* GameMain::Update()
 			for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 				if (enemy[i] != nullptr) {
 					enemy[i]->EnemyUpdate(player, i);
+					fishi = i;
 				}
 				//エネミーを倒したら
 				if (Enemy::EdeadCount == Stage::EnemyMax[Stage::Snum]) {
@@ -69,8 +73,11 @@ AbstractScene* GameMain::Update()
 
 
 			}
-
-			fish.FishUpdate(player, enemy[0]);
+			for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+				if (enemy[i] != nullptr) {
+					fish.FishUpdate(player, *enemy[i]);
+				}
+			}
 			thunder.ThunderUpdate();
 			bubble.BabbleUpdate();
 		}
@@ -166,7 +173,7 @@ AbstractScene* GameMain::Update()
 				if (player.GetPlayerImgNum() >= 0 && player.GetPlayerImgNum() <= 26) {
 					if (enemy[i]->GetI() >= 8 && enemy[i]->GetI() <= 12) {
 						if (hit.PlayerAndEnemy(player, *enemy[i]) == TRUE) {
-							player.SetReboundFlgStageX(TRUE);
+							player.SetReboundEnemyX(TRUE);
 							enemy[i]->ESetReboundFlgStageX(TRUE);
 						
 						}
@@ -176,8 +183,8 @@ AbstractScene* GameMain::Update()
 								if (player.GetNoInputFlg() == FALSE) {
 									player.SubtractRemainBalloon();
 								}
-								player.SetReboundFlgStageX(TRUE);
-								player.SetReboundFlgStageY(TRUE);
+								player.SetReboundEnemyX(TRUE);
+								player.SetReboundEnemyY(TRUE);
 								player.SetPlayerImgFpsCnt(0);
 								enemy[i]->ESetReboundFlgStageX(TRUE);
 								enemy[i]->ESetReboundFlgStageY(TRUE);
@@ -187,12 +194,53 @@ AbstractScene* GameMain::Update()
 					}
 					if (enemy[i]->GetI() >= 8 && enemy[i]->GetI() <= 17) {
 
-						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE) {
+						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE && reboundFlg == FALSE) {
 							//player.SubtractRemainBalloon();
 							
-							player.SetReboundFlgStageX(TRUE);
+							//player.SetReboundFlgStageX(TRUE);
 							//player.SetReboundFlgStageY(TRUE);
-							player.SetPlayerMoveY();
+							//player.SetPlayerMoveY();
+
+							player.SetReboundEnemyX(TRUE);
+							player.SetReboundEnemyY(TRUE);
+							/*player.SetPlayerLocationX();
+							player.SetPlayerLocationY();*/
+							//player.SetReboundEnemyY(TRUE);
+
+							reboundFlg = TRUE;
+						}
+						else {
+							reboundFlg = FALSE;
+						}
+					}
+				}
+			}
+		}
+
+		//敵と敵
+		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+			if (enemy[i] != nullptr) {
+				for (int j = i + 1; j <= Stage::EnemyMax[Stage::Snum]; j++) {
+					if (enemy[j] != nullptr) {
+						if (hit.EnemyAndEnemy(*enemy[i], *enemy[j]) == TRUE) {
+							if (enemy[i]->GetEnemyLocationX() < enemy[j]->GetEnemyLocationX()) {
+								enemy[j]->ESetReboundFlgStageX(TRUE);
+							}
+							else {
+								enemy[i]->ESetReboundFlgStageX(TRUE);
+							}
+
+
+							if (enemy[i]->GetEnemyLocationY() > enemy[j]->GetEnemyLocationY()) {
+								enemy[j]->ESetReboundFlgStageY(TRUE);
+							}
+							else {
+								enemy[i]->ESetReboundFlgStageY(TRUE);
+							}
+							//enemy[i]->ESetReboundFlgStageY(TRUE);
+
+
+							//enemy[i]->ESetReboundFlgStageY(TRUE);
 						}
 					}
 				}
@@ -207,6 +255,19 @@ AbstractScene* GameMain::Update()
 				player.SetPlayerDeathFState(1);
 			}
 		}
+		// ステージと当たり判定
+		if (hit.ThunderAndStageLeft(thunder, stage) == TRUE) {
+			thunder.ChangeAngle();
+		}
+		if (hit.ThunderAndStageRight(thunder, stage) == TRUE) {
+			thunder.ChangeAngle();
+		}
+		if (hit.ThunderAndStageUnder(thunder, stage) == TRUE) {
+			thunder.ChangeAngle();
+		}
+		if (hit.ThunderAndStageTop(thunder, stage) == TRUE) {
+			thunder.ChangeAngle();
+		}
 	}
 	//次のステージの敵生成
 	//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
@@ -220,21 +281,138 @@ AbstractScene* GameMain::Update()
 	//}
 		
 
-		/* 魚とプレイヤーの当たり判定 */
+	/* 魚とプレイヤーの当たり判定 */
 
-		if (fish.FishProbability() == TRUE && fish.PFlg == 1) {
-			if (hit.FishAndPlayer(fish, player) == TRUE) {
-				fish.FishPlayerHitAnimation(player);
-				/*player.SetPlayerDeathFlg(TRUE);
-				player.SetPlayerDeathFState(1);*/
-				fish.FishDownAnimation();
+	/* プレイヤーがサカナの稼働エリアに入った時 */
+	if (FishAreaX0 <= player.GetPlayerLocationX() && player.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= player.GetPlayerLocationY() + 32 && fish.FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
+		if (fish.PFlg == 0) {
+			fish.PFlg = 1;
+		}
+		else {
+			fish.PFlg = 0;
+		}
+		if (fish.FPSCount() >= 180) {  // ３秒以上たったら
+			fish.FPSCount();  // 加算し続けないように値を固定
+
+			if (fish.FishProbability() == TRUE && fish.PFlg == 1) { // サカナの確率
+				fish.PFlg = 2;
+				fish.FishFlg = 1;         // フィッシュフラグをサカナが上がるフラグに変更
+				fish.FishOrientation = fish.Orientation();  // サカナの向きを描く際の変数に入れる
+				fish.FishX = player.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
 			}
 		}
+	}
+	else fish.FPSCount();  // FPSのカウントをリセットする
 
-		/*if (hit.FishAndPlayer(fish, player) == TRUE) {
+	if (fish.FishFlg == 1 && fish.PFlg == 2 || fish.PFlg == 5) {      // フィッシュフラグがサカナを上げるフラグになった時
+		//FishX = p.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
+		/* アニメーション処理 */
+		fish.FishUpAnimation();
+		if (hit.FishAndPlayer(fish, player) == TRUE && fish.FishAnimation() == 1 /*|| fish.FishAnimation() == 2*/) {
 			fish.FishPlayerHitAnimation(player);
-			fish.FishDownAnimation();
-		}*/
+			/*player.SetPlayerDeathFlg(TRUE);
+			player.SetPlayerDeathFState(1);*/
+			fish.PFlg = 5;
+		}
+		if (fish.FishAnimation() == 2 || fish.FishAnimation() == 6 || fish.PFlg == 5) {
+			fish.PFlg = 3;
+		}
+	}
+
+	if (fish.PFlg == 3) {      // フィッシュフラグがサカナを下げるフラグになった時
+		//FishY += 2;             // フィッシュを下に下げる
+		/* アニメーション処理 */
+		fish.FishDownAnimation();
+		if (fish.FishAnimation() == 10) {
+			fish.FishAnimation();  // i == 10
+			fish.PFlg = 4;
+			fish.FishFlg = 0;     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
+			/*fpscount = 0;*/
+		}
+
+	}
+
+	/* プレイヤーがサカナエリアに居続ける時の処理 */
+	if (FishAreaX0 <= player.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= player.GetPlayerLocationY() && fish.FishFlg == 0 && fish.FishAnimation() == 10 && fish.PFlg == 4) {
+		fish.FPSCount();
+	}
+
+	/* 魚と敵の当たり判定 */
+	/* 敵がサカナの稼働エリアに入った時 */
+	//if (FishAreaX0 <= *enemy[].GetEnemyLocationX() && enemy[].GetEnemyLocationX() <= FishAreaX1 && FishAreaY <= enemy[].GetEnemyLocationY() + 32 && fish.FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
+	//	if (fish.EFlg == 0) {
+	//		fish.EFlg = 1;
+	//	}
+	//	else {
+	//		fish.EFlg = 0;
+	//	}
+	//	if (fish.FPSCount() >= 180) {  // ３秒以上たったら
+	//		fish.FPSCount();  // 加算し続けないように値を固定
+
+	//		if (fish.FishProbability() == TRUE && fish.EFlg == 1) { // サカナの確率
+	//			fish.EFlg = 2;
+	//			fish.FishFlg = 1;         // フィッシュフラグをサカナが上がるフラグに変更
+	//			fish.FishOrientation = fish.Orientation();  // サカナの向きを描く際の変数に入れる
+	//			fish.FishX = player.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
+	//		}
+	//	}
+	//}
+	//else fish.FPSCount();  // FPSのカウントをリセットする
+
+	//if (fish.FishFlg == 1 && fish.EFlg == 2 || fish.EFlg == 5) {      // フィッシュフラグがサカナを上げるフラグになった時
+	//	//FishX = p.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
+	//	/* アニメーション処理 */
+	//	fish.FishUpAnimation();
+	//	if (hit.FishAndPlayer(fish, player) == TRUE && fish.FishAnimation() == 1 /*|| fish.FishAnimation() == 2*/) {
+	//		fish.FishPlayerHitAnimation(player);
+	//		/*player.SetPlayerDeathFlg(TRUE);
+	//		player.SetPlayerDeathFState(1);*/
+	//		fish.EFlg = 5;
+	//	}
+	//	/*if (hb.FishAndPlayer(f, p) == TRUE) {
+	//		FishPlayerHitAnimation(p);
+
+	//	}*/
+	//	if (fish.FishAnimation() == 2 || fish.FishAnimation() == 6 || fish.EFlg == 5) {
+	//		fish.EFlg = 3;
+	//	}
+	//}
+
+	//if (fish.EFlg == 3) {      // フィッシュフラグがサカナを下げるフラグになった時
+	//	//FishY += 2;             // フィッシュを下に下げる
+	//	/* アニメーション処理 */
+	//	fish.FishDownAnimation();
+	//	if (fish.FishAnimation() == 10) {
+	//		fish.FishAnimation();  // i == 10
+	//		fish.EFlg = 4;
+	//		fish.FishFlg = 0;     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
+	//		/*fpscount = 0;*/
+	//	}
+
+	//}
+
+	///* プレイヤーがサカナエリアに居続ける時の処理 */
+	//if (FishAreaX0 <= *enemy[].GetEnemyLocationX() && enemy[].GetEnemyLocationX() <= FishAreaX1 && FishAreaY <= enemy[].GetEnemyLocationY() + 32 && fish.FishFlg == 0 && fish.FishAnimation() == 10 && fish.EFlg == 4) {
+	//	fish.FPSCount();
+	//}
+
+
+	/* 当たった時の処理 */
+	//if (fish.FishProbability() == TRUE /*&& fish.PFlg == 1*/) {
+	//	if (hit.FishAndPlayer(fish, player) == TRUE && fish.FishAnimation() == 1) {
+	//		fish.FishPlayerHitAnimation(player);
+	//		/*player.SetPlayerDeathFlg(TRUE);
+	//		player.SetPlayerDeathFState(1);*/
+	//		fish.PFlg = 3;
+	//	}
+	//	if (hit.FishAndPlayer(fish, player) == TRUE && fish.FishAnimation() != 1) {
+	//		fish.FishDownAnimation();
+	//	}
+	//}
+	/*if (hit.FishAndPlayer(fish, player) == TRUE) {
+		fish.FishPlayerHitAnimation(player);
+		fish.FishDownAnimation();
+	}*/
 
 		//次のステージの敵生成
 		//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
@@ -250,6 +428,7 @@ AbstractScene* GameMain::Update()
 	if (ClearFlg == TRUE) {
 		//countで少しまってから
 		if (++count > 100) {
+			Fish::FyInitFlg = true;
 			ClearFlg = FALSE;
 			count = 0;
 			enemy[Elast] = nullptr;
@@ -278,13 +457,17 @@ AbstractScene* GameMain::Update()
 		}
 	}
 
+	tst=player.GetPlayerLife();
+	if (tst <= -1) {
 
+		return new End;
+	}
 	return this;
 }
 
 void GameMain::Draw() const
 {
-	//DrawFormatString(200, 300, 0xffffff, "Snum%d", Stage::Snum);
+	DrawFormatString(200, 300, 0xffffff, "life%d",tst);
 
 	if (PauseFlg == TRUE) {
 		DrawFormatString(0, 0, 0xffffff, "Pause");
@@ -302,12 +485,15 @@ void GameMain::Draw() const
 		//DrawFormatString(200, 300, 0xffffff, "EnemyMax%d", Stage::EnemyMax[Stage::Snum]);
 		if (enemy[i] != nullptr) {
 			enemy[i]->EnemyDraw();
+
 		}
 		
 	}
 
+	if (Enemy::GetFishflg() == true)fish.EdeadFishAnim();
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	
 	stage.DrawStage();
 	UI.DrawUI();
 	hit.DrawHitBox();

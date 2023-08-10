@@ -45,6 +45,11 @@ Player::Player()
 	splashNum = 99;
 
 	playerDeathState = -1;
+
+	noInputFps = 0;
+
+	reboundFlgEnemyY = FALSE;
+	reboundFlgEnemyX = FALSE;
 }
 
 Player::~Player()
@@ -53,6 +58,7 @@ Player::~Player()
 
 void Player::PlayerUpdate()
 {
+	noInputFps++;
 	if (deathFlg == TRUE) {
 		switch (playerDeathState)
 		{
@@ -70,6 +76,8 @@ void Player::PlayerUpdate()
 				playerNoInputFlg = TRUE;
 				playerDeathState = -1;
 				playerImgReturnFlg = TRUE;
+				playerImgFpsCnt = 0;
+				noInputFps = 0;
 			}
 			break;
 		case 1:
@@ -86,6 +94,9 @@ void Player::PlayerUpdate()
 				playerNoInputFlg = TRUE;
 				playerDeathState = -1;
 				playerImgReturnFlg = TRUE;
+				playerImgFpsCnt = 0;
+				noInputFps = 0;
+
 			}
 			break;
 		case 2:
@@ -102,6 +113,9 @@ void Player::PlayerUpdate()
 				playerNoInputFlg = TRUE;
 				playerDeathState = -1;
 				playerImgReturnFlg = TRUE;
+				playerImgFpsCnt = 0;
+				noInputFps = 0;
+
 			}
 			break;
 		}
@@ -145,10 +159,10 @@ void Player::PlayerUpdate()
 
 		/***à⁄ìÆêßå¿Å@Ç±Ç±Ç‹Ç≈***/
 
-		if (playerMoveY == 0 && playerMoveX == 0 && playerNoInputFlg == TRUE) {
+		if (playerMoveY == 0 && playerMoveX == 0 && playerNoInputFlg == TRUE && noInputFps < 600) {
 			PlayerNoInputAnim();
 		}
-		else if(AnyButtons() == TRUE) {
+		else if(AnyButtons() == TRUE || noInputFps >= 600) {
 			playerNoInputFlg = FALSE;
 		}
 
@@ -186,7 +200,7 @@ void Player::PlayerDraw() const
 	DrawFormatString(0, 145, 0xffffff, "flyingflg::%d", flyingFlg);
 	DrawFormatString(0, 160, 0xffffff, "reboundflgx::%d", reboundFlgStageX);
 	DrawFormatString(0, 175, 0xffffff, "reboundcntx::%d", reboundFrameCntX);
-	DrawFormatString(0, 190, 0xffffff, "interval::%d", interval);
+	DrawFormatString(0, 190, 0xffffff, "flapflg::%d", flapFlg);
 	DrawFormatString(0, 205, 0xffffff, "imgnum::%d", playerImgNum);
 	DrawFormatString(0, 220, 0xffffff, "takeoff::%d", takeOffFlg);
 	
@@ -218,12 +232,12 @@ void Player::PlayerMoveX()
 				playerMoveX += 0.01f;
 			}
 
-			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
-					playerMoveX += 1.0f;
+			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
+				playerMoveX += 0.6f;
 			}
 			else if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
 				if (interval % 10 == 0) {
-					playerMoveX += 1.0f;
+					playerMoveX += 0.6f;
 				}
 			}
 
@@ -253,12 +267,12 @@ void Player::PlayerMoveX()
 				playerMoveX -= 0.01f;
 			}
 
-			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
-					playerMoveX -= 1.0f;
+			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
+					playerMoveX -= 0.6f;
 			}
 			else if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
 				if (interval % 10 == 0) {
-					playerMoveX -= 1.0f;
+					playerMoveX -= 0.6f;
 				}
 			}
 			
@@ -409,7 +423,7 @@ void Player::PlayerMoveX()
 		playerImgFpsCnt++;
 
 		//îÚÇ—óßÇø
-		if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
+		if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
 			
 			flyingFlg = TRUE;
 			flyButtonFlg = TRUE;
@@ -449,23 +463,48 @@ void Player::PlayerMoveY()
 		moveFpsCountY = 0;
 	}
 
+	//if (!(PAD_INPUT::OnPressed(XINPUT_BUTTON_B))) {
+	//	flapInterval = 6;
+	//	flapFlg = FALSE;
+	//}
+
+	if (reboundFlgEnemyX == TRUE) {
+		playerMoveX = playerMoveX * -1 * 0.8f;
+		reboundFlgEnemyX = FALSE;
+	}
+
+	if (reboundFlgEnemyY == TRUE) {
+		/*playerMoveY = playerMoveY * -1;*/
+		if (playerMoveY > 0) {
+			playerMoveY *= -1 * 0.8f;
+		}
+		playerMoveY = -3 * 0.8f;
+		reboundFlgEnemyY = FALSE;
+	}
+
 
 	//AÉ{É^ÉìÇ™âüÇ≥ÇÍÇΩÇ©
-	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
+	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnPressed(XINPUT_BUTTON_B) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
 		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
 			flapInterval = 6;
-			
+			flapFlg = TRUE;
 		}
 		else {
 			flapInterval = 4;
+			flapFlg = TRUE;
 		}
-		flapFlg = TRUE;
+
+		/*if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)){
+			flapInterval = 4;
+			flapFlg = TRUE;
+		}*/
+
 		/*playerImgFpsCnt = 0;*/
-		if (interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
+		if (interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
 			flyButtonFlg = TRUE;
 			//playerImgFly = 0;
 			//playerImgFlyFlg = TRUE;
-			if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
+			if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B) && PAD_INPUT::GetOldKey(XINPUT_BUTTON_B) == TRUE) {
 				playerMoveY += -0.5f;
 			}
 			else {

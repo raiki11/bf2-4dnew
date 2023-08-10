@@ -1,10 +1,14 @@
 #include<time.h>
 #include "Fish.h"
 #include"DxLib.h"
+#include"HitBox.h"
 
-#define FishAreaX0    160
-#define FishAreaX1    480
-#define FishAreaY     419
+
+//#define FishAreaX0    160
+//#define FishAreaX1    480
+//#define FishAreaY     419
+
+bool Fish::FyInitFlg = false;
 
 Fish::Fish()
 {
@@ -12,6 +16,11 @@ Fish::Fish()
 	Time = 0;
 	fpscount = 0;
 	i = 0;
+	Fishmove=0;
+	Fy = 440;
+	Fx = 0;
+	Fimg = 1;
+	count = 0;
 	FishFlg = 0;
 	PFlg = 0;
 	EFlg = 0;
@@ -22,49 +31,45 @@ Fish::~Fish()
 
 }
 
-void Fish::FishUpdate(Player p , Enemy e[])
+void Fish::FishUpdate(Player p , Enemy e)
 {
 	/* プレイヤーがサカナの稼働エリアに入った時 */
-	if (FishAreaX0 <= p.GetPlayerLocationX() && p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() + 32 && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
-		if (PFlg == 0) {
-			PFlg = 1;
-		}
-		else {
-			PFlg = 0;
-		}
+	if (FishAreaX0 <= p.GetPlayerLocationX() - 16 && p.GetPlayerLocationX() + 16 <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() + 32 && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
 		if (++fpscount >= 180) {  // ３秒以上たったら
 			fpscount = 180;  // 加算し続けないように値を固定
-			if (FishProbability() == TRUE && PFlg == 1) { // サカナの確率
-				PFlg = 2;
-				FishFlg = 1;         // フィッシュフラグをサカナが上がるフラグに変更
-				FishOrientation = Orientation();  // サカナの向きを描く際の変数に入れる
-				FishX = p.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
-			}
+			//if (FishProbability() == TRUE && PFlg == 1) { // サカナの確率
+			//	PFlg = 2;
+			//	FishFlg = 1;         // フィッシュフラグをサカナが上がるフラグに変更
+			//	FishOrientation = Orientation();  // サカナの向きを描く際の変数に入れる
+			//	FishX = p.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
+			//}
 		}
 	}
-	else fpscount = 0;  // FPSのカウントをリセットする
+	else { 
+		fpscount = 0; // FPSのカウントをリセットする
+	}
 
 	if (FishFlg == 1 && PFlg == 2) {      // フィッシュフラグがサカナを上げるフラグになった時
 		//FishX = p.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
 		/* アニメーション処理 */
-		FishUpAnimation();
+		//FishUpAnimation();
 		/*if (hb.FishAndPlayer(f, p) == TRUE) {
 			FishPlayerHitAnimation(p);
 			
 		}*/
-		if (i == 2) {
+		if (i == 2 || i == 6) {
 			PFlg = 3;
 		}
 	}
 	
 	if (PFlg == 3) {      // フィッシュフラグがサカナを下げるフラグになった時
-		//FishY += 2;             // フィッシュを下に下げる
+
 		/* アニメーション処理 */
-		FishDownAnimation();
+		//FishDownAnimation();
 		if (i == 5) {
 			i = 10;
-			PFlg = 4;
-			FishFlg = 0;     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
+			/*PFlg = 4;
+			FishFlg = 0;*/     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
 			/*fpscount = 0;*/
 		}
 		
@@ -74,42 +79,67 @@ void Fish::FishUpdate(Player p , Enemy e[])
 	if (FishAreaX0 <= p.GetPlayerLocationX() <= FishAreaX1 && FishAreaY <= p.GetPlayerLocationY() && FishFlg == 0 && i == 10 && PFlg==4) {
 		fpscount = 180;
 	}
-	
+
+
+	if (FyInitFlg == true) {
+		Fy = 445;
+		FyInitFlg = false;
+	}
+
+	if (Enemy::GetFishflg() == true) {
+		EdeadFish();
+	}
+	else {
+		Fishmove = 0;
+	}
+
+	Fx = e.GetEnemyLocationX();
 
 	/* 敵がサカナの稼働エリアに入った時 */
-	//if (FishAreaX0 <= e.GetEnemyLocationX() <= FishAreaX1 && FishAreaY <= e.GetEnemyLocationY() && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
-	//	if (EFlg == 0) {
-	//		EFlg = 1;
+	//if (FishAreaX0 <= e[].GetEnemyLocationX() - 16 && e[].GetEnemyLocationX() + 16 <= FishAreaX1 && FishAreaY <= e[].GetEnemyLocationY() + 32 && FishFlg == 0) {// プレイヤーがサカナの範囲に入った時
+	//	if (++fpscount >= 180) {  // ３秒以上たったら
+	//		fpscount = 180;  // 加算し続けないように値を固定
+	//		//if (FishProbability() == TRUE && PFlg == 1) { // サカナの確率
+	//		//	PFlg = 2;
+	//		//	FishFlg = 1;         // フィッシュフラグをサカナが上がるフラグに変更
+	//		//	FishOrientation = Orientation();  // サカナの向きを描く際の変数に入れる
+	//		//	FishX = p.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
+	//		//}
 	//	}
-	//	else {
-	//		EFlg = 0;
+	//}
+	//else {
+	//	fpscount = 0; // FPSのカウントをリセットする
+	//}
+
+	//if (FishFlg == 1 && EFlg == 2) {      // フィッシュフラグがサカナを上げるフラグになった時
+	//	//FishX = p.GetPlayerLocationX(); // プレイヤーがいたX座標にサカナを出現させる
+	//	/* アニメーション処理 */
+	//	//FishUpAnimation();
+	//	/*if (hb.FishAndPlayer(f, p) == TRUE) {
+	//		FishPlayerHitAnimation(p);
+
+	//	}*/
+	//	if (i == 2 || i == 6) {
+	//		EFlg = 3;
+	//	}
+	//}
+
+	//if (EFlg == 3) {      // フィッシュフラグがサカナを下げるフラグになった時
+
+	//	/* アニメーション処理 */
+	//	//FishDownAnimation();
+	//	if (i == 5) {
+	//		i = 10;
+	//		/*EFlg = 4;
+	//		FishFlg = 0;*/     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
+	//		/*fpscount = 0;*/
 	//	}
 
-	//	if (FishProbability() == TRUE && PFlg == 1) { // サカナの確率
-	//		/* 処理を書く */
-	//		PFlg = 2;
-	//		FishFlg = 1;         // フィッシュフラグをサカナが上がるフラグに変更
-	//		FishX = e.GetEnemyLocationX(); // プレイヤーがいたX座標にサカナを出現させる
-	//	}
-	//	//if (p.GetPlayerLocationX() < FishAreaX0 && FishAreaX1 <  p.GetPlayerLocationX() && FishAreaY > p.GetPlayerLocationY()) {// プレイヤーがサカナの範囲を出たとき
-	//	//	FishFlg = 0;
-	//	//}
-	//	//else {
-	//	//	FishFlg = 3;  // 範囲内に入った時、1回しかif文の中の条件を受付ないように設定
-	//	//}
 	//}
-	//if (FishFlg == 1 && PFlg == 2) {      // フィッシュフラグがサカナを上げるフラグになった時
-	//	--FishY;             // フィッシュを上に上げる
-	//	if (FishY == 420) {  // フィッシュのY座標が４２０になった時
-	//		FishFlg = 2;     // フィッシュフラグをサカナが下がるフラグに変更
-	//	}
-	//}
-	//if (FishFlg == 2) {      // フィッシュフラグがサカナを下げるフラグになった時
-	//	FishY++;             // フィッシュを下に下げる
-	//	if (FishY == 500) {  // フィッシュのY座標が５００になった時
-	//		FishFlg = 0;     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
-	//		PFlg = 0;
-	//	}
+
+	///* プレイヤーがサカナエリアに居続ける時の処理 */
+	//if (FishAreaX0 <= e[].GetEnemyLocationX() <= FishAreaX1 && FishAreaY <= e[].GetEnemyLocationY() && FishFlg == 0 && i == 10 && EFlg == 4) {
+	//	fpscount = 180;
 	//}
 }
 
@@ -120,9 +150,10 @@ void Fish:: FishDraw(Player p) const
 	/* デバック用 */
 	DrawFormatString(400, 200, 0xffffff, "playerLocationX::%f", p.GetPlayerLocationX());
 	DrawFormatString(400, 230, 0xffffff, "fishLocationX::%f", FishX);
-	DrawFormatString(400, 260, 0xffffff, "FishOrientation::%d", FishOrientation);
+	/*DrawFormatString(400, 260, 0xffffff, "FishOrientation::%d", FishOrientation);*/
 	DrawFormatString(400, 290, 0xffffff, "flg::%d", fpscount);
-	DrawFormatString(400, 350, 0xffffff, "Pflg::%d", PFlg);
+	DrawFormatString(400, 350, 0xffffff, "Time::%d", Time);
+	DrawFormatString(400, 380, 0xffffff, "i::%d", i);
 }
 
 int Fish::FishProbability() 
@@ -141,10 +172,12 @@ int Fish::FishProbability()
 void Fish::FishUpAnimation()
 {
 	Time;
-	if (i == 10) i = 0;   // サカナが出てないときiをリセットする
+	if (i == 10) {
+		i = 0;   // サカナが出てないときiをリセットする
+	}
 
 	if (i < 2 && ++Time % 30 == 0) { // 要調整
-		i++;
+	i++;
 	}
 }
 
@@ -152,16 +185,21 @@ void Fish::FishDownAnimation()
 {
 	
 	++Time;
-
+	if (i == 6) {
+		if (Time % 30 == 0) i = 2;
+	}
 	if (i < 5 && Time % 30 == 0) { // 要調整
 		++i;
 	}
+	if (i == 5) {
+		i = 10;
+		Time = 0;
+	}
+	
 }
 
 void Fish::FishPlayerHitAnimation(Player p)
 {
-	++Time;
-	if(Time<=60)
 	i = 6;
 }
 
@@ -194,4 +232,42 @@ bool Fish::Orientation() {
 		return TRUE;
 	}
 	else return FALSE;
+}
+
+void Fish::EdeadFish() {
+	switch (Fishmove) {
+	case 0:
+		Fy--;
+		if (Fy<=420) {
+			Fishmove+=1;
+		}
+		break;
+	case 1:
+		count++;
+		if (count > 20) {
+			count = 0;
+			Fishmove += 1;
+		}
+		break;
+		case 2:
+			Fy++;
+			if (Fy>=440) {
+				Fishmove +=1;
+
+				count = 0;
+			}
+			break;
+		case 3:
+			Fishmove += 1;
+			Fy = 440;
+			break;
+		default:
+			break;
+	}
+}
+
+void Fish::EdeadFishAnim()const{
+
+	DrawRotaGraph(Enemy::EgetFx, Fy, 1.0f, 0, FishImg[Fimg], TRUE, FishOrientation);
+
 }
