@@ -57,7 +57,4 @@ public:
 
     /* デバック用 */
     int b;
-
-    // 角度調整
-    void ChangeAngle();
 };
