@@ -460,10 +460,8 @@ AbstractScene* GameMain::Update()
 				UI::getsco = 0;
 				return new TitleScene;
 			}
-			// ライフポイントが0になったらゲームオーバー
-		/*	if (player.GetPlayerLife()==-1) {
-				return new End;
-			}*/
+		
+	
 			//次のステージの敵生成
 			if (OldSnum != Stage::Snum) {
 				for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
@@ -472,10 +470,12 @@ AbstractScene* GameMain::Update()
 			}
 		}
 	}
-
+	// ライフポイントが0になったらゲームオーバー
 	tst=player.GetPlayerLife();
 	if (tst <= -1) {
-
+		Stage::Snum = 0;
+		Enemy::Score = 0;
+		UI::getsco = 0;
 		return new End;
 	}
 	return this;
