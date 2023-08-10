@@ -164,12 +164,15 @@ void Bubble::BabbleUpdate()
 		//additionX =sin(rad);
 
 
+	//64*64ÇÃê^ÇÒíÜ
 
 }
 
 void Bubble::BabbleDraw() const 
 {
 	DrawRotaGraph(BabbleX+additionX, BabbleY+additionY, 1.0f, 0, BubbleImg[0], TRUE, FALSE);
+	DrawCircle(BabbleX + additionX, BabbleY + additionY, 20, 0xffffff, TRUE);
+	DrawCircle(BabbleX + additionX, BabbleY + additionY, 1, 0x00ffff, TRUE);
 	DrawFormatString(400, 400, 0xffffff, "addX%f", additionX);
 	DrawFormatString(400, 440, 0xffffff, "addY%f", additionY);
 }

@@ -17,6 +17,8 @@ private:
 	double additionX;
 	double additionY;
 
+	//バブルの当たり判定用
+
 public:
 	// コンストラクタ
 	Bubble();

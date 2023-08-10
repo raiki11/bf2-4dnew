@@ -67,7 +67,6 @@ AbstractScene* GameMain::Update()
 				if (Enemy::DeadFlg == TRUE) {
 					enemy[i] = nullptr;
 					Enemy::DeadFlg = FALSE;
-					
 				}
 
 
