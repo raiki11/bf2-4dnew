@@ -209,12 +209,13 @@ AbstractScene* GameMain::Update()
 
 
 		//プレイヤーと雷
-		if (hit.PlayerAndThunder(player, thunder) == TRUE) {
-			if (player.GetDeathFlg() == FALSE) {
-				player.SetPlayerDeathFlg(TRUE);
-				player.SetPlayerDeathFState(1);
-			}
-		}
+		//if (hit.PlayerAndThunder(player, thunder) == TRUE) {
+		//	if (player.GetDeathFlg() == FALSE) {
+		//		player.SetPlayerDeathFlg(TRUE);
+		//		player.SetPlayerDeathFState(1);
+		//	}
+		//}
+
 		// ステージと当たり判定
 		if (hit.ThunderAndStageLeft(thunder, stage) == TRUE) {
 			thunder.ChangeAngle();

@@ -84,57 +84,60 @@ void Bubble::BabbleUpdate(Player p, Enemy e)
 
 	//0~1~0~-1
 
-	if (c <= 20) {
+	if (c+10 <= 20) {
 		check = TRUE;
 	}
-
-	switch (flg) {
-	case 0:
-		additionX += 0.15;
-		additionY -= 0.3;
-		if (additionX > 13.5) {
-			flg = 1;
-		}
-		break;
-	case 1:
-		additionX += 0.3;
-		additionY -= 0.2;
-		if (count++ > 5) {
-			count = 0;
-			flg = 2;
-		}
-		break;
-	case 2:
-		additionY -= 0.2;
-		if (count++ > 20) {
-			count = 0;
-			flg = 3;
-		}
-		break;
-	case 3:
-		additionX -= 0.15;
-		additionY -= 0.3;
-		if (additionX < -13) {
-			flg = 4;
-		}
-		break;
-	case 4:
-		additionX -= 0.3;
-		additionY -= 0.2;
-		if (count++ > 5) {
-			count = 0;
-			flg = 5;
-		}
-	case 5:
-		additionY -= 0.2;
-		if (count++ > 20) {
-			count = 0;
-			flg = 0;
-		}
-		break;
-	default:
-		break;
+	else {
+		check = FALSE;
 	}
+
+	//switch (flg) {
+	//case 0:
+	//	additionX += 0.15;
+	//	additionY -= 0.3;
+	//	if (additionX > 13.5) {
+	//		flg = 1;
+	//	}
+	//	break;
+	//case 1:
+	//	additionX += 0.3;
+	//	additionY -= 0.2;
+	//	if (count++ > 5) {
+	//		count = 0;
+	//		flg = 2;
+	//	}
+	//	break;
+	//case 2:
+	//	additionY -= 0.2;
+	//	if (count++ > 20) {
+	//		count = 0;
+	//		flg = 3;
+	//	}
+	//	break;
+	//case 3:
+	//	additionX -= 0.15;
+	//	additionY -= 0.3;
+	//	if (additionX < -13) {
+	//		flg = 4;
+	//	}
+	//	break;
+	//case 4:
+	//	additionX -= 0.3;
+	//	additionY -= 0.2;
+	//	if (count++ > 5) {
+	//		count = 0;
+	//		flg = 5;
+	//	}
+	//case 5:
+	//	additionY -= 0.2;
+	//	if (count++ > 20) {
+	//		count = 0;
+	//		flg = 0;
+	//	}
+	//	break;
+	//default:
+	//	break;
+	//}
 
 
 	/*
