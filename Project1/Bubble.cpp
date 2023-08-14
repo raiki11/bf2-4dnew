@@ -42,8 +42,8 @@ void Bubble::BabbleUpdate(Player p, Enemy e)
 	babbleaddX = BabbleX + additionX;
 	babbleaddY = BabbleY + additionY;
 
-	a = babbleaddX - Px;
-	b = babbleaddY - Py;
+	a = Px-babbleaddX;
+	b = Py - babbleaddY;
 	c = sqrt((a * a) + (b * b));
 	
 	//switch (count++)
@@ -84,7 +84,7 @@ void Bubble::BabbleUpdate(Player p, Enemy e)
 
 	//0~1~0~-1
 
-	if (c+10 <= 20) {
+	if (c <= 20) {
 		check = TRUE;
 	}
 	else {
