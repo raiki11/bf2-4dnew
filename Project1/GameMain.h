@@ -44,6 +44,7 @@ private:
     int reboundFlg;
     //BGM用変数
     int BGM;
+    int Start_SE;
 public:
 
     // コンストラクタ

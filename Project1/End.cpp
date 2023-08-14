@@ -23,7 +23,7 @@ End::~End()
 AbstractScene* End::Update()
 {
 	
-	PlaySoundMem(SE, DX_PLAYTYPE_BACK, TRUE);
+	//PlaySoundMem(SE, DX_PLAYTYPE_BACK, TRUE);
 	
 	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
 		return new TitleScene();

@@ -31,6 +31,9 @@ GameMain::GameMain()
 
 	//BGMの音量変更
 	ChangeVolumeSoundMem(100, BGM);
+
+	//SEの読み込み
+	(Start_SE = LoadSoundMem("sounds/SE_Start.wav"));
 }
 
 GameMain::~GameMain()
@@ -41,15 +44,17 @@ GameMain::~GameMain()
 
 AbstractScene* GameMain::Update()
 {
-
+	
 	//BGMの再生
 	if (CheckSoundMem(BGM) == 0)
 	{
+		//PlaySoundMem(Start_SE, DX_PLAYTYPE_NORMAL, TRUE);
 		PlaySoundMem(BGM, DX_PLAYTYPE_LOOP, TRUE);
 	}
 	//ポーズフラグ切り替え処理
 	if (PAD_INPUT::OnButton(XINPUT_BUTTON_START))
 	{
+		//PlaySoundMem(SE, DX_PLAYTYPE_BACK, TRUE);
 		PauseFlg = !PauseFlg;
 
 	}
