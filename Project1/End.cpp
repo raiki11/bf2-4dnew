@@ -12,6 +12,7 @@ End::End()
 	}
 	//SEÇÃì«Ç›çûÇ›
 	(SE = LoadSoundMem("sounds/SE_GameOver.wav"));
+	ChangeVolumeSoundMem(70, SE);
 }
 
 End::~End()
@@ -23,7 +24,7 @@ End::~End()
 AbstractScene* End::Update()
 {
 	
-	//PlaySoundMem(SE, DX_PLAYTYPE_BACK, TRUE);
+	PlaySoundMem(SE, DX_PLAYTYPE_NORMAL, TRUE);
 	
 	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
 		return new TitleScene();

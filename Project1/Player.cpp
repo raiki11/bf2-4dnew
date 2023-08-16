@@ -220,7 +220,7 @@ void Player::PlayerMoveX()
 	if (flyingFlg == TRUE) {
 		//‰EˆÚ“®
 		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || PAD_INPUT::GetLStick().x >= 32000) {
-			PlaySoundMem(SE_playerwalk, DX_PLAYTYPE_BACK, TRUE);		//SE
+			PlaySoundMem(SE_playerwalk, DX_PLAYTYPE_NORMAL, TRUE);		//SE
 			rButtonFlg = TRUE;
 			rFlg = TRUE;
 			reboundFrameCntX = 0;
@@ -244,7 +244,7 @@ void Player::PlayerMoveX()
 			}
 
 			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
-				//PlaySoundMem(SE_playerjump, DX_PLAYTYPE_BACK, TRUE);
+				PlaySoundMem(SE_playerjump, DX_PLAYTYPE_NORMAL, TRUE);
 				playerMoveX += 0.6f;
 				
 			}
@@ -265,7 +265,7 @@ void Player::PlayerMoveX()
 			reboundFrameCntX = 0;
 			//reboundFlgStageX = FALSE;
 			playerImgReturnFlg = FALSE;
-			PlaySoundMem(SE_playerwalk, DX_PLAYTYPE_BACK, TRUE);			// SE
+			PlaySoundMem(SE_playerwalk, DX_PLAYTYPE_NORMAL, TRUE);			// SE
 		}
 		else {
 			lButtonFlg = FALSE;
@@ -282,13 +282,13 @@ void Player::PlayerMoveX()
 			}
 
 			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
-				PlaySoundMem(SE_playerjump, DX_PLAYTYPE_BACK, TRUE);		//SE
+				PlaySoundMem(SE_playerjump, DX_PLAYTYPE_NORMAL, TRUE);		//SE
 					playerMoveX -= 0.6f;
 				
 			}
 			else if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
 				if (interval % 10 == 0) {
-					PlaySoundMem(SE_playerjump, DX_PLAYTYPE_BACK, TRUE);		//SE
+					PlaySoundMem(SE_playerjump, DX_PLAYTYPE_NORMAL, TRUE);		//SE
 					playerMoveX -= 0.6f;
 					
 				}
@@ -506,7 +506,7 @@ void Player::PlayerMoveY()
 	//Aƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚©
 	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnPressed(XINPUT_BUTTON_B) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
 		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
-			PlaySoundMem(SE_playerjump, DX_PLAYTYPE_BACK, TRUE);		//SE
+			PlaySoundMem(SE_playerjump, DX_PLAYTYPE_NORMAL, TRUE);		//SE
 			flapInterval = 6;
 			flapFlg = TRUE;
 			

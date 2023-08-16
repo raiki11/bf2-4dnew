@@ -25,33 +25,48 @@ GameMain::GameMain()
 
 	reboundFlg = FALSE;
 
-	
+	o	= 0;
 	//BGMの読み込み
 	(BGM = LoadSoundMem("sounds/BGM_Trip.wav"));
 
 	//BGMの音量変更
-	ChangeVolumeSoundMem(100, BGM);
+	ChangeVolumeSoundMem(70, BGM);
 
 	//SEの読み込み
 	(Start_SE = LoadSoundMem("sounds/SE_Start.wav"));
-
+	ChangeVolumeSoundMem(70,Start_SE);
 }
 
 GameMain::~GameMain()
 {
 	//BGMの削除
 	DeleteSoundMem(BGM);
+	DeleteSoundMem(Start_SE);
 }
 
 AbstractScene* GameMain::Update()
 {
 	
 	//BGMの再生
-	if (CheckSoundMem(BGM) == 0)
+	if (CheckSoundMem(Start_SE) == 0)
 	{
-		//PlaySoundMem(Start_SE, DX_PLAYTYPE_NORMAL, TRUE);
+
+		PlaySoundMem(Start_SE, DX_PLAYTYPE_BACK, TRUE);
+
+		//StopSoundMem(BGM);
 		//PlaySoundMem(BGM, DX_PLAYTYPE_LOOP, TRUE);
+		o++;
 	}
+
+	if (o > 1) {
+		StopSoundMem(Start_SE);
+		if (CheckSoundMem(BGM) == 0)
+		{
+			PlaySoundMem(BGM, DX_PLAYTYPE_LOOP, TRUE);
+		}
+	}
+
+	
 	//ポーズフラグ切り替え処理
 	if (PAD_INPUT::OnButton(XINPUT_BUTTON_START))
 	{
