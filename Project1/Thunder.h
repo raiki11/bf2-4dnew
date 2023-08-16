@@ -11,7 +11,7 @@ private:
 	// 雷のY座標
 	float ThunderY;
 	// 雷のフラグ
-	int ThunderFlg = 2; // 雷の状態（0: 移動中 1: バー接触 2: 待機状態）
+	int ThunderFlg; // 雷の状態（0: 移動中 1: バー接触 2: 待機状態）
 	
 	// 雷が動くX座標の量
 	float MoveX;

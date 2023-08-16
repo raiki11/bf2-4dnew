@@ -8,9 +8,11 @@ Thunder::Thunder()
 	MoveX = 0.0f;
 	MoveY = 0.0f;
 	// 雷のX座標
-	ThunderX = 300.0;
+	ThunderX = 100.0;
 	// 雷のY座標
 	ThunderY = 400.0;
+	// 雷のフラグ
+	ThunderFlg = 2;
 }
 
 Thunder::~Thunder()
@@ -50,9 +52,10 @@ void Thunder::ThunderUpdate()
 		ThunderAngle = (1 - ThunderAngle);
 		ChangeAngle(/*MoveX,MoveY*/);
 	}
-	//if (ThunderY > 480 + 32) { // 雷が画面下に落ちた時
-	//	ThunderFlg = 2; // 雷をスタート状態にする
-	//}
+	if (ThunderY > 480.0 + 32.0) { // 雷が画面下に落ちた時
+		//ThunderFlg = 2; // 雷をスタート状態にする
+		ChangeAngle();
+	}
 
 
 	//デバッグ

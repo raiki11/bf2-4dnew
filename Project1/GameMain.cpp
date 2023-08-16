@@ -257,16 +257,20 @@ AbstractScene* GameMain::Update()
 		}
 		b = hit.ThunderAndStageLeft(thunder, stage);
 		// ステージと当たり判定
-		if (hit.ThunderAndStageLeft(thunder, stage) == TRUE) {
+		if (hit.ThunderAndStageLeft(thunder, stage) == TRUE /*&& Thunder::ThunderFlg==0*/) {
+			thunder.ThunderAngle = (0.3f / 60) * stage.GetStageXY(Stage::Snum, 0, hit.ThunderAndStageLeft(thunder, stage));
 			thunder.ChangeAngle(/*thunder.GetThunderMoveLocationX(),thunder.GetThunderMoveLocationY()*/);
 		}
 		if (hit.ThunderAndStageRight(thunder, stage) == TRUE) {
+			thunder.ThunderAngle = (0.3f / 60) * stage.GetStageXY(Stage::Snum, 0, hit.ThunderAndStageRight(thunder, stage));
 			thunder.ChangeAngle(/*thunder.GetThunderMoveLocationX(), thunder.GetThunderMoveLocationY()*/);
 		}
 		if (hit.ThunderAndStageUnder(thunder, stage) == TRUE) {
+			thunder.ThunderAngle = (0.3f / 60) * stage.GetStageXY(Stage::Snum, 0, hit.ThunderAndStageUnder(thunder, stage));
 			thunder.ChangeAngle(/*thunder.GetThunderMoveLocationX(), thunder.GetThunderMoveLocationY()*/);
 		}
 		if (hit.ThunderAndStageTop(thunder, stage) == TRUE) {
+			thunder.ThunderAngle = (0.3f / 60) * stage.GetStageXY(Stage::Snum, 0, hit.ThunderAndStageTop(thunder, stage));
 			thunder.ChangeAngle(/*thunder.GetThunderMoveLocationX(), thunder.GetThunderMoveLocationY()*/);
 		}
 	}

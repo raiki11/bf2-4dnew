@@ -42,6 +42,7 @@ public:
 	int ThunderAndStageTop(Thunder th, Stage s);
 	int ThunderAndStageRight(Thunder th, Stage s);
 	int ThunderAndStageLeft(Thunder th, Stage s);
+	int GetThunderAndStage(Thunder th, Stage s);
 
 	int FishAndPlayer(Fish f, Player p);
 
