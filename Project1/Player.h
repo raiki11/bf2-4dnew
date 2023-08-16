@@ -55,6 +55,9 @@ private:
 
 	int reboundFlgEnemyY;
 	int reboundFlgEnemyX;
+	//SE
+	int SE_playerjump;
+	int SE_playerwalk;
 public:
 	Player();
 	~Player();

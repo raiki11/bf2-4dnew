@@ -50,11 +50,18 @@ Player::Player()
 
 	reboundFlgEnemyY = FALSE;
 	reboundFlgEnemyX = FALSE;
+
+	//SEの読み込み
+	(SE_playerwalk = LoadSoundMem("sounds/SE_PlayerWalk.wav"));
+	(SE_playerjump = LoadSoundMem("sounds/SE_Playerjump.wav"));
+	
 	fishFlg = FALSE;
 }
 
 Player::~Player()
 {
+	DeleteSoundMem(SE_playerwalk);
+	DeleteSoundMem(SE_playerjump);
 }
 
 void Player::PlayerUpdate()
@@ -148,11 +155,13 @@ void Player::PlayerUpdate()
 		if (flyingFlg == FALSE) {
 			PlayerMoveX();
 			playerMoveY = 0;
+			PlaySoundMem(SE_playerwalk, DX_PLAYTYPE_BACK, TRUE);
 		}
 		//飛んでる時の処理
 		else if (flyingFlg == TRUE) {
 			PlayerMoveX();
 			PlayerMoveY();
+			
 		}
 
 		if (takeOffFlg == TRUE) {
@@ -232,11 +241,13 @@ void Player::PlayerMoveX()
 	if (flyingFlg == TRUE) {
 		//右移動
 		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || PAD_INPUT::GetLStick().x >= 32000) {
+			PlaySoundMem(SE_playerwalk, DX_PLAYTYPE_NORMAL, TRUE);		//SE
 			rButtonFlg = TRUE;
 			rFlg = TRUE;
 			reboundFrameCntX = 0;
 			//reboundFlgStageX = FALSE;
 			playerImgReturnFlg = TRUE;
+			
 		}
 		else {
 			rButtonFlg = FALSE;
@@ -254,7 +265,9 @@ void Player::PlayerMoveX()
 			}
 
 			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
+				PlaySoundMem(SE_playerjump, DX_PLAYTYPE_NORMAL, TRUE);
 				playerMoveX += 0.6f;
+				
 			}
 			else if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
 				if (interval % 10 == 0) {
@@ -273,6 +286,7 @@ void Player::PlayerMoveX()
 			reboundFrameCntX = 0;
 			//reboundFlgStageX = FALSE;
 			playerImgReturnFlg = FALSE;
+			PlaySoundMem(SE_playerwalk, DX_PLAYTYPE_NORMAL, TRUE);			// SE
 		}
 		else {
 			lButtonFlg = FALSE;
@@ -289,11 +303,15 @@ void Player::PlayerMoveX()
 			}
 
 			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
+				PlaySoundMem(SE_playerjump, DX_PLAYTYPE_NORMAL, TRUE);		//SE
 					playerMoveX -= 0.6f;
+				
 			}
 			else if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
 				if (interval % 10 == 0) {
+					PlaySoundMem(SE_playerjump, DX_PLAYTYPE_NORMAL, TRUE);		//SE
 					playerMoveX -= 0.6f;
+					
 				}
 			}
 			
@@ -341,6 +359,7 @@ void Player::PlayerMoveX()
 
 		//右移動
 		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || PAD_INPUT::GetLStick().x >= 32000) {
+			
 			rButtonFlg = TRUE;
 			rFlg = TRUE;
 			
@@ -372,6 +391,7 @@ void Player::PlayerMoveX()
 
 		//左移動
 		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_LEFT) || PAD_INPUT::GetLStick().x <= -32000) {
+			
 			lButtonFlg = TRUE;
 			
 		}
@@ -507,8 +527,10 @@ void Player::PlayerMoveY()
 	//Aボタンが押されたか
 	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnPressed(XINPUT_BUTTON_B) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
 		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
+			PlaySoundMem(SE_playerjump, DX_PLAYTYPE_NORMAL, TRUE);		//SE
 			flapInterval = 6;
 			flapFlg = TRUE;
+			
 		}
 		else {
 			flapInterval = 4;
