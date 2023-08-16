@@ -8,6 +8,7 @@
 #include "End.h"
 
 Enemy* enemy[6];
+Bubble* bubble[6];
 
 GameMain::GameMain()
 {
@@ -19,9 +20,15 @@ GameMain::GameMain()
 	OldSnum = Stage::Snum;
 	fishi = 0;
 
+	
+
 	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 		enemy[i] = new Enemy(i, i);
+
+		bubble[i] = new Bubble();
+		
 	}
+
 
 }
 
@@ -59,12 +66,12 @@ AbstractScene* GameMain::Update()
 						Enemy::EdeadCount = -1;
 						Elast = i;
 						Enemy::DeadFlg = FALSE;
-						
-						//enemy[i] = nullptr;
 					}
 
 				}
 				if (Enemy::DeadFlg == TRUE) {
+					getenemyX[i] = enemy[i]->GetEnemyLocationX();
+					BubbleFlg = true;
 					enemy[i] = nullptr;
 					Enemy::DeadFlg = FALSE;
 				}
@@ -79,6 +86,21 @@ AbstractScene* GameMain::Update()
 			thunder.ThunderUpdate();
 		}
 
+
+		//シャボン玉アップデート
+		for (int i = 0; i < 6; i++) {
+
+			if (bubble[i]->BubbleDelete() == TRUE) {
+				bubble[i] = nullptr;
+			}
+
+			if (bubble[i] != nullptr) {
+				if (getenemyX[i] != 0) {
+					bubble[i]->BubbleUpdate(player, getenemyX[i]);
+				}
+			}
+
+		}
 
 		if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
 			//if (player.GetTakeOffFlg() == FALSE) {
@@ -201,8 +223,9 @@ AbstractScene* GameMain::Update()
 					}
 				}
 
-				bubble.BabbleUpdate(player,*enemy[i]);
 
+				//bubble[i].BabbleUpdate(player, *enemy[i]);
+				
 
 			}
 		}
@@ -386,6 +409,8 @@ AbstractScene* GameMain::Update()
 		//	}
 		//}
 
+
+
 	if (ClearFlg == TRUE) {
 		//countで少しまってから
 		if (++count > 100) {
@@ -441,12 +466,21 @@ void GameMain::Draw() const
 	player.PlayerDraw();
 
 	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+
 		//DrawFormatString(200, 300, 0xffffff, "EnemyMax%d", Stage::EnemyMax[Stage::Snum]);
 		if (enemy[i] != nullptr) {
 			enemy[i]->EnemyDraw();
 
 		}
 		
+	}
+
+	for (int i = 0; i < 6; i++) {
+
+		if (bubble[i] != nullptr) {
+			bubble[i]->BubbleDraw();
+
+		}
 	}
 
 	if (Enemy::GetFishflg() == true)fish.EdeadFishAnim();
@@ -459,7 +493,6 @@ void GameMain::Draw() const
 	//enemy.EnemyDraw();
 	fish.FishDraw(player);
 	thunder.ThunderDraw();
-	bubble.BabbleDraw();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 
 	//DrawFormatString(300,0, 0xffffff, "%d", Enemy::Eflg);

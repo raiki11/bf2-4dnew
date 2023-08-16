@@ -33,7 +33,16 @@ private:
 
 	int check;//当たり判定できてるか確認用
 
+	int bimgnum;	//バブルの画像切り替え用
+	int bimgcnt;    //バブルの画像切り替えカウント
+
+	float amp;	//振幅
+	float fre;	//頻度
+
+	int BDeleteFlg;	//シャボンだまデリートフラグ
+
 public:
+
 	// コンストラクタ
 	Bubble();
 
@@ -41,8 +50,10 @@ public:
 	~Bubble();
 
 	// バブルのアップデート
-	void BabbleUpdate(Player p,Enemy e);
+	void BubbleUpdate(Player p, int ex);
 
 	// バブルの描画
-	void BabbleDraw() const;
+	void BubbleDraw() const;
+
+	int BubbleDelete();
 };

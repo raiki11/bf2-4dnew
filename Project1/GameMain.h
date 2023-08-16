@@ -29,7 +29,6 @@ private:
     HitBox hit;
     Fish fish;
     Thunder thunder;
-    Bubble bubble;
     bool PauseFlg;            // ポーズ
     
     bool ClearFlg;            //ステージclearフラグ
@@ -42,7 +41,10 @@ private:
 
     int a;
     int reboundFlg;
-   
+
+    bool BubbleFlg;//シャボン玉用フラグ
+    int getenemyX[6]={0,0,0,0,0,0};
+
 public:
 
     // コンストラクタ
