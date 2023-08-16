@@ -49,6 +49,7 @@ private:
 	int fishFlg;
 
 	int splashNum;
+	int SEsplashFlg;
 	int St_Sea;
 
 	int playerDeathState; //âΩÇ≈éÄÇÒÇæÇ© 0,ïóëDÇ™Ç»Ç≠Ç»Ç¡ÇΩÅ@1,óã
@@ -56,8 +57,12 @@ private:
 	int reboundFlgEnemyY;
 	int reboundFlgEnemyX;
 	//SE
-	int SE_playerjump;
-	int SE_playerwalk;
+	int SEplayerjump;
+	int SEplayerwalk;
+	int seFlg;
+	int SEplayerjumpFlg;
+	int SEplayerwalkFlg;
+	int SEfallingFlg;
 public:
 	Player();
 	~Player();
@@ -92,6 +97,10 @@ public:
 	int GetRemainBalloon() { return remainBalloon; }
 	int GetPlayerImgNum() { return playerImgNum; }
 	int GetNoInputFlg() { return playerNoInputFlg; }
+	int GetSEWalk() { return SEplayerwalkFlg; }
+	int GetSEJump() { return SEplayerjumpFlg; }
+	int GetSESplash() { return SEsplashFlg; }
+	int GetplayerDeathState() { return playerDeathState; }
 
 	void SetFlyingFlg(int f)
 	{
@@ -154,6 +163,19 @@ public:
 	void SetFishFlg(int f)
 	{
 		fishFlg = f;
+	}
+
+	void SetSEWalk(int f)
+	{
+		SEplayerwalkFlg = f;
+	}
+	void SetSEJump(int f)
+	{
+		SEplayerjumpFlg = f;
+	}
+	void SetSplash(int f)
+	{
+		SEsplashFlg = f;
 	}
 	void SetFallLimit();
 	void SetRemainBalloon();

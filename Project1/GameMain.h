@@ -42,7 +42,8 @@ private:
     int playerAndFishFlg;
 
     int a;
-    int reboundFlg;
+    int reboundFlg[20];
+    int reboundPflg;
     //BGM—p•Ï”
     int BGM;
     // SE—p•Ï”
@@ -59,6 +60,10 @@ private:
     int SE_splash;
     int SE_stageclear;
     int o; // SEnokaisuu
+
+    int SE_playerjump;
+    int SE_playerwalk;
+
   
 public:
 

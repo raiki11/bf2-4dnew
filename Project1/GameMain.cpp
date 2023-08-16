@@ -23,7 +23,11 @@ GameMain::GameMain()
 		enemy[i] = new Enemy(i, i);
 	}
 
-	reboundFlg = FALSE;
+	for (int i = 0; i < 20; i++) {
+		reboundFlg[i] = { FALSE };
+	}
+	
+	reboundPflg = FALSE;
 	playerAndFishFlg = FALSE;
 	
 
@@ -37,6 +41,20 @@ GameMain::GameMain()
 	//SEの読み込み
 	(Start_SE = LoadSoundMem("sounds/SE_Start.wav"));
 	ChangeVolumeSoundMem(70,Start_SE);
+
+	(SE_playerjump = LoadSoundMem("sounds/SE_Playerjump.wav"));
+	SE_playerwalk = LoadSoundMem("sounds/SE_PlayerWalk.wav");
+	ChangeVolumeSoundMem(70, SE_playerwalk);
+	ChangeVolumeSoundMem(70, SE_playerjump);
+
+	SE_splash = LoadSoundMem("sounds/SE_Splash.wav");
+	ChangeVolumeSoundMem(70, SE_splash);
+
+	SE_crack = LoadSoundMem("sounds/SE_crack.wav");
+	ChangeVolumeSoundMem(70, SE_crack);
+
+	SE_falling = LoadSoundMem("sounds/SE_Falling.wav");
+	ChangeVolumeSoundMem(70, SE_falling);
 }
 
 GameMain::~GameMain()
@@ -83,7 +101,48 @@ AbstractScene* GameMain::Update()
 			UI.Update(player.GetPlayerLife());
 			// ゲームメイン処理
 			player.PlayerUpdate();
-			//printfDx("%d", Enemy::EdeadCount);
+			if (player.GetSEWalk() == TRUE)
+			{
+				if (CheckSoundMem(SE_playerwalk) == 0)
+				{
+					PlaySoundMem(SE_playerwalk, DX_PLAYTYPE_BACK, TRUE);
+					player.SetSEWalk(FALSE);
+				}
+			}
+			else {
+				StopSoundMem(SE_playerwalk);
+			}
+
+			if (player.GetSEJump() == TRUE)
+			{
+				if (CheckSoundMem(SE_playerjump) == 0)
+				{
+					PlaySoundMem(SE_playerjump, DX_PLAYTYPE_BACK, TRUE);
+					player.SetSEJump(FALSE);
+				}
+			}
+
+			if (player.GetplayerDeathState() >= 0 && player.GetplayerDeathState() <= 1)
+			{
+				if (CheckSoundMem(SE_falling) == 0 && CheckSoundMem(SE_splash) == 0)
+				{
+					PlaySoundMem(SE_falling, DX_PLAYTYPE_BACK, TRUE);
+				}
+			}
+
+
+
+			if (player.GetSESplash() == TRUE)
+			{
+				StopSoundMem(SE_falling);
+				if (CheckSoundMem(SE_splash) == 0)
+				{
+					PlaySoundMem(SE_splash, DX_PLAYTYPE_BACK, TRUE);
+					player.SetSplash(FALSE);
+				}
+			}
+			
+		
 
 			//エネミーアップデート
 			for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
@@ -217,38 +276,50 @@ AbstractScene* GameMain::Update()
 						}
 
 						else if (player.GetRemainBalloon() > 0) {
-							if (hit.PlayerBalloonAndEnemy(player, *enemy[i]) == TRUE) {
+							if (hit.PlayerBalloonAndEnemy(player, *enemy[i]) == TRUE && reboundPflg == FALSE) {
 								if (player.GetNoInputFlg() == FALSE) {
 									player.SubtractRemainBalloon();
+				
+									if (CheckSoundMem(SE_crack) == 0)
+									{
+										PlaySoundMem(SE_crack, DX_PLAYTYPE_BACK, TRUE);
+									}
+							
 								}
 								player.SetReboundEnemyX(TRUE);
 								player.SetReboundEnemyY(TRUE);
 								player.SetPlayerImgFpsCnt(0);
 								enemy[i]->ESetReboundFlgStageX(TRUE);
 								enemy[i]->ESetReboundFlgStageY(TRUE);
+								reboundPflg = TRUE;
+							}
+							else {
+								reboundPflg = FALSE;
 							}
 						}
 
 					}
 					if (enemy[i]->GetI() >= 8 && enemy[i]->GetI() <= 17) {
 						
-						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE && reboundFlg == FALSE) {
+						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE && reboundFlg[i] == FALSE) {
 							//player.SubtractRemainBalloon();
 							
 							//player.SetReboundFlgStageX(TRUE);
 							//player.SetReboundFlgStageY(TRUE);
 							//player.SetPlayerMoveY();
-
+							
+							PlaySoundMem(SE_crack, DX_PLAYTYPE_BACK, TRUE);
+							
 							player.SetReboundEnemyX(TRUE);
 							player.SetReboundEnemyY(TRUE);
 							/*player.SetPlayerLocationX();
 							player.SetPlayerLocationY();*/
 							//player.SetReboundEnemyY(TRUE);
 
-							reboundFlg = TRUE;
+							reboundFlg[i] = TRUE;
 						}
 						else {
-							reboundFlg = FALSE;
+							reboundFlg[i] = FALSE;
 						}
 					}
 				}
