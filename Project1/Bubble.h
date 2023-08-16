@@ -7,21 +7,18 @@ private:
 	int BubbleImg[4];
 
 	// バブルの発生座標
-	float BabbleX;
 	float BabbleY;
 
+	int flg;//座標を一度だけ受け取る用
+
+	//バブルの移動用
 	float babbleaddX;
 	float babbleaddY;
 
-	//バブルの移動用
-	double additionX;
-	double additionY;
-
-	double rad;
 
 	//バブルアニメーション用
 	int count;
-	int flg;//0:X座標プラス 1:X座標そのまま　2:X座標マイナス
+
 
 	//バブルの当たり判定用
 
@@ -31,7 +28,9 @@ private:
 
 	float a,b,c;
 
-	int check;//当たり判定できてるか確認用
+	//当たり判定できてるか確認用
+	int check;//0:当たってない　1:当たった　2:スコア表示
+	
 
 	int bimgnum;	//バブルの画像切り替え用
 	int bimgcnt;    //バブルの画像切り替えカウント
@@ -39,7 +38,10 @@ private:
 	float amp;	//振幅
 	float fre;	//頻度
 
-	int BDeleteFlg;	//シャボンだまデリートフラグ
+	int BDeleteFlg;	//シャボン玉デリートフラグ
+	int BscoFlg;	//スコアを一度だけ増やすフラグ
+
+	int Bscoimg;	//スコア画像表示フラグ
 
 public:
 

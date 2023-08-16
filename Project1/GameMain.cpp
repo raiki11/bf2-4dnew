@@ -71,7 +71,6 @@ AbstractScene* GameMain::Update()
 				}
 				if (Enemy::DeadFlg == TRUE) {
 					getenemyX[i] = enemy[i]->GetEnemyLocationX();
-					BubbleFlg = true;
 					enemy[i] = nullptr;
 					Enemy::DeadFlg = FALSE;
 				}
@@ -86,21 +85,24 @@ AbstractScene* GameMain::Update()
 			thunder.ThunderUpdate();
 		}
 
+		if (ClearFlg == FALSE) {
+			//シャボン玉アップデート
+			for (int i = 0; i < 6; i++) {
 
-		//シャボン玉アップデート
-		for (int i = 0; i < 6; i++) {
-
-			if (bubble[i]->BubbleDelete() == TRUE) {
-				bubble[i] = nullptr;
-			}
-
-			if (bubble[i] != nullptr) {
-				if (getenemyX[i] != 0) {
-					bubble[i]->BubbleUpdate(player, getenemyX[i]);
+				if (bubble[i] != nullptr) {
+					if (bubble[i]->BubbleDelete() == TRUE) {
+						bubble[i] = nullptr;
+					}
 				}
-			}
+				if (bubble[i] != nullptr) {
+					if (getenemyX[i] != 0) {
+						bubble[i]->BubbleUpdate(player, getenemyX[i]);
+					}
+				}
 
+			}
 		}
+
 
 		if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
 			//if (player.GetTakeOffFlg() == FALSE) {
@@ -253,17 +255,7 @@ AbstractScene* GameMain::Update()
 			thunder.ChangeAngle();
 		}
 	}
-	//次のステージの敵生成
-	//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
-	//	if (Stage::Snum >= 4) { Stage::Snum = 0; }
-	//		Stage::Snum += 1;
-	//	if (OldSnum != Stage::Snum) {
-	//		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
-	//			enemy[i] = new Enemy(i, i);
-	//		}
-	//	}
-	//}
-		
+
 
 	/* 魚とプレイヤーの当たり判定 */
 
@@ -435,6 +427,11 @@ AbstractScene* GameMain::Update()
 			if (OldSnum != Stage::Snum) {
 				for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 					enemy[i] = new Enemy(i, i);
+
+					//バブルの残りを削除
+					bubble[i] = nullptr;
+					getenemyX[i] = 0;
+					bubble[i] = new Bubble();
 				}
 			}
 		}
@@ -444,6 +441,19 @@ AbstractScene* GameMain::Update()
 	tst=player.GetPlayerLife();
 	if (tst <= -1) {
 
+		Fish::FyInitFlg = true;
+		ClearFlg = FALSE;
+		count = 0;
+		enemy[Elast] = nullptr;
+		Enemy::EdeadCount = -1;
+		player.InitPlayer();  //プレイヤーの初期化
+		
+		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+			//バブルの残りを削除
+			bubble[i] = nullptr;
+			getenemyX[i] = 0;
+			bubble[i] = new Bubble();
+		}
 		return new End;
 	}
 	return this;

@@ -67,6 +67,8 @@ private:
 	int n_score;	// 現在のスコア
 	int hi_score;	// ハイスコア
 
+	int ranonce;//Rand関数一度だけやる用
+
 public:
 	Enemy(int set_X,int set_Y);
 	~Enemy();
