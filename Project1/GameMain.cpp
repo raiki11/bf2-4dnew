@@ -35,6 +35,8 @@ GameMain::GameMain()
 	//SEの読み込み
 	(Start_SE = LoadSoundMem("sounds/SE_Start.wav"));
 	ChangeVolumeSoundMem(70,Start_SE);
+	(SE_stageclear = LoadSoundMem("sounds/SE_StageClear.wav"));
+	ChangeVolumeSoundMem(70, SE_stageclear);
 }
 
 GameMain::~GameMain()
@@ -475,6 +477,7 @@ AbstractScene* GameMain::Update()
 
 			//ステージを最後までクリアしたらタイトルに戻る
 			if (Stage::Snum > 4) {
+				PlaySoundMem(SE_stageclear, DX_PLAYTYPE_BACK, TRUE);
 				Stage::Snum = 0;
 				UI::old_score = Enemy::Score;
 				Enemy::Score = 0;
