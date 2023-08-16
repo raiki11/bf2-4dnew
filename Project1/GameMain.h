@@ -39,6 +39,7 @@ private:
     int OldSnum;//ステージ数比較用
 
     int fishi;//サカナに渡すエネミーの番号保管用
+    int playerAndFishFlg;
 
     int a;
     int reboundFlg;

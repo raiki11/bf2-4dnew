@@ -46,6 +46,7 @@ private:
 	int playerNoInputFlg;
 	int playerThunderFlg;
 	int noInputFps;
+	int fishFlg;
 
 	int splashNum;
 	int St_Sea;
@@ -73,6 +74,7 @@ public:
 	int PlayerThunderDeathAnim();
 	int PlayerNoInputAnim();
 	int PlayerSplashAnim();
+	int PlayerFishAnim();
 
 	float GetPlayerLocationX() { return playerLocationX; }
 	float GetPlayerLocationY() { return playerLocationY; }
@@ -145,6 +147,10 @@ public:
 	void SetPlayerLocationY()
 	{
 		playerLocationY += -10;
+	}
+	void SetFishFlg(int f)
+	{
+		fishFlg = f;
 	}
 	void SetFallLimit();
 	void SetRemainBalloon();

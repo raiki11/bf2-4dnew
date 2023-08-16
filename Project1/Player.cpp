@@ -50,6 +50,7 @@ Player::Player()
 
 	reboundFlgEnemyY = FALSE;
 	reboundFlgEnemyX = FALSE;
+	fishFlg = FALSE;
 }
 
 Player::~Player()
@@ -116,6 +117,26 @@ void Player::PlayerUpdate()
 				playerImgFpsCnt = 0;
 				noInputFps = 0;
 
+			}
+			break;
+		case 3:
+			playerImgNum = 40;
+			if (fishFlg == TRUE) {
+				deathFlg = FALSE;
+				playerImgNum = 0;
+				playerLocationX = 100;
+				playerLocationY = 387;
+				playerMoveX = 0;
+				playerMoveY = 0.0f;
+				remainBalloon = 2;
+				splashNum = 99;
+				playerLife--;
+				playerNoInputFlg = TRUE;
+				playerDeathState = -1;
+				playerImgReturnFlg = TRUE;
+				playerImgFpsCnt = 0;
+				noInputFps = 0;
+				fishFlg = FALSE;
 			}
 			break;
 		}
@@ -954,6 +975,11 @@ int Player::PlayerSplashAnim()
 		}
 	}
 
+	return 0;
+}
+
+int Player::PlayerFishAnim()
+{
 	return 0;
 }
 

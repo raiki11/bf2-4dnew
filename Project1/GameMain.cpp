@@ -24,7 +24,7 @@ GameMain::GameMain()
 	}
 
 	reboundFlg = FALSE;
-
+	playerAndFishFlg = FALSE;
 	
 	//BGMの読み込み
 	(BGM = LoadSoundMem("sounds/BGM_Trip.wav"));
@@ -193,7 +193,7 @@ AbstractScene* GameMain::Update()
 						
 						}
 
-						if (player.GetRemainBalloon() > 0) {
+						else if (player.GetRemainBalloon() > 0) {
 							if (hit.PlayerBalloonAndEnemy(player, *enemy[i]) == TRUE) {
 								if (player.GetNoInputFlg() == FALSE) {
 									player.SubtractRemainBalloon();
@@ -208,7 +208,7 @@ AbstractScene* GameMain::Update()
 
 					}
 					if (enemy[i]->GetI() >= 8 && enemy[i]->GetI() <= 17) {
-
+						
 						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE && reboundFlg == FALSE) {
 							//player.SubtractRemainBalloon();
 							
@@ -329,6 +329,10 @@ AbstractScene* GameMain::Update()
 			/*player.SetPlayerDeathFlg(TRUE);
 			player.SetPlayerDeathFState(1);*/
 			fish.PFlg = 5;
+
+			player.SetPlayerDeathFlg(TRUE);
+			player.SetPlayerDeathFState(3);
+			playerAndFishFlg = TRUE;
 		}
 		if (fish.FishAnimation() == 2 || fish.FishAnimation() == 6 || fish.PFlg == 5) {
 			fish.PFlg = 3;
@@ -344,6 +348,10 @@ AbstractScene* GameMain::Update()
 			fish.PFlg = 4;
 			fish.FishFlg = 0;     // フィッシュフラグをプレイヤーやエネミーが入っていない状態にする。
 			/*fpscount = 0;*/
+			if (playerAndFishFlg == TRUE) {
+				player.SetFishFlg(TRUE);
+				playerAndFishFlg = FALSE;
+			}
 		}
 
 	}
@@ -494,7 +502,7 @@ void GameMain::Draw() const
 		DrawFormatString(0, 0, 0xffffff, "ゲームメイン"); 
 	}
 	
-
+	stage.DrawStage();
 	player.PlayerDraw();
 
 	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
@@ -510,7 +518,7 @@ void GameMain::Draw() const
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	
-	stage.DrawStage();
+	stage.DrawSea();
 	UI.DrawUI();
 	hit.DrawHitBox();
 	//enemy.EnemyDraw();
