@@ -33,7 +33,7 @@ GameMain::GameMain()
 
 	o	= 0;
 	//BGMの読み込み
-	(BGM = LoadSoundMem("sounds/BGM_Trip.wav"));
+	//(BGM = LoadSoundMem("sounds/BGM_Trip.wav"));
 
 	//BGMの音量変更
 	ChangeVolumeSoundMem(70, BGM);
@@ -62,6 +62,10 @@ GameMain::GameMain()
 
 	SE_eatable = LoadSoundMem("sounds/SE_Eatable.wav");
 	ChangeVolumeSoundMem(70, SE_eatable);
+
+	SE_stageclear = LoadSoundMem("sounds/SE_StageClear.wav");
+	ChangeVolumeSoundMem(70, SE_stageclear);
+	clearSoundFlg = FALSE;
 
 }
 
@@ -319,7 +323,7 @@ AbstractScene* GameMain::Update()
 					}
 					if (enemy[i]->GetI() >= 8 && enemy[i]->GetI() <= 17) {
 						
-						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE && reboundFlg[i] == FALSE) {
+						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE && reboundFlg[0] == FALSE) {
 							//player.SubtractRemainBalloon();
 							
 							//player.SetReboundFlgStageX(TRUE);
@@ -334,10 +338,10 @@ AbstractScene* GameMain::Update()
 							player.SetPlayerLocationY();*/
 							//player.SetReboundEnemyY(TRUE);
 
-							reboundFlg[i] = TRUE;
+							reboundFlg[0] = TRUE;
 						}
 						else {
-							reboundFlg[i] = FALSE;
+							reboundFlg[0] = FALSE;
 						}
 					}
 				}
@@ -563,8 +567,12 @@ AbstractScene* GameMain::Update()
 		//}
 
 	if (ClearFlg == TRUE) {
+		if (clearSoundFlg == FALSE) {
+			PlaySoundMem(SE_stageclear, DX_PLAYTYPE_BACK, TRUE);
+			clearSoundFlg = TRUE;
+		}
 		//countで少しまってから
-		if (++count > 100) {
+		if (++count > 100 && CheckSoundMem(SE_stageclear) == 0) {
 			Fish::FyInitFlg = true;
 			ClearFlg = FALSE;
 			count = 0;
@@ -572,10 +580,11 @@ AbstractScene* GameMain::Update()
 			Enemy::EdeadCount = -1;
 			Stage::Snum += 1;
 			player.InitPlayer();  //プレイヤーの初期化
+			clearSoundFlg = FALSE;
 
 			//ステージを最後までクリアしたらタイトルに戻る
 			if (Stage::Snum > 4) {
-				PlaySoundMem(SE_stageclear, DX_PLAYTYPE_BACK, TRUE);
+				
 				Stage::Snum = 0;
 				UI::old_score = Enemy::Score;
 				Enemy::Score = 0;

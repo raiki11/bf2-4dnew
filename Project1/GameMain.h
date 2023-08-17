@@ -65,6 +65,7 @@ private:
     int SE_playerwalk;
 
     int restartFlg;
+    int clearSoundFlg;
   
 public:
 
