@@ -39,6 +39,8 @@ private:
 	int EfectScore;
 	int efectcout;
 	int e;
+	int E_rand;
+	int E_count;
 
 
 	int changeimg;//エネミー落下画像切り替え用
