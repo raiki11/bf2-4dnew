@@ -67,10 +67,10 @@ void Thunder::ThunderDraw() const
 {
 	DrawRotaGraph(ThunderX, ThunderY, 1.0f, 0, ThunderImg[2], TRUE, FALSE);
 	/* デバック用 */
-	DrawFormatString(400, 130, 0xffffff, "ThunderLocationX::%f", ThunderX);
-	DrawFormatString(400, 230, 0xffffff, "ThunderLocationY::%f", ThunderY);
-	DrawFormatString(400, 260, 0xffffff, "MoveX::%f", MoveX);
-	DrawFormatString(400, 290, 0xffffff, "MoveY::%f", MoveY);
+	//DrawFormatString(400, 130, 0xffffff, "ThunderLocationX::%f", ThunderX);
+	//DrawFormatString(400, 230, 0xffffff, "ThunderLocationY::%f", ThunderY);
+	//DrawFormatString(400, 260, 0xffffff, "MoveX::%f", MoveX);
+	//DrawFormatString(400, 290, 0xffffff, "MoveY::%f", MoveY);
 
 }
 

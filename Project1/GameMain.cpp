@@ -561,12 +561,18 @@ AbstractScene* GameMain::Update()
 }
 
 	if (ClearFlg == TRUE) {
+		StopSoundMem(Enemy::SE_enemyMove);
+		StopSoundMem(Enemy::SE_PA);
+
 		if (clearSoundFlg == FALSE) {
 			PlaySoundMem(SE_stageclear, DX_PLAYTYPE_BACK, TRUE);
 			clearSoundFlg = TRUE;
 		}
 		//countで少しまってから
 		if (++count > 100 && CheckSoundMem(SE_stageclear) == 0) {
+			StopSoundMem(Enemy::SE_enemyMove);
+			StopSoundMem(Enemy::SE_PA);
+
 			Fish::FyInitFlg = true;
 			ClearFlg = FALSE;
 			count = 0;
@@ -578,6 +584,8 @@ AbstractScene* GameMain::Update()
 
 					//ステージを最後までクリアしたらタイトルに戻る
 					if (Stage::Snum > 4) {
+						StopSoundMem(Enemy::SE_enemyMove);
+						StopSoundMem(Enemy::SE_PA);
 						Stage::Snum = 0;
 						UI::old_score = Enemy::Score;
 						Enemy::Score = 0;
@@ -593,6 +601,9 @@ AbstractScene* GameMain::Update()
 
 					//次のステージの敵生成
 					if (OldSnum != Stage::Snum) {
+						StopSoundMem(Enemy::SE_enemyMove);
+						StopSoundMem(Enemy::SE_PA);
+
 						for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 							enemy[i] = new Enemy(i, i);
 
@@ -606,6 +617,8 @@ AbstractScene* GameMain::Update()
 			}
 			// ライフポイントが0になったらゲームオーバー
 			if (player.GetPlayerLife() <= -1) {
+				StopSoundMem(Enemy::SE_enemyMove);
+				StopSoundMem(Enemy::SE_PA);
 				GameoverFlg = TRUE;
 			}
 
@@ -648,7 +661,7 @@ void GameMain::Draw() const
 	}
 	else 
 	{ 
-		DrawFormatString(0, 0, 0xffffff, "ゲームメイン"); 
+		//DrawFormatString(0, 0, 0xffffff, "ゲームメイン"); 
 	}
 	
 	stage.DrawStage();
@@ -683,9 +696,9 @@ void GameMain::Draw() const
 	
 	stage.DrawSea();
 	UI.DrawUI();
-	hit.DrawHitBox();
+	//hit.DrawHitBox();
 
-	DrawFormatString(100, 0, 0xffffff, "%d", a);
+	//DrawFormatString(100, 0, 0xffffff, "%d", a);
 
 	if (GameoverFlg == TRUE) {
 		DrawGraph(220, 220, image, TRUE);
@@ -694,5 +707,5 @@ void GameMain::Draw() const
 	//DrawFormatString(300,0, 0xffffff, "%d", Enemy::Eflg);
 	//DrawBox(200, 99, 242, 117, 0xff0000, TRUE);
 
-	DrawFormatString(400, 0, 0xffffff, "hitflg:%d", b);
+	//DrawFormatString(400, 0, 0xffffff, "hitflg:%d", b);
 }
