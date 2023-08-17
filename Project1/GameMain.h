@@ -45,6 +45,9 @@ private:
     bool BubbleFlg;//シャボン玉用フラグ
     int getenemyX[6]={0,0,0,0,0,0};
 
+    bool GameoverFlg;//ゲームオーバーフラグ
+    int image;  //gameover画像表示
+
 public:
 
     // コンストラクタ

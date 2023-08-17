@@ -31,6 +31,7 @@ private:
 	//当たり判定できてるか確認用
 	int check;//0:当たってない　1:当たった　2:スコア表示
 	
+	int pdeathFlg;//プレイヤーが死んだかどうか
 
 	int bimgnum;	//バブルの画像切り替え用
 	int bimgcnt;    //バブルの画像切り替えカウント

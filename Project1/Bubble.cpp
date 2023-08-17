@@ -27,7 +27,7 @@ Bubble::Bubble() {
 	BDeleteFlg = FALSE;
 	BscoFlg = TRUE;
 	Bscoimg = LoadGraph("images/Score/GetScore_500.png");
-
+	pdeathFlg = FALSE;
 }
 
 Bubble::~Bubble() 
@@ -37,9 +37,10 @@ Bubble::~Bubble()
 
 void Bubble::BubbleUpdate(Player p, int ex)
 {
+
+	pdeathFlg = p.GetDeathFlg();
+
 	if (check != 2) {
-
-
 		if (flg == TRUE) {
 			babbleaddX = ex;
 			flg = FALSE;
@@ -91,10 +92,11 @@ void Bubble::BubbleUpdate(Player p, int ex)
 		//	break;
 		//}
 
-		//0~1~0~-1
 
-		if (c <= 50) {
-			check = 1;
+		if (pdeathFlg != TRUE) {
+			if (c <= 50) {
+				check = 1;
+			}
 		}
 
 		/*
@@ -156,7 +158,7 @@ void Bubble::BubbleUpdate(Player p, int ex)
 		}
 		else {
 			count++;
-			babbleaddY -= 0.18;
+			babbleaddY -= 0.2;
 			if (count > 2) {
 				babbleaddX += amp * sin(fre * GetNowCount() / 300.0f);
 				count = 0;
