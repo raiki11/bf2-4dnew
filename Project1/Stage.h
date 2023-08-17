@@ -148,5 +148,8 @@ public:
 	{
 		return StageXY[snum][m][xy];
 	}
+
+
+	void DrawSea() const;
 };
 

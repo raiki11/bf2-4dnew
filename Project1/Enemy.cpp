@@ -94,7 +94,7 @@ Enemy::~Enemy()
 }
 
 void Enemy::EnemyUpdate(Player P,int& j)
-{
+{ 
 	Fishprobability = rand() % (30 + 1);
 
 	if (++E_count >= 120) {

@@ -43,6 +43,7 @@ Player::Player()
 	St_Sea = LoadGraph("images/Stage/Stage_Sea01.png");
 
 	splashNum = 99;
+	SEsplashFlg = FALSE;
 
 	playerDeathState = -1;
 
@@ -50,19 +51,48 @@ Player::Player()
 
 	reboundFlgEnemyY = FALSE;
 	reboundFlgEnemyX = FALSE;
+
+	//SEの読み込み
+	//if (SE_playerwalk = LoadSoundMem("sounds/SE_PlayerWalk.wav") == -1) {
+	//	
+	//}
+	/*(SEplayerjump = LoadSoundMem("SE_Playerjump.wav"));
+	SEplayerwalk = LoadSoundMem("SE_PlayerWalk.wav");*/
+	seFlg = FALSE;
+	fishFlg = FALSE;
+
+	SEplayerjumpFlg = FALSE;
+	SEplayerwalkFlg = FALSE;
+	SEfallingFlg = FALSE;
 }
 
 Player::~Player()
 {
+	DeleteSoundMem(SEplayerwalk);
+	DeleteSoundMem(SEplayerjump);
 }
 
 void Player::PlayerUpdate()
 {
+	if (seFlg == FALSE) {
+		/*(SEplayerjump = LoadSoundMem("SE_Playerjump.wav"));
+		SEplayerwalk = LoadSoundMem("SE_PlayerWalk.wav");*/
+		seFlg = TRUE;
+		/*PlaySoundMem(SEplayerwalk, DX_PLAYTYPE_BACK, TRUE);
+		if (CheckSoundMem(SEplayerwalk) == 1) {
+			reboundFrameCntX = 0;
+		}*/
+	}
+	/*PlaySoundMem(SE_playerwalk, DX_PLAYTYPE_BACK, TRUE);
+	if (CheckSoundMem(SE_playerwalk) == -1) {
+		reboundFrameCntX = 0;
+	}*/
 	noInputFps++;
 	if (deathFlg == TRUE) {
 		switch (playerDeathState)
 		{
 		case 0:
+
 			if (PlayerDeathAnim() == TRUE) {
 				deathFlg = FALSE;
 				playerImgNum = 0;
@@ -100,6 +130,7 @@ void Player::PlayerUpdate()
 			}
 			break;
 		case 2:
+			SEsplashFlg = TRUE;
 			if (PlayerSplashAnim() == TRUE) {
 				deathFlg = FALSE;
 				playerImgNum = 0;
@@ -115,7 +146,27 @@ void Player::PlayerUpdate()
 				playerImgReturnFlg = TRUE;
 				playerImgFpsCnt = 0;
 				noInputFps = 0;
-
+				SEsplashFlg = FALSE;
+			}
+			break;
+		case 3:
+			playerImgNum = 40;
+			if (fishFlg == TRUE) {
+				deathFlg = FALSE;
+				playerImgNum = 0;
+				playerLocationX = 100;
+				playerLocationY = 387;
+				playerMoveX = 0;
+				playerMoveY = 0.0f;
+				remainBalloon = 2;
+				splashNum = 99;
+				playerLife--;
+				playerNoInputFlg = TRUE;
+				playerDeathState = -1;
+				playerImgReturnFlg = TRUE;
+				playerImgFpsCnt = 0;
+				noInputFps = 0;
+				fishFlg = FALSE;
 			}
 			break;
 		}
@@ -127,11 +178,13 @@ void Player::PlayerUpdate()
 		if (flyingFlg == FALSE) {
 			PlayerMoveX();
 			playerMoveY = 0;
+			//PlaySoundMem(SE_playerwalk, DX_PLAYTYPE_BACK, TRUE);
 		}
 		//飛んでる時の処理
 		else if (flyingFlg == TRUE) {
 			PlayerMoveX();
 			PlayerMoveY();
+			
 		}
 
 		if (takeOffFlg == TRUE) {
@@ -187,7 +240,7 @@ void Player::PlayerDraw() const
 
 	DrawCircle(playerLocationX, playerLocationY, 4, 0xff0000, TRUE);
 
-	//DrawGraph(160, 442, St_Sea, TRUE);
+	//DrawGraph(0, 02, St_Sea, TRUE);
 
 	DrawFormatString(0, 40, 0xffffff, "count::%d", count);
 	DrawFormatString(0, 55, 0xffffff, "remainBalloon::%d", remainBalloon);
@@ -203,6 +256,8 @@ void Player::PlayerDraw() const
 	DrawFormatString(0, 190, 0xffffff, "flapflg::%d", flapFlg);
 	DrawFormatString(0, 205, 0xffffff, "imgnum::%d", playerImgNum);
 	DrawFormatString(0, 220, 0xffffff, "takeoff::%d", takeOffFlg);
+	DrawFormatString(0, 235, 0xffffff, "se::%d", SEplayerjump);
+	DrawFormatString(0, 250, 0xffffff, "se::%d", SEplayerwalk);
 	
 }
 
@@ -211,11 +266,14 @@ void Player::PlayerMoveX()
 	if (flyingFlg == TRUE) {
 		//右移動
 		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || PAD_INPUT::GetLStick().x >= 32000) {
+			//PlaySoundMem(SE_playerwalk, DX_PLAYTYPE_NORMAL, TRUE);		//SE
 			rButtonFlg = TRUE;
 			rFlg = TRUE;
 			reboundFrameCntX = 0;
 			//reboundFlgStageX = FALSE;
 			playerImgReturnFlg = TRUE;
+			
+			
 		}
 		else {
 			rButtonFlg = FALSE;
@@ -233,7 +291,9 @@ void Player::PlayerMoveX()
 			}
 
 			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
+				//PlaySoundMem(SE_playerjump, DX_PLAYTYPE_NORMAL, TRUE);
 				playerMoveX += 0.6f;
+				
 			}
 			else if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
 				if (interval % 10 == 0) {
@@ -252,6 +312,7 @@ void Player::PlayerMoveX()
 			reboundFrameCntX = 0;
 			//reboundFlgStageX = FALSE;
 			playerImgReturnFlg = FALSE;
+			//PlaySoundMem(SE_playerwalk, DX_PLAYTYPE_NORMAL, TRUE);			// SE
 		}
 		else {
 			lButtonFlg = FALSE;
@@ -268,11 +329,15 @@ void Player::PlayerMoveX()
 			}
 
 			if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
+				//PlaySoundMem(SE_playerjump, DX_PLAYTYPE_NORMAL, TRUE);		//SE
 					playerMoveX -= 0.6f;
+				
 			}
 			else if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
 				if (interval % 10 == 0) {
+					//PlaySoundMem(SE_playerjump, DX_PLAYTYPE_NORMAL, TRUE);		//SE
 					playerMoveX -= 0.6f;
+					
 				}
 			}
 			
@@ -317,12 +382,13 @@ void Player::PlayerMoveX()
 
 		reboundFrameCntX = 0;
 		reboundFlgStageX = FALSE;
-
+		
 		//右移動
 		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || PAD_INPUT::GetLStick().x >= 32000) {
+			
 			rButtonFlg = TRUE;
 			rFlg = TRUE;
-			
+			SEplayerwalkFlg = TRUE;
 		}
 		else {
 			rButtonFlg = FALSE;
@@ -351,8 +417,9 @@ void Player::PlayerMoveX()
 
 		//左移動
 		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_LEFT) || PAD_INPUT::GetLStick().x <= -32000) {
-			lButtonFlg = TRUE;
 			
+			lButtonFlg = TRUE;
+			SEplayerwalkFlg = TRUE;
 		}
 		else {
 			lButtonFlg = FALSE;
@@ -416,7 +483,7 @@ void Player::PlayerMoveX()
 				playerMoveX = 0;
 			}
 			PlayerWaitAnim();
-			
+			SEplayerwalkFlg = FALSE;
 		}
 
 		playerLocationX += playerMoveX;
@@ -428,7 +495,6 @@ void Player::PlayerMoveX()
 			flyingFlg = TRUE;
 			flyButtonFlg = TRUE;
 			playerImgFlyFlg = TRUE;
-		
 			/*if (rButtonFlg == TRUE || lButtonFlg == TRUE) {
 				playerLocationX += playerMoveX + 5;
 			}*/
@@ -436,6 +502,10 @@ void Player::PlayerMoveX()
 			//playerLocationY -= 15;
 			takeOffFlg = TRUE;
 			playerImgTakeOffNum = 0;
+
+
+			SEplayerjumpFlg = TRUE;
+
 		}
 
 
@@ -486,8 +556,10 @@ void Player::PlayerMoveY()
 	//Aボタンが押されたか
 	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A) || PAD_INPUT::OnPressed(XINPUT_BUTTON_B) || PAD_INPUT::OnButton(XINPUT_BUTTON_B)) {
 		if (PAD_INPUT::OnPressed(XINPUT_BUTTON_B)) {
+			//PlaySoundMem(SEplayerjump, DX_PLAYTYPE_NORMAL, TRUE);		//SE
 			flapInterval = 6;
 			flapFlg = TRUE;
+			
 		}
 		else {
 			flapInterval = 4;
@@ -515,6 +587,8 @@ void Player::PlayerMoveY()
 				playerMoveY = -2;
 			}
 			
+
+			SEplayerjumpFlg = TRUE;
 		}
 
 		if (count < 21 && (interval % 10 == 0 || PAD_INPUT::OnButton(XINPUT_BUTTON_A))) {
@@ -947,13 +1021,20 @@ int Player::PlayerSplashAnim()
 {
 	if (splashNum == 99) {
 		splashNum = 0;
+		SEsplashFlg = TRUE;
 	}
 	if (++playerImgFpsCnt % 5 == 0) {
 		if (splashNum++ > 3) {
+			
 			return TRUE;
 		}
 	}
 
+	return 0;
+}
+
+int Player::PlayerFishAnim()
+{
 	return 0;
 }
 

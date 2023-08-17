@@ -39,11 +39,32 @@ private:
     int OldSnum;//ステージ数比較用
 
     int fishi;//サカナに渡すエネミーの番号保管用
+    int playerAndFishFlg;
 
     int a;
-    int reboundFlg;
+    int reboundFlg[20];
+    int reboundPflg;
     //BGM用変数
     int BGM;
+    // SE用変数
+    int Start_SE;
+    int SE_bubble;
+    int SE_crack;
+    int SE_defealtheenemy;
+    int SE_eatable;
+    int SE_enemymove;
+    int SE_falling;
+    int SE_parachute;
+    int SE_perfect;
+    int SE_restart;
+    int SE_splash;
+    int SE_stageclear;
+    int o; // SEnokaisuu
+
+    int SE_playerjump;
+    int SE_playerwalk;
+
+  
 public:
 
     // コンストラクタ
