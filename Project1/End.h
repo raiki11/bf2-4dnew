@@ -18,6 +18,8 @@ private:
     Enemy* enemy[6];
     //ƒQ[ƒ€ƒƒCƒ“‚Åg‚¤•Ï”‚ÌéŒ¾
     Player player;
+
+    int flg;
 public:
     int EndCount = 0;
 

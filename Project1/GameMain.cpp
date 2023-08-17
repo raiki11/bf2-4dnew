@@ -55,6 +55,14 @@ GameMain::GameMain()
 
 	SE_falling = LoadSoundMem("sounds/SE_Falling.wav");
 	ChangeVolumeSoundMem(70, SE_falling);
+
+	SE_restart = LoadSoundMem("sounds/SE_Restart.wav");
+	ChangeVolumeSoundMem(70, SE_restart);
+	restartFlg = FALSE;
+
+	SE_eatable = LoadSoundMem("sounds/SE_Eatable.wav");
+	ChangeVolumeSoundMem(70, SE_eatable);
+
 }
 
 GameMain::~GameMain()
@@ -142,7 +150,17 @@ AbstractScene* GameMain::Update()
 				}
 			}
 			
-		
+			if (player.GetNoInputFlg() == TRUE && player.GetPlayerLife() != 2)
+			{
+				if (CheckSoundMem(SE_restart) == 0 && restartFlg == FALSE)
+				{
+					PlaySoundMem(SE_restart, DX_PLAYTYPE_BACK, TRUE);
+					restartFlg = TRUE;
+				}
+			}
+			if (player.AnyButtons() == TRUE) {
+				restartFlg = FALSE;
+			}
 
 			//エネミーアップデート
 			for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
@@ -427,6 +445,7 @@ AbstractScene* GameMain::Update()
 			player.SetPlayerDeathFlg(TRUE);
 			player.SetPlayerDeathFState(3);
 			playerAndFishFlg = TRUE;
+			PlaySoundMem(SE_eatable, DX_PLAYTYPE_BACK, TRUE);
 		}
 		if (fish.FishAnimation() == 2 || fish.FishAnimation() == 6 || fish.PFlg == 5) {
 			fish.PFlg = 3;
@@ -568,6 +587,7 @@ AbstractScene* GameMain::Update()
 			if (OldSnum != Stage::Snum) {
 				for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 					enemy[i] = new Enemy(i, i);
+					//reboundFlg[i] = FALSE;
 				}
 			}
 		}
