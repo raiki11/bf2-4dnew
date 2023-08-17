@@ -571,6 +571,11 @@ AbstractScene* GameMain::Update()
 						UI::old_score = Enemy::Score;
 						Enemy::Score = 0;
 						UI::getsco = 0;
+						for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+							//バブルの残りを削除
+							bubble[i] = nullptr;
+							getenemyX[i] = 0;
+						}
 						return new TitleScene;
 					}
 
@@ -606,7 +611,6 @@ AbstractScene* GameMain::Update()
 						//バブルの残りを削除
 						bubble[i] = nullptr;
 						getenemyX[i] = 0;
-						bubble[i] = new Bubble();
 					}
 
 					return new TitleScene();
