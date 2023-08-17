@@ -574,6 +574,7 @@ void Enemy::DebagHit(Player P) {
 					once = true;
 
 					Enemy::EdeadCount += 1;
+
 				}
 				cflg = 2;
 				aflg = FALSE;

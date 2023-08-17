@@ -180,7 +180,7 @@ AbstractScene* GameMain::Update()
 						Elast = i;
 						Enemy::DeadFlg = FALSE;
 						
-						//enemy[i] = nullptr;
+						
 					}
 
 				}
@@ -203,12 +203,9 @@ AbstractScene* GameMain::Update()
 
 
 		if (hit.PlayerAndStageUnder(player, stage) == TRUE) {
-			//if (player.GetTakeOffFlg() == FALSE) {
+			
 			player.SetFlyingFlg(FALSE);
-			/*}
-			else {
-				player.SetFlyingFlg(TRUE);
-			}*/
+			
 		}
 		else if (hit.PlayerAndStageUnder(player, stage) == FALSE) {
 			if (player.GetDeathFlg() == FALSE) {
@@ -237,7 +234,7 @@ AbstractScene* GameMain::Update()
 			player.SetReboundFlgStageX(TRUE);
 		}
 		else if (hit.PlayerAndStageLeft(player, stage) == FALSE) {
-			if (player.GetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
+			if (player.GetReboundFlgStageX() == TRUE ) {
 				player.SetReboundFlgStageX(TRUE);
 			}
 			else {
@@ -275,7 +272,7 @@ AbstractScene* GameMain::Update()
 					enemy[i]->ESetReboundFlgStageX(TRUE);
 				}
 				else if (hit.EnemyAndStageLeft(*enemy[i], stage) == FALSE) {
-					if (enemy[i]->EGetReboundFlgStageX() == TRUE /*&& player.GetReboundFrameCntX() <= 60*/) {
+					if (enemy[i]->EGetReboundFlgStageX() == TRUE ) {
 						enemy[i]->ESetReboundFlgStageX(TRUE);
 					}
 					else {
@@ -323,25 +320,17 @@ AbstractScene* GameMain::Update()
 					}
 					if (enemy[i]->GetI() >= 8 && enemy[i]->GetI() <= 17) {
 						
-						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE && reboundFlg[0] == FALSE) {
-							//player.SubtractRemainBalloon();
-							
-							//player.SetReboundFlgStageX(TRUE);
-							//player.SetReboundFlgStageY(TRUE);
-							//player.SetPlayerMoveY();
+						if (hit.PlayerAndEnemyBalloon(player, *enemy[i]) == TRUE && reboundFlg[i] == FALSE) {
 							
 							PlaySoundMem(SE_crack, DX_PLAYTYPE_BACK, TRUE);
 							
 							player.SetReboundEnemyX(TRUE);
 							player.SetReboundEnemyY(TRUE);
-							/*player.SetPlayerLocationX();
-							player.SetPlayerLocationY();*/
-							//player.SetReboundEnemyY(TRUE);
-
-							reboundFlg[0] = TRUE;
+						
+							reboundFlg[i] = TRUE;
 						}
 						else {
-							reboundFlg[0] = FALSE;
+							reboundFlg[i] = FALSE;
 						}
 					}
 				}
@@ -368,10 +357,6 @@ AbstractScene* GameMain::Update()
 							else {
 								enemy[i]->ESetReboundFlgStageY(TRUE);
 							}
-							//enemy[i]->ESetReboundFlgStageY(TRUE);
-
-
-							//enemy[i]->ESetReboundFlgStageY(TRUE);
 						}
 					}
 				}
