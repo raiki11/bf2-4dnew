@@ -47,6 +47,8 @@ Enemy::Enemy(int set_X,int set_Y)
 	EfectScore = 0;
 	efectcout = 0;
 	e = FALSE;
+	E_rand = 0;
+	E_count = 0;
 
 	Fishprobability = 0;
 
@@ -95,7 +97,14 @@ void Enemy::EnemyUpdate(Player P,int& j)
 { 
 	Fishprobability = rand() % (30 + 1);
 
-	if (++fpscount >= 60)
+	if (++E_count >= 120) {
+
+		E_rand = rand() % 2;
+		E_count = 0;
+	}
+	
+
+	if (++fpscount >= 30)
 	{
 		EAnimation();
 		
@@ -258,7 +267,7 @@ void Enemy::EnemyDraw() const
 
 	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
 	DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
-	DrawFormatString(500, 340, 0xffffff, "%d", efectcout);
+	DrawFormatString(500, 340, 0xffffff, "E_rand:%d", E_rand);
 
 }
 
@@ -282,9 +291,9 @@ void Enemy::EnemyMoveX(Player P)
 		ELocationX = 640;
 	}
 
-	if (EMoveX > enemy.MaxSpeed) {
-		EMoveX = enemy.MaxSpeed;
-	}
+	if (E_rand == 0) {
+
+	
 
 	if (ELocationX <= P.GetPlayerLocationX()) {
 		EMoveX += enemy.MaxSpeed/50;
@@ -297,10 +306,26 @@ void Enemy::EnemyMoveX(Player P)
 
 	}
 
+	if (E_rand == 1) {
+
+		if (EMoveX >= 0) {
+			EMoveX -= 0.001f;
+		}
+		
+		if (EMoveX <= 0) {
+			EMoveX += 0.001f;
+		}
+	}
+
+	
+	
+	}
+	if (EMoveX > enemy.MaxSpeed) {
+		EMoveX = enemy.MaxSpeed;
+	}
 	if (EMoveX < -enemy.MaxSpeed) {
 		EMoveX = -enemy.MaxSpeed;
 	}
-
 
 	//”½”­
 	if (reboundFlgStageX == TRUE) {
@@ -347,21 +372,28 @@ void Enemy::EnemyMoveY(Player P)
 		
 	 }
 	 
-	 
-		 if (ELocationY <= P.GetPlayerLocationY() && flyingFlg == FALSE) {
+	 if (E_rand == 0) {
+		if (ELocationY <= P.GetPlayerLocationY() && flyingFlg == FALSE) {	
 			 EMoveY += enemy.MaxSpeed/150;
 		 }
 		 else if (ELocationY >= P.GetPlayerLocationY()) {
 			 EMoveY -= enemy.MaxSpeed/150;
 		 }
-		 if (EMoveY > enemy.MaxSpeed) {
+		
+	 
+	 }
+
+
+	 if (E_rand == 1) {
+		 EMoveY += 0.001f;
+	 }
+		
+	 if (EMoveY > enemy.MaxSpeed) {
 			 EMoveY = enemy.MaxSpeed;
-		 }
+	 }
 		 if (EMoveY < -enemy.MaxSpeed) {
 			 EMoveY = -enemy.MaxSpeed;
 		 }
-	 
-	
 
 
 	ELocationY += EMoveY;
@@ -523,7 +555,7 @@ void Enemy::DebagHit(Player P) {
 	}
 	if (a) {
 		
-		if (count >= 60) {
+		if (count >= 30) {
 
 			aflg = TRUE;
 			if (cflg == 0 && i >= 8 && aflg == TRUE) {
