@@ -566,7 +566,7 @@ AbstractScene* GameMain::Update()
 					player.InitPlayer();  //プレイヤーの初期化
 
 					//ステージを最後までクリアしたらタイトルに戻る
-					if (Stage::Snum > 1) {
+					if (Stage::Snum > 4) {
 						Stage::Snum = 0;
 						UI::old_score = Enemy::Score;
 						Enemy::Score = 0;
