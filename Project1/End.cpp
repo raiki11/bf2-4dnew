@@ -10,14 +10,22 @@ End::End()
 	for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
 		enemy[i] = new Enemy(i, i);
 	}
+	//SE‚Ì“Ç‚İ‚İ
+	(SE = LoadSoundMem("sounds/SE_GameOver.wav"));
+	ChangeVolumeSoundMem(70, SE);
 }
 
 End::~End()
 {
+	//SE‚Ìíœ
+	DeleteSoundMem(SE);
 }
 
 AbstractScene* End::Update()
 {
+	
+	PlaySoundMem(SE, DX_PLAYTYPE_NORMAL, TRUE);
+	
 	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
 		return new TitleScene();
 	}

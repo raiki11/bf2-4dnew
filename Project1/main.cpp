@@ -8,8 +8,7 @@
 #include "End.h"
 #include "TitleScene.h"
 
-//BGM—p•Ï”
-int BGM;
+
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
@@ -25,10 +24,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	SetDrawScreen(DX_SCREEN_BACK);	// •`‰ææ‰æ–Ê‚ğ— ‚É‚·‚é
 
-	BGM = LoadSoundMem("sound/BGM.wav");
 
-	//BGM‚ÌÄ¶
-	PlaySoundMem(BGM, DX_PLAYTYPE_LOOP, TRUE);
+
 
 	SceneManager* sceneMng;
 	FPS fpsCtrl;

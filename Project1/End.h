@@ -12,6 +12,7 @@ class End :
 {
 private:
     int image;
+    int SE; //ゲームオーバーSE
     Stage stage;
     UI UI;
     Enemy* enemy[6];

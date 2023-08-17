@@ -177,14 +177,14 @@ int HitBox::EnemyAndStageLeft(Enemy e, Stage s)
 
 int HitBox::ThunderAndStageUnder(Thunder th, Stage s) 
 {
-	tx0 = th.GetThunderX() - 32;
-	ty0 = th.GetThunderY() + 32;
-	tx1 = th.GetThunderX() + 32;
-	ty1 = th.GetThunderY() + 32;
+	tx0 = th.GetThunderX() - 16;
+	ty0 = th.GetThunderY() + 16;
+	tx1 = th.GetThunderX() + 16;
+	ty1 = th.GetThunderY() + 16;
 
-	for (int i = 0; i < 6; i += 2) {
-		if (s.GetStageXY(0, i, 0) <= tx1 && s.GetStageXY(0, i + 1, 0) >= tx0 &&
-			s.GetStageXY(0, i, 1) <= ty1 && s.GetStageXY(0, i + 1, 1) >= ty0) {
+	for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
+		if (s.GetStageXY(Stage::Snum, i, 0) <= tx1 && s.GetStageXY(Stage::Snum, i + 1, 0) >= tx0 &&
+			s.GetStageXY(Stage::Snum, i, 1) <= ty1 && s.GetStageXY(Stage::Snum, i + 1, 1) >= ty0) {
 
 			return TRUE;
 		}
@@ -194,14 +194,14 @@ int HitBox::ThunderAndStageUnder(Thunder th, Stage s)
 
 int HitBox::ThunderAndStageTop(Thunder th, Stage s)
 {
-	tx0 = th.GetThunderX() - 32;
-	ty0 = th.GetThunderY() - 32;
-	tx1 = th.GetThunderX() + 32;
-	ty1 = th.GetThunderY() - 32;
+	tx0 = th.GetThunderX() - 16;
+	ty0 = th.GetThunderY() - 16;
+	tx1 = th.GetThunderX() + 16;
+	ty1 = th.GetThunderY() - 16;
 
-	for (int i = 0; i < 6; i += 2) {
-		if (s.GetStageXY(0, i, 0) <= tx1 && s.GetStageXY(0, i + 1, 0) >= tx0 &&
-			s.GetStageXY(0, i, 1) <= ty1 && s.GetStageXY(0, i + 1, 1) >= ty0) {
+	for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
+		if (s.GetStageXY(Stage::Snum, i, 0) <= tx1 && s.GetStageXY(Stage::Snum, i + 1, 0) >= tx0 &&
+			s.GetStageXY(Stage::Snum, i, 1) <= ty1 && s.GetStageXY(Stage::Snum, i + 1, 1) >= ty0) {
 
 			return TRUE;
 		}
@@ -212,15 +212,15 @@ int HitBox::ThunderAndStageTop(Thunder th, Stage s)
 
 int HitBox::ThunderAndStageRight(Thunder th, Stage s)
 {
-	tx0 = th.GetThunderX() + 32;
-	ty0 = th.GetThunderY() - 32;
-	tx1 = th.GetThunderX() + 32;
-	ty1 = th.GetThunderY() + 32;
+	tx0 = th.GetThunderX() + 16;
+	ty0 = th.GetThunderY() - 16;
+	tx1 = th.GetThunderX() + 16;
+	ty1 = th.GetThunderY() + 16;
 
 	if (th.GetThunderMoveLocationX() > 0) {
-		for (int i = 0; i < 6; i += 2) {
-			if (s.GetStageXY(0, i, 0) <= ex1 && s.GetStageXY(0, i + 1, 0) >= ex0 &&
-				s.GetStageXY(0, i, 1) <= ey1 && s.GetStageXY(0, i + 1, 1) >= ey0) {
+		for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
+			if (s.GetStageXY(Stage::Snum, i, 0) <= tx1 && s.GetStageXY(Stage::Snum, i + 1, 0) >= tx0 &&
+				s.GetStageXY(Stage::Snum, i, 1) <= ty1 && s.GetStageXY(Stage::Snum, i + 1, 1) >= ty0) {
 
 				return TRUE;
 			}
@@ -231,15 +231,15 @@ int HitBox::ThunderAndStageRight(Thunder th, Stage s)
 
 int HitBox::ThunderAndStageLeft(Thunder th, Stage s)
 {
-	tx0 = th.GetThunderX() - 32;
-	ty0 = th.GetThunderY() - 32;
-	tx1 = th.GetThunderX() - 32;
-	ty1 = th.GetThunderY() + 32;
+	tx0 = th.GetThunderX() - 16;
+	ty0 = th.GetThunderY() - 16;
+	tx1 = th.GetThunderX() - 16;
+	ty1 = th.GetThunderY() + 16;
 
 	if (th.GetThunderMoveLocationX() < 0) {
-		for (int i = 0; i < 6; i += 2) {
-			if (s.GetStageXY(0, i, 0) <= ex1 && s.GetStageXY(0, i + 1, 0) >= ex0 &&
-				s.GetStageXY(0, i, 1) <= ey1 && s.GetStageXY(0, i + 1, 1) >= ey0) {
+		for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
+			if (s.GetStageXY(Stage::Snum, i, 0) <= tx1 && s.GetStageXY(Stage::Snum, i + 1, 0) >= tx0 &&
+				s.GetStageXY(Stage::Snum, i, 1) <= ty1 && s.GetStageXY(Stage::Snum, i + 1, 1) >= ty0) {
 
 				return TRUE;
 
@@ -356,6 +356,28 @@ int HitBox::PlayerAndEnemyBalloon(Player p, Enemy e)
 	else {
 		now1 = FALSE;
 	}
+	return 0;
+}
+
+int HitBox::EnemyAndEnemy(Enemy e0, Enemy e1)
+{
+	ex0 = e0.GetEnemyLocationX() - 20;
+	ey0 = e0.GetEnemyLocationY() - 20;
+	ex1 = e0.GetEnemyLocationX() + 20;
+	ey1 = e0.GetEnemyLocationY() + 20;
+
+	px0 = e1.GetEnemyLocationX() - 20;
+	py0 = e1.GetEnemyLocationY() - 20;
+	px1 = e1.GetEnemyLocationX() + 20;
+	py1 = e1.GetEnemyLocationY() + 20;
+
+
+	if(ex0 <= px1 && ex1 >= px0 &&
+		ey0 <= py1 && ey1 >= py0) {
+
+		return TRUE;
+	}
+
 	return 0;
 }
 

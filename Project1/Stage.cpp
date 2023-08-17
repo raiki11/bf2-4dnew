@@ -248,5 +248,13 @@ void Stage::Stage5()const {
 
 }
 
+void Stage::DrawSea() const
+{
+	//海表示
+	DrawGraph(-160, 450, St_Sea, TRUE);
+	DrawGraph(160, 444, St_Sea, TRUE);
+	DrawGraph(480, 450, St_Sea, TRUE);
+}
+
 	//デバッグ
 	//DrawFormatString(100, 0, 0xffffff, "%d", StageXY[0][0][1]);
