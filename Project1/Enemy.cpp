@@ -47,8 +47,9 @@ Enemy::Enemy(int set_X,int set_Y)
 	EfectScore = 0;
 	efectcout = 0;
 	e = FALSE;
-	E_rand = 0;
+	E_Gflg = 0;
 	E_count = 0;
+	E_rand = 0;
 
 	Fishprobability = 0;
 
@@ -98,8 +99,13 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	Fishprobability = rand() % (30 + 1);
 
 	if (++E_count >= 120) {
-
-		E_rand = rand() % 2;
+		E_rand = rand() % 100;
+		if (E_rand <= 30) {
+			E_Gflg = 1;
+		}
+		else {
+			E_Gflg = 0;
+		}
 		E_count = 0;
 	}
 	
@@ -111,7 +117,11 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	}
 
 	if (cflg == 1) {
+
 		EPA();
+	}
+	if (i>=8 && i < 13 && E_Gflg == 1) {
+		i = 9;
 	}
 
 	if (cflg == 2) {
@@ -121,9 +131,10 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	if (cflg == 0) {
 		if (i >= 8 && i < 13) {
 			EnemyMoveX(P);
-			EnemyMoveY(P);
+			EnemyMoveY(P);     
+			Estate = 1;
 		}
-	}
+			}
 	
 
 	/*if (CheckHitKey(KEY_INPUT_A) == TRUE) {
@@ -163,6 +174,7 @@ void Enemy::EnemyUpdate(Player P,int& j)
 	if (e == TRUE) {
 		Efect();
 	}
+	
 	
 }
 
@@ -208,23 +220,23 @@ void Enemy::EnemyDraw() const
 	
 		}
 		// プレイヤーと敵の風船
-		if (EfectFlag == TRUE&&enemy.type==0) {
-			DrawGraph(ELocationX - 15, ELocationY - 30, Escore1, TRUE);
-			//DrawFormatString(ELocationX, ELocationY, 0xffffff,"%d",EfectScore);
+		//if (EfectFlag == TRUE&&enemy.type==0) {
+		//	DrawGraph(ELocationX - 15, ELocationY - 30, EfectScore, TRUE);
+		//	//DrawFormatString(ELocationX, ELocationY, 0xffffff,"%d",EfectScore);
 			
-		}
-		if (EfectFlag == TRUE && enemy.type == 1) {
+		/*}*/
+		//if (EfectFlag == TRUE && enemy.type == 1) {
 
-			//DrawFormatString(ELocationX, ELocationY, 0xffffff,"%d",EfectScore);
-			DrawGraph(ELocationX - 15, ELocationY - 30, Escore2, TRUE);
+		//	//DrawFormatString(ELocationX, ELocationY, 0xffffff,"%d",EfectScore);
+		//	DrawGraph(ELocationX - 15, ELocationY - 30, EfectScore, TRUE);
 
-		}
-		if (EfectFlag == TRUE && enemy.type == 2) {
+		//}
+		//if (EfectFlag == TRUE && enemy.type == 2) {
 
-			//DrawFormatString(ELocationX, ELocationY, 0xffffff,"%d",EfectScore);
-			DrawGraph(ELocationX - 15, ELocationY - 30, Escore3, TRUE);
+		//	//DrawFormatString(ELocationX, ELocationY, 0xffffff,"%d",EfectScore);
+		//	DrawGraph(ELocationX - 15, ELocationY - 30, EfectScore, TRUE);
 
-		}
+		//}
 	// プレイヤーと敵
 	
 		//デバッグ用
@@ -267,7 +279,7 @@ void Enemy::EnemyDraw() const
 
 	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
 	DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
-	DrawFormatString(500, 340, 0xffffff, "E_rand:%d", E_rand);
+	DrawFormatString(500, 340, 0xffffff, "E_rand:%d", E_Gflg);
 
 }
 
@@ -291,7 +303,7 @@ void Enemy::EnemyMoveX(Player P)
 		ELocationX = 640;
 	}
 
-	if (E_rand == 0) {
+	if (E_Gflg == 0) {
 
 	
 
@@ -306,7 +318,7 @@ void Enemy::EnemyMoveX(Player P)
 
 	}
 
-	if (E_rand == 1) {
+	if (E_Gflg == 1) {
 
 		if (EMoveX >= 0) {
 			EMoveX -= 0.001f;
@@ -365,14 +377,14 @@ void Enemy::EnemyMoveY(Player P)
 			reboundFlgStageY = FALSE;
 			EMoveY = -1 * EMoveY*10;
 	}
-	 if (flyingFlg != FALSE) {
+	 if (flyingFlg == TRUE) {
 			 EMoveY = 0;
 			 
 		 
 		
 	 }
 	 
-	 if (E_rand == 0) {
+	 if (E_Gflg == 0) {
 		if (ELocationY <= P.GetPlayerLocationY() && flyingFlg == FALSE) {	
 			 EMoveY += enemy.MaxSpeed/150;
 		 }
@@ -383,13 +395,18 @@ void Enemy::EnemyMoveY(Player P)
 	 
 	 }
 
+	 if (ELocationY >= 419&&E_Gflg==1) {
+		 E_Gflg = 0;
+		 EMoveY = 0;
+	 }
 
-	 if (E_rand == 1) {
-		 EMoveY += 0.001f;
+
+	 if (E_Gflg == 1&& flyingFlg == FALSE) {
+		 EMoveY = enemy.MaxSpeed;
 	 }
 		
-	 if (EMoveY > enemy.MaxSpeed) {
-			 EMoveY = enemy.MaxSpeed;
+	 if (EMoveY > 0.8) {
+			 EMoveY = 0.8;
 	 }
 		 if (EMoveY < -enemy.MaxSpeed) {
 			 EMoveY = -enemy.MaxSpeed;
@@ -408,10 +425,10 @@ void Enemy::EAnimation()
 
 		if (i < 8) {
 			++i;
-			Estate = 0;
+			
 		}
 
-		if (i >= 8 ) {
+		if (i >= 8 && E_Gflg == 0) {
 			if (eflg == TRUE) {
 				if (enemy.type != 2) {
 					enemy.type = enemy.type + 1;
@@ -419,8 +436,10 @@ void Enemy::EAnimation()
 				}
 			}
 			++i;
-			Estate = 1;
+			
 		}
+
+	
 
 		if (i == 12) {
 		i = 8;
@@ -464,7 +483,7 @@ void Enemy::EPA()
 		if (++i >= 17) {
 			i = 17;
 		}
-		Estate = 2;
+		
 	}
 
 
@@ -555,14 +574,14 @@ void Enemy::DebagHit(Player P) {
 	}
 	if (a) {
 		
-		if (count >= 30) {
+		if (count >= 20) {
 
 			aflg = TRUE;
 			if (cflg == 0 && i >= 8 && aflg == TRUE) {
 				cflg = 1;
 				aflg = FALSE;
 				EfectFlag = TRUE;
-
+				
 				EScore();
 				
 			}
@@ -578,6 +597,7 @@ void Enemy::DebagHit(Player P) {
 				cflg = 2;
 				aflg = FALSE;
 				EfectFlag = TRUE;
+				
 				EScore();
 				
 			}
@@ -606,14 +626,14 @@ int Enemy::EScore()
 		//地面に立ってる時
 		if (Estate == 0) {
 			Score += 750;
-			EfectScore = 750;
+			EfectScore = Escore2;
 		
 			
 		}
 		//風船割る
 		else if (Estate == 1) {
 			Score += 500;
-			EfectScore = 500;
+			EfectScore = Escore1;
 
 			
 
@@ -621,7 +641,7 @@ int Enemy::EScore()
 		//パラシュート状態の時
 		else if (Estate == 2) {
 			Score += 1000;
-			EfectScore = 1000;
+			EfectScore = Escore3;
 
 			
 
@@ -631,7 +651,7 @@ int Enemy::EScore()
 		//地面に立ってる時
 		if (Estate == 0) {
 			Score += 1000;
-			EfectScore = 1000;
+			EfectScore = Escore3;
 
 			
 
@@ -639,7 +659,7 @@ int Enemy::EScore()
 		//風船割る
 		else if (Estate == 1) {
 			Score += 750;
-			EfectScore = 750;
+			EfectScore = Escore2;
 
 			
 
@@ -647,7 +667,7 @@ int Enemy::EScore()
 		//パラシュート状態の時
 		else if (Estate == 2) {
 			Score += 1500;
-			EfectScore = 1500;
+			EfectScore = Escore4;
 
 			
 
@@ -657,7 +677,7 @@ int Enemy::EScore()
 		//地面に立ってる時
 		if (Estate == 0) {
 			Score += 1500;
-			EfectScore = 1500;
+			EfectScore = Escore4;
 
 			
 
@@ -665,7 +685,7 @@ int Enemy::EScore()
 		//風船割る
 		else if (Estate == 1) {
 			Score += 1000;
-			EfectScore = 1000;
+			EfectScore = Escore3;
 
 		
 
@@ -673,7 +693,7 @@ int Enemy::EScore()
 		//パラシュート状態の時
 		else if (Estate == 2) {
 			Score += 2000;
-			EfectScore = 2000;
+			EfectScore = Escore5;
 
 			
 

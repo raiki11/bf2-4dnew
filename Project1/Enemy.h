@@ -2,8 +2,8 @@
 #include"Player.h"
 
 #define P_MAX 0.5f
-#define G_MAX 1.0f
-#define R_MAX 1.5f
+#define G_MAX 0.8f
+#define R_MAX 1.2f
 
 
 
@@ -39,8 +39,9 @@ private:
 	int EfectScore;
 	int efectcout;
 	int e;
-	int E_rand;
+	int E_Gflg;
 	int E_count;
+	int E_rand;
 
 
 	int changeimg;//エネミー落下画像切り替え用
