@@ -19,6 +19,11 @@ int Enemy::ElastFlg = FALSE;
 int Enemy::Score = 0;
 bool Enemy::FishFlg = false;
 int Enemy::EgetFx = 0;
+
+int Enemy::SE_enemyMove = LoadSoundMem("sounds/SE_EnemyMove.wav");
+int Enemy::SE_PA = LoadSoundMem("sounds/SE_parachute.wav");
+
+
 Enemy::Enemy(int set_X,int set_Y)
 {
 	//ELocationX = 320;
@@ -90,6 +95,11 @@ Enemy::Enemy(int set_X,int set_Y)
 	Escore3 = LoadGraph("images/Score/GetScore_1000.png");
 	Escore4 = LoadGraph("images/Score/GetScore_1500.png");
 	Escore5 = LoadGraph("images/Score/GetScore_2000.png");
+
+	SE_enemyMove = LoadSoundMem("sounds/SE_EnemyMove.wav");
+	SE_PA = LoadSoundMem("sounds/SE_parachute.wav");
+	SEonce = false;
+	on = FALSE;
 };
 
 
@@ -100,11 +110,19 @@ Enemy::~Enemy()
 
 void Enemy::EnemyUpdate(Player P,int& j)
 {
+	ChangeVolumeSoundMem(70, SE_enemyMove);
+	ChangeVolumeSoundMem(80, SE_PA);
 
-	if (ranonce == FALSE) {
-		Fishprobability = rand() % (100 + 1);
-		ranonce = TRUE;
-	}
+
+
+		if (ranonce == FALSE) {
+			Fishprobability = rand() % (100 + 1);
+			StopSoundMem(SE_PA);
+			PlaySoundMem(SE_enemyMove, DX_PLAYTYPE_LOOP);
+			ranonce = TRUE;
+			SEonce = false;
+		}
+
 
 	if (++E_count >= 120) {
 		E_rand = rand() % 100;
@@ -126,6 +144,12 @@ void Enemy::EnemyUpdate(Player P,int& j)
 
 	if (cflg == 1) {
 
+		if (SEonce == false) {
+			StopSoundMem(SE_enemyMove);
+			PlaySoundMem(SE_PA, DX_PLAYTYPE_LOOP);
+			SEonce = true;
+			ranonce = FALSE;
+		}
 		EPA();
 	}
 	if (i>=8 && i < 13 && E_Gflg == 1) {
@@ -187,9 +211,6 @@ void Enemy::EnemyUpdate(Player P,int& j)
 
 void Enemy::EnemyDraw() const
 {
-
-	DrawFormatString(0, 400, 0xffffff, "Fish::%d", Fishprobability);
-
 
 	//DrawCircle(ELocationX, ELocationY, 4, 0x00ff00, TRUE);
 	/*DrawGraph(enemyLocationX, enemyLocationY, img[i], TRUE);*/
@@ -284,9 +305,9 @@ void Enemy::EnemyDraw() const
 
 	if(spflg == true)DrawGraph(ELocationX - 30, 415, EspAnim[spc], TRUE);
 
-	DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
-	DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
-	DrawFormatString(500, 340, 0xffffff, "E_rand:%d", E_Gflg);
+	//DrawFormatString(500, 0, 0xffffff, "%06d", n_score);
+	//DrawFormatString(340, 340, 0xffffff, "%d", EdeadCount);
+	//DrawFormatString(500, 340, 0xffffff, "E_rand:%d", E_rand);
 
 }
 
@@ -456,6 +477,8 @@ void Enemy::EAnimation()
 
 void Enemy::EPA()
 {
+
+
 	EMoveX = PSpeedX;
 	EMoveY =PSpeedY;
 

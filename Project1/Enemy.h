@@ -72,6 +72,8 @@ private:
 
 	int ranonce;//Rand関数一度だけやる用
 
+	bool SEonce;
+
 public:
 	Enemy(int set_X,int set_Y);
 	~Enemy();
@@ -97,6 +99,9 @@ public:
 	int spc;	//スプラッシュアニメーションカウント
 	bool spflg;	//スプラッシュアニメーション用フラグ
 
+	static int SE_enemyMove;
+	static int SE_PA;
+	int on;
 
 	//敵が死ぬアニメーションになるか確認する用
 	void DebagHit(Player P);
@@ -127,6 +132,7 @@ public:
 	static int GetScore() { return Score; }
 
 	static int GetFishflg() { return FishFlg; }
+
 
 	static int EgetFx;
 	int Fishprobability;
