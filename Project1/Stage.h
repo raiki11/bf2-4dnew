@@ -130,6 +130,7 @@ public:
 	~Stage();
 
 	void DrawStage() const;
+	void DrawSea() const;
 	void Stage1() const;
 	void Stage2() const;
 	void Stage3() const;
@@ -150,6 +151,5 @@ public:
 	}
 
 
-	void DrawSea() const;
 };
 

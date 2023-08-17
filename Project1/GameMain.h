@@ -29,7 +29,6 @@ private:
     HitBox hit;
     Fish fish;
     Thunder thunder;
-    Bubble bubble;
     bool PauseFlg;            // ポーズ
     
     bool ClearFlg;            //ステージclearフラグ
@@ -48,7 +47,6 @@ private:
     int BGM;
     // SE用変数
     int Start_SE;
-    int SE_bubble;
     int SE_crack;
     int SE_defealtheenemy;
     int SE_eatable;
@@ -64,7 +62,17 @@ private:
     int SE_playerjump;
     int SE_playerwalk;
 
+    int restartFlg;
+    int clearSoundFlg;
   
+    //int reboundFlg;
+
+    bool BubbleFlg;//シャボン玉用フラグ
+    int getenemyX[6]={0,0,0,0,0,0};
+
+    bool GameoverFlg;//ゲームオーバーフラグ
+    int image;  //gameover画像表示
+
 public:
 
     // コンストラクタ

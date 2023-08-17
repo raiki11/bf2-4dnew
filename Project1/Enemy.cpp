@@ -4,12 +4,14 @@
 #include "HitBox.h"
 #include "Fish.h"
 #include "math.h"
+#include "Bubble.h"
 
 Enemy* hitenemy[6];
 HitBox hit;
 Stage stage;
 int Enemy::Eflg = FALSE;
 Fish fish;
+Bubble bu;
 
 int Enemy::DeadFlg = FALSE;
 int Enemy::EdeadCount = -1;
@@ -41,6 +43,8 @@ Enemy::Enemy(int set_X,int set_Y)
 	once = false;
 	spc = 0;
 	spflg = false;
+
+	ranonce = FALSE;
 
 	f = FALSE;
 	EfectFlag = FALSE;
@@ -95,8 +99,12 @@ Enemy::~Enemy()
 }
 
 void Enemy::EnemyUpdate(Player P,int& j)
-{ 
-	Fishprobability = rand() % (30 + 1);
+{
+
+	if (ranonce == FALSE) {
+		Fishprobability = rand() % (100 + 1);
+		ranonce = TRUE;
+	}
 
 	if (++E_count >= 120) {
 		E_rand = rand() % 100;
@@ -147,7 +155,6 @@ void Enemy::EnemyUpdate(Player P,int& j)
 
 	if (spflg == true) {
 		EgetFx = ELocationX;
-
 		EsplashAnim();
 	}
 
@@ -524,12 +531,11 @@ void Enemy::EDeadAnim() {
 			if (ELocationY+cy>=450)swy += 1;
 			break;
 		case 2:
-			FishFlg = true;
 			spflg = true;
 			//30%
-			//if (Fishprobability == 30) {
-			//	FishFlg = true;
-			//}
+			if (Fishprobability <= 30) {
+				FishFlg = true;
+			}
 			break;
 		default:
 			break;
@@ -593,6 +599,7 @@ void Enemy::DebagHit(Player P) {
 					once = true;
 
 					Enemy::EdeadCount += 1;
+
 				}
 				cflg = 2;
 				aflg = FALSE;
@@ -620,6 +627,7 @@ void Enemy::Efect()
 
 int Enemy::EScore()
 {
+
 	switch (enemy.type)
 	{
 	case 0:

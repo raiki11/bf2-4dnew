@@ -70,11 +70,13 @@ private:
 	int n_score;	// 現在のスコア
 	int hi_score;	// ハイスコア
 
+	int ranonce;//Rand関数一度だけやる用
+
 public:
 	Enemy(int set_X,int set_Y);
 	~Enemy();
 
-	int cflg;		//死亡アニメーションフラグ
+	int cflg;		//0:通常状態　1:パラシュート状態　2:死亡状態
 	static int DeadFlg;		//死亡フラグ
 	static int EdeadCount;//エネミーがやられた数のカウント
 	static int ElastFlg;	//最後の一匹か確認するフラグ
@@ -92,8 +94,8 @@ public:
 	void EDeadAnim();
 	void EsplashAnim();
 	int EspAnim[4];
-	int spc;
-	bool spflg;
+	int spc;	//スプラッシュアニメーションカウント
+	bool spflg;	//スプラッシュアニメーション用フラグ
 
 
 	//敵が死ぬアニメーションになるか確認する用
