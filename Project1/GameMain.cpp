@@ -423,19 +423,6 @@ AbstractScene* GameMain::Update()
 			
 		
 	}
-	//次のステージの敵生成
-	//if (PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
-	//	if (Stage::Snum >= 4) { Stage::Snum = 0; }
-	//		Stage::Snum += 1;
-	//	if (OldSnum != Stage::Snum) {
-	//		for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
-	//			enemy[i] = new Enemy(i, i);
-	//		}
-	//	}
-	//}
-		
-
-
 				/* 魚とプレイヤーの当たり判定 */
 
 				/* プレイヤーがサカナの稼働エリアに入った時 */
@@ -468,7 +455,7 @@ AbstractScene* GameMain::Update()
 						/*player.SetPlayerDeathFlg(TRUE);
 						player.SetPlayerDeathFState(1);*/
 						fish.PFlg = 5;
-
+					
 			player.SetPlayerDeathFlg(TRUE);
 			player.SetPlayerDeathFState(3);
 			playerAndFishFlg = TRUE;
@@ -582,9 +569,6 @@ AbstractScene* GameMain::Update()
 				*/
 			}
 		}
-	
-}
-
 	if (ClearFlg == TRUE) {
 		if (clearSoundFlg == FALSE) {
 			PlaySoundMem(SE_stageclear, DX_PLAYTYPE_BACK, TRUE);
