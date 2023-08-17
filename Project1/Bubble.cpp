@@ -28,6 +28,10 @@ Bubble::Bubble() {
 	BscoFlg = TRUE;
 	Bscoimg = LoadGraph("images/Score/GetScore_500.png");
 	pdeathFlg = FALSE;
+	//BGMÇÃâπó ïœçX
+	SE_bubble= LoadSoundMem("sounds/SE_Bubble.wav");
+	ChangeVolumeSoundMem(70, SE_bubble);
+
 }
 
 Bubble::~Bubble() 
@@ -192,6 +196,7 @@ void Bubble::BubbleDraw() const
 		DrawRotaGraph(babbleaddX, babbleaddY, 1.0f, 0, BubbleImg[bimgnum], TRUE, FALSE);
 		break;
 	case 1:
+		PlaySoundMem(SE_bubble, DX_PLAYTYPE_BACK, TRUE);
 		DrawRotaGraph(babbleaddX, babbleaddY, 1.0f, 0, BubbleImg[3], TRUE, FALSE);
 		break;
 	case 2:

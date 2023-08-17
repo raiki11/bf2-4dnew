@@ -44,6 +44,8 @@ private:
 
 	int Bscoimg;	//スコア画像表示フラグ
 
+	int SE_bubble;	//効果音
+
 public:
 
 	// コンストラクタ

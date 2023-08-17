@@ -151,6 +151,5 @@ public:
 	}
 
 
-	void DrawSea() const;
 };
 

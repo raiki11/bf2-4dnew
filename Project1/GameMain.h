@@ -47,7 +47,6 @@ private:
     int BGM;
     // SE用変数
     int Start_SE;
-    int SE_bubble;
     int SE_crack;
     int SE_defealtheenemy;
     int SE_eatable;
@@ -64,7 +63,7 @@ private:
     int SE_playerwalk;
 
   
-    int reboundFlg;
+    //int reboundFlg;
 
     bool BubbleFlg;//シャボン玉用フラグ
     int getenemyX[6]={0,0,0,0,0,0};
