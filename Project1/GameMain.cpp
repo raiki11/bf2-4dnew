@@ -566,12 +566,12 @@ AbstractScene* GameMain::Update()
 					player.InitPlayer();  //プレイヤーの初期化
 
 					//ステージを最後までクリアしたらタイトルに戻る
-					if (Stage::Snum > 4) {
+					if (Stage::Snum > 1) {
 						Stage::Snum = 0;
 						UI::old_score = Enemy::Score;
 						Enemy::Score = 0;
 						UI::getsco = 0;
-						for (int i = 0; i <= Stage::EnemyMax[Stage::Snum]; i++) {
+						for (int i = 0; i <= 6; i++) {
 							//バブルの残りを削除
 							bubble[i] = nullptr;
 							getenemyX[i] = 0;
