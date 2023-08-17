@@ -575,6 +575,7 @@ AbstractScene* GameMain::Update()
 
 			//ステージを最後までクリアしたらタイトルに戻る
 			if (Stage::Snum > 4) {
+				PlaySoundMem(SE_stageclear, DX_PLAYTYPE_BACK, TRUE);
 				Stage::Snum = 0;
 				UI::old_score = Enemy::Score;
 				Enemy::Score = 0;
