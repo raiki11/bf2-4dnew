@@ -69,6 +69,15 @@ void Stage::DrawStage()const{
 
 }
 
+void Stage::DrawSea()const {
+	//海表示
+	DrawGraph(160, 441, St_Sea, TRUE);
+
+	DrawGraph(0, 450, St_Sea, TRUE);
+	DrawGraph(320, 450, St_Sea, TRUE);
+
+}
+
 void Stage::Stage1()const {
 	//ステージ1の表示
 	//浮島の表示
@@ -84,7 +93,7 @@ void Stage::Stage1()const {
 	//DrawBox(480, 419, 640, 480, 0xff0000, FALSE);
 
 	//海表示
-	DrawGraph(160, 444, St_Sea, TRUE);
+	//DrawGraph(160, 444, St_Sea, TRUE);
 	//DrawBox(160, 419, 480, 478, 0x00ff00, FALSE);
 
 	//雲表示
@@ -112,10 +121,7 @@ void Stage::Stage2()const {
 	DrawGraph(480, 416, St_Land_Right, TRUE);
 	//DrawBox(480, 419, 640, 480, 0xff0000, FALSE);
 
-	//海表示
-	DrawGraph(160, 444, St_Sea, TRUE);
-	//DrawBox(160, 419, 480, 478, 0x00ff00, FALSE);
-
+	
 	//雲左表示
 	DrawGraph(80, 220, cloud, TRUE);
 	//雲右表示
@@ -155,10 +161,6 @@ DrawGraph(0, 416, St_Land_Left, TRUE);
 DrawGraph(480, 416, St_Land_Right, TRUE);
 //DrawBox(480, 419, 640, 480, 0xff0000, FALSE);
 
-//海表示
-DrawGraph(160, 444, St_Sea, TRUE);
-//DrawBox(160, 419, 480, 478, 0x00ff00, FALSE);
-
 //雲左表示
 DrawGraph(80, 121, cloud, TRUE);
 //雲右表示
@@ -195,10 +197,6 @@ void Stage::Stage4()const {
 	//右下の地面表示
 	DrawGraph(480, 416, St_LR, TRUE);
 	//DrawBox(480, 419, 640, 480, 0xff0000, FALSE);
-
-	//海表示
-	DrawGraph(160, 444, St_Sea, TRUE);
-	//DrawBox(160, 419, 480, 478, 0x00ff00, FALSE);
 
 	//雲左表示
 	DrawGraph(160, 85, cloud, TRUE);
@@ -243,16 +241,20 @@ void Stage::Stage5()const {
 	DrawGraph(480, 416, St_LR, TRUE);
 	//DrawBox(480, 419, 640, 480, 0xff0000, FALSE);
 
-	//海表示
-	DrawGraph(160, 444, St_Sea, TRUE);
-	//DrawBox(160, 419, 480, 478, 0x00ff00, FALSE);
-
 	//雲左表示
 	DrawGraph(80, 85, cloud, TRUE);
 	//雲右表示
 	DrawGraph(360, 121, cloud, TRUE);
 
 }
+
+//void Stage::DrawSea() const
+//{
+//	//海表示
+//	DrawGraph(-160, 450, St_Sea, TRUE);
+//	DrawGraph(160, 444, St_Sea, TRUE);
+//	DrawGraph(480, 450, St_Sea, TRUE);
+//}
 
 	//デバッグ
 	//DrawFormatString(100, 0, 0xffffff, "%d", StageXY[0][0][1]);

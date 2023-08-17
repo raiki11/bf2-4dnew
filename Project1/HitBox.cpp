@@ -17,7 +17,7 @@ void HitBox::UpdetaHitBox(Player p, Stage s)
 
 void HitBox::DrawHitBox() const
 {
-	DrawBox(x0, y0, x1, y1, 0xff0000, FALSE);
+	//DrawBox(underPx0, underPy0, underPx1, underPy1, 0xff0000, FALSE);
 	/*DrawFormatString(200, 0, 0xffffff, "x0:%d", px0);
 	DrawFormatString(200, 20, 0xffffff, "y0:%d", py0);
 	DrawFormatString(200, 40, 0xffffff, "x1:%d", px1);
@@ -344,7 +344,7 @@ int HitBox::PlayerBalloonAndEnemy(Player p, Enemy e)
 	py1 = p.GetPlayerLocationY() + 5;
 
 	ex0 = e.GetEnemyLocationX() - 10;
-	ey0 = e.GetEnemyLocationY();
+	ey0 = e.GetEnemyLocationY() + 5;
 	ex1 = e.GetEnemyLocationX() + 15;
 	ey1 = e.GetEnemyLocationY() + 32;
 
