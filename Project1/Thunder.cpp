@@ -8,9 +8,9 @@ Thunder::Thunder()
 	MoveX = 0.0f;
 	MoveY = 0.0f;
 	// 雷のX座標
-	ThunderX = 100.0;
+	ThunderX = 150.0;
 	// 雷のY座標
-	ThunderY = 400.0;
+	ThunderY = 200.0;
 	// 雷のフラグ
 	ThunderFlg = 2;
 }
@@ -45,15 +45,16 @@ void Thunder::ThunderUpdate()
 		}
 		ThunderAngle = (1 - ThunderAngle) + 0.5f;
 		if (ThunderAngle > 1)ThunderAngle -= 1.0f;
-		ChangeAngle(/*MoveX,MoveY*/);
+		ChangeAngle();
 	}
 
 	if (ThunderY < 8) {
 		ThunderAngle = (1 - ThunderAngle);
-		ChangeAngle(/*MoveX,MoveY*/);
+		ChangeAngle();
 	}
 	if (ThunderY > 480.0 + 32.0) { // 雷が画面下に落ちた時
 		//ThunderFlg = 2; // 雷をスタート状態にする
+		ThunderY = 200;
 		ChangeAngle();
 	}
 
@@ -74,12 +75,13 @@ void Thunder::ThunderDraw() const
 	DrawFormatString(400, 230, 0xffffff, "ThunderLocationY::%f", ThunderY);
 	DrawFormatString(400, 260, 0xffffff, "MoveX::%f", MoveX);
 	DrawFormatString(400, 290, 0xffffff, "MoveY::%f", MoveY);
+	DrawFormatString(400, 320, 0xffffff, "ThuderAngle::%f", ThunderAngle);
 
 }
 
-void Thunder::ChangeAngle(/*float MoveX,float MoveY*/)
+void Thunder::ChangeAngle()
 {
 	float rad = ThunderAngle * (float)M_PI * 2;
-	MoveX = (float)(ThunderSpeed * cosf(rad));
-	MoveY = (float)(ThunderSpeed * sinf(rad));
+	MoveX = (int)(ThunderSpeed * cosf(rad));
+	MoveY = (int)(ThunderSpeed * sinf(rad));
 }

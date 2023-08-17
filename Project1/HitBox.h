@@ -11,6 +11,7 @@ private:
 	int px0, px1, py0, py1;
 	int ex0, ex1, ey0, ey1;
 	float tx0, tx1, ty0, ty1;
+	float x0, x1, y0, y1;
 	int fx0, fx1, fy0, fy1;
 	
 	int underPx0, underPy0, underPx1, underPy1;	//プレイヤーの接地判定
@@ -42,7 +43,8 @@ public:
 	int ThunderAndStageTop(Thunder th, Stage s);
 	int ThunderAndStageRight(Thunder th, Stage s);
 	int ThunderAndStageLeft(Thunder th, Stage s);
-	int GetThunderAndStage(Thunder th, Stage s);
+	int GetThunderAndStageX(Thunder th, Stage s);
+	int GetThunderAndStageY(Thunder th, Stage s);
 
 	int FishAndPlayer(Fish f, Player p);
 

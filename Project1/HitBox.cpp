@@ -17,7 +17,7 @@ void HitBox::UpdetaHitBox(Player p, Stage s)
 
 void HitBox::DrawHitBox() const
 {
-	DrawBox(underPx0, underPy0, underPx1, underPy1, 0xff0000, FALSE);
+	DrawBox(x0, y0, x1, y1, 0xff0000, FALSE);
 	/*DrawFormatString(200, 0, 0xffffff, "x0:%d", px0);
 	DrawFormatString(200, 20, 0xffffff, "y0:%d", py0);
 	DrawFormatString(200, 40, 0xffffff, "x1:%d", px1);
@@ -178,9 +178,14 @@ int HitBox::EnemyAndStageLeft(Enemy e, Stage s)
 int HitBox::ThunderAndStageUnder(Thunder th, Stage s) 
 {
 	tx0 = th.GetThunderX() - 10;
-	ty0 = th.GetThunderY() + 10;
+	ty0 = th.GetThunderY() - 20;
 	tx1 = th.GetThunderX() + 10;
-	ty1 = th.GetThunderY() + 10;
+	ty1 = th.GetThunderY() - 15;
+
+	x0 = th.GetThunderX() - 10;
+	y0 = th.GetThunderY() - 20;
+	x1 = th.GetThunderX() + 10;
+	y1 = th.GetThunderY() - 15;
 
 	for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
 		if (s.GetStageXY(Stage::Snum, i, 0) <= tx1 && s.GetStageXY(Stage::Snum, i + 1, 0) >= tx0 &&
@@ -194,10 +199,10 @@ int HitBox::ThunderAndStageUnder(Thunder th, Stage s)
 
 int HitBox::ThunderAndStageTop(Thunder th, Stage s)
 {
-	tx0 = th.GetThunderX() - 10;
-	ty0 = th.GetThunderY() - 10;
-	tx1 = th.GetThunderX() + 10;
-	ty1 = th.GetThunderY() - 10;
+	tx0 = th.GetThunderX() + 10;
+	ty0 = th.GetThunderY() - 15;
+	tx1 = th.GetThunderX() - 10;
+	ty1 = th.GetThunderY() - 20;
 
 	for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
 		if (s.GetStageXY(Stage::Snum, i, 0) <= tx1 && s.GetStageXY(Stage::Snum, i + 1, 0) >= tx0 &&
@@ -212,9 +217,9 @@ int HitBox::ThunderAndStageTop(Thunder th, Stage s)
 
 int HitBox::ThunderAndStageRight(Thunder th, Stage s)
 {
-	tx0 = th.GetThunderX() + 10;
+	tx0 = th.GetThunderX() + 15;
 	ty0 = th.GetThunderY() - 10;
-	tx1 = th.GetThunderX() + 10;
+	tx1 = th.GetThunderX() + 20;
 	ty1 = th.GetThunderY() + 10;
 
 	if (th.GetThunderMoveLocationX() > 0) {
@@ -231,10 +236,10 @@ int HitBox::ThunderAndStageRight(Thunder th, Stage s)
 
 int HitBox::ThunderAndStageLeft(Thunder th, Stage s)
 {
-	tx0 = th.GetThunderX() - 10;
-	ty0 = th.GetThunderY() - 10;
-	tx1 = th.GetThunderX() - 10;
-	ty1 = th.GetThunderY() + 10;
+	tx0 = th.GetThunderX() - 15;
+	ty0 = th.GetThunderY() + 10;
+	tx1 = th.GetThunderX() - 20;
+	ty1 = th.GetThunderY() - 10;
 
 	if (th.GetThunderMoveLocationX() < 0) {
 		for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
@@ -249,21 +254,41 @@ int HitBox::ThunderAndStageLeft(Thunder th, Stage s)
 	return FALSE;
 }
 
-//int HitBox::GetThunderAndStage(Thunder th, Stage s)
-//{
-//	tx0 = th.GetThunderX() - 16;
-//	ty0 = th.GetThunderY() - 16;
-//	tx1 = th.GetThunderX() + 16;
-//	ty1 = th.GetThunderY() + 16;
-//
-//	for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
-//		s.GetStageXY(Stage::Snum, i, 0);
-//		s.GetStageXY(Stage::Snum, i + 1, 0);
-//		s.GetStageXY(Stage::Snum, i, 1);
-//		s.GetStageXY(Stage::Snum, i + 1, 1);
-//	}
-//
-//}
+int HitBox::GetThunderAndStageX(Thunder th, Stage s)
+{
+	tx0 = th.GetThunderX() - 10;
+	ty0 = th.GetThunderY() - 10;
+	tx1 = th.GetThunderX() + 10;
+	ty1 = th.GetThunderY() + 10;
+
+	for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
+		s.GetStageXY(Stage::Snum, i, 0);
+		s.GetStageXY(Stage::Snum, i + 1, 0);
+		/*s.GetStageXY(Stage::Snum, i, 1);
+		s.GetStageXY(Stage::Snum, i + 1, 1);*/
+
+		return s.GetStageXY(Stage::Snum, i, 0);
+	}
+
+}
+
+int HitBox::GetThunderAndStageY(Thunder th, Stage s)
+{
+	tx0 = th.GetThunderX() - 10;
+	ty0 = th.GetThunderY() - 10;
+	tx1 = th.GetThunderX() + 10;
+	ty1 = th.GetThunderY() + 10;
+
+	for (int i = 0; i < Stage::MaxCoord[Stage::Snum]; i += 2) {
+		/*s.GetStageXY(Stage::Snum, i, 0);
+		s.GetStageXY(Stage::Snum, i + 1, 0);*/
+		s.GetStageXY(Stage::Snum, i, 1);
+		s.GetStageXY(Stage::Snum, i + 1, 1);
+
+		return s.GetStageXY(Stage::Snum, i, 1);
+	}
+
+}
 
 //	return FALSE;
 //}

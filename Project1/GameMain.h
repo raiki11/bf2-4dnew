@@ -60,4 +60,6 @@ public:
 
     /* デバック用 */
     int b;
+
+    void ChangeAngle(Thunder th);
 };

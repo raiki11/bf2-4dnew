@@ -13,10 +13,7 @@ private:
 	// 雷のフラグ
 	int ThunderFlg; // 雷の状態（0: 移動中 1: バー接触 2: 待機状態）
 	
-	// 雷が動くX座標の量
-	float MoveX;
-	// 雷が動くY座標の量
-	float MoveY;
+	
 	//// 雷の当たり判定専用の座標
 	//int tx1 = ThunderX - 32;
 	//int tx2 = ThunderX + 32;
@@ -43,7 +40,12 @@ public:
 	int ThunderSpeed;
 	// 雷の角度
 	float ThunderAngle;
+	float ThunderAngle2;
 
+	// 雷が動くX座標の量
+	float MoveX;
+	// 雷が動くY座標の量
+	float MoveY;
 
 	//座標を獲得、追記者 北村
 	float GetThunderX() { return ThunderX; }
