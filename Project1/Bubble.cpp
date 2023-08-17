@@ -22,7 +22,7 @@ Bubble::Bubble() {
 	check = 0;
 	bimgnum = 0;
 	bimgcnt = 0;
-	amp = 0.85f;
+	amp = 1.5f;
 	fre = 0.9f;
 	BDeleteFlg = FALSE;
 	BscoFlg = TRUE;
@@ -53,99 +53,15 @@ void Bubble::BubbleUpdate(Player p, int ex)
 		Px = p.GetPlayerLocationX();
 		Py = p.GetPlayerLocationY() + 10;
 
-		//babbleaddX = BabbleX + additionX;
-
-
 		a = Px - babbleaddX;
 		b = Py - babbleaddY;
 		c = sqrt((a * a) + (b * b));
-
-		//switch (count++)
-		//{
-		//case 0:
-		//	rad = DEGREE_RADIAN(0);
-		//	break;
-		//case 10:
-		//	rad = DEGREE_RADIAN(45.0);
-		//	break;
-		//case 20:
-		//	rad = DEGREE_RADIAN(90.0);
-		//	break;
-		//case 30:
-		//	rad = DEGREE_RADIAN(135.0);
-		//	break;
-		//case 40:
-		//	rad = DEGREE_RADIAN(180.0);
-		//	break;
-		//case 50:
-		//	rad = DEGREE_RADIAN(225.0);
-		//	break;
-		//case 60:
-		//	rad = DEGREE_RADIAN(270.0);
-		//	break;
-		//case 70:
-		//	rad = DEGREE_RADIAN(315.0);
-		//	break;
-		//case 80:
-		//	rad = DEGREE_RADIAN(360.0);
-		//	break;
-		//case 90:
-		//	count = 0;
-		//	break;
-		//default:
-		//	break;
-		//}
-
 
 		if (pdeathFlg != TRUE) {
 			if (c <= 50) {
 				check = 1;
 			}
 		}
-
-		/*
-		switch (flg) {
-		case 0:
-			additionX += 0.3;
-			if (additionX > 13) {
-				flg = 1;
-			}
-			break;
-		case 1:
-			additionX -= 0.1;
-			if (count++ > 5) {
-				count = 0;
-				flg = 2;
-			}
-			break;
-		case 2:
-			if (count++ > 5) {
-				count = 0;
-				flg = 3;
-			}
-			break;
-		case 3:
-			additionX -= 0.3;
-			if (additionX < -13) {
-				flg = 4;
-			}
-			break;
-		case 4:
-			if (count++ > 5) {
-				count = 0;
-				flg = 5;
-			}
-		case 5:
-			additionX += 0.1;
-			if (count++ > 5) {
-				count = 0;
-				flg = 0;
-			}
-			break;
-		default:
-			break;
-		}*/
-
 
 		if (check == 1) {
 			//ƒXƒRƒA{‚T‚O‚O
@@ -162,7 +78,7 @@ void Bubble::BubbleUpdate(Player p, int ex)
 		}
 		else {
 			count++;
-			babbleaddY -= 0.2;
+			babbleaddY -= 0.3;
 			if (count > 2) {
 				babbleaddX += amp * sin(fre * GetNowCount() / 300.0f);
 				count = 0;
@@ -170,7 +86,7 @@ void Bubble::BubbleUpdate(Player p, int ex)
 		}
 
 
-		if (bimgcnt++ > 200) {
+		if (bimgcnt++ > 70) {
 			bimgnum += 1;
 			bimgcnt = 0;
 		}

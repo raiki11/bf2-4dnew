@@ -673,9 +673,7 @@ void GameMain::Draw() const
 	stage.DrawSea();
 	UI.DrawUI();
 	hit.DrawHitBox();
-	//enemy.EnemyDraw();
 
-	//stage.DrawSea();
 	DrawFormatString(100, 0, 0xffffff, "%d", a);
 
 	if (GameoverFlg == TRUE) {
