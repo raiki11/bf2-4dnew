@@ -557,8 +557,8 @@ void Enemy::EDeadAnim() {
 }
 
 void Enemy::DebagHit(Player P) {
-	float Ex = ELocationX - 15;
-	float Exwidth = ELocationX  + 15;
+	float Ex = ELocationX - 10;
+	float Exwidth = ELocationX  + 10;
 	float Ey = ELocationY - 30;
 	float Eywidth = ELocationY + 30;
 
