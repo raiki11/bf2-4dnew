@@ -661,7 +661,7 @@ AbstractScene* GameMain::Update()
 
 void GameMain::Draw() const
 {
-	DrawFormatString(200, 300, 0xffffff, "life%d",tst);
+	//DrawFormatString(200, 300, 0xffffff, "life%d",tst);
 	stage.DrawStage();
 
 	if (PauseFlg == TRUE) {

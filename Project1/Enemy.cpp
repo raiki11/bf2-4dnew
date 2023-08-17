@@ -270,18 +270,18 @@ void Enemy::EnemyDraw() const
 		//デバッグ用
 		//DrawFormatString(0, 145, 0xffffff, "enemyLocatoinX::%f", ELocationX);
 		//DrawFormatString(0, 160, 0xffffff, "time::%d", time);
-		DrawFormatString(0, 300, 0xffffff, "Score::%d", Score);
+		//DrawFormatString(0, 300, 0xffffff, "Score::%d", Score);
 		if (reboundFlgStageY == TRUE) {
-			DrawFormatString(0, 205, 0xffffff, "Y:TRUE");
+			//DrawFormatString(0, 205, 0xffffff, "Y:TRUE");
 		}
 		else {
-			DrawFormatString(0, 205, 0xffffff, "Y:FALSE");
+			//DrawFormatString(0, 205, 0xffffff, "Y:FALSE");
 		}
 		if (reboundFlgStageX == TRUE) {
-			DrawFormatString(0, 220, 0xffffff, "X:TRUE");
+			///DrawFormatString(0, 220, 0xffffff, "X:TRUE");
 		}
 		else {
-			DrawFormatString(0, 220, 0xffffff, "X:FALSE");
+			//DrawFormatString(0, 220, 0xffffff, "X:FALSE");
 		}
 	}
 	//DrawFormatString(0, 300, 0xffffff, "Score::%d", Score);
