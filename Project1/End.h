@@ -12,11 +12,14 @@ class End :
 {
 private:
     int image;
+    int SE; //ゲームオーバーSE
     Stage stage;
     UI UI;
     Enemy* enemy[6];
     //ゲームメインで使う変数の宣言
     Player player;
+
+    int flg;
 public:
     int EndCount = 0;
 
