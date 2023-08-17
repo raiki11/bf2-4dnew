@@ -303,7 +303,7 @@ int HitBox::PlayerBalloonAndEnemy(Player p, Enemy e)
 	py1 = p.GetPlayerLocationY() + 5;
 
 	ex0 = e.GetEnemyLocationX() - 10;
-	ey0 = e.GetEnemyLocationY();
+	ey0 = e.GetEnemyLocationY() + 5;
 	ex1 = e.GetEnemyLocationX() + 15;
 	ey1 = e.GetEnemyLocationY() + 32;
 
