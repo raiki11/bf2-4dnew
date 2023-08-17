@@ -77,8 +77,8 @@ AbstractScene* TitleScene::Update()
 	if (selectNum == 0 && PAD_INPUT::OnButton(XINPUT_BUTTON_A)) {
 		return new GameMain();
 	}
-
 	Stage::Snum = 0;
+	//UI::getsco = 0;
 	return this;
 }
 
